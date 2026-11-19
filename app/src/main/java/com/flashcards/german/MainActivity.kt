@@ -56,9 +56,9 @@ class MainActivity : ComponentActivity() {
                                 onOpen = { screen = Screen.Play(it) },
                                 onStudy = { cards, title, cram -> screen = Screen.Study(cards, title, cram) },
                                 onStudyDeck = { deck, cards, title, cram -> screen = Screen.Study(cards, title, cram, deck) },
+                                onGenderScope = { learnedOnly -> update(progress.copy(genderLearnedOnly = learnedOnly)) },
                                 onGender = { mode ->
-                                    val all = nounsFrom(repo.allCards, mine = false)
-                                    val mine = nounsFrom(Deck.entries.flatMap { repo.cardsOf(it) }, mine = true)
+                                    val (all, mine) = genderPool(repo, progress)
                                     screen = Screen.Gender(mode, pickNouns(mode, all, mine, progress.genderStats))
                                 },
                                 updateAvailable = updateState is UpdateState.Available,

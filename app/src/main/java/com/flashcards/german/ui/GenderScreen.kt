@@ -55,9 +55,11 @@ fun pickNouns(mode: GenderMode, all: List<GNoun>, mine: List<GNoun>, stats: Map<
 // ---------------------------------------------------------------- hub (the tab)
 
 @Composable
-fun GenderHub(repo: Repo, p: Progress, onPlay: (GenderMode) -> Unit) {
-    val all = remember(repo) { nounsFrom(repo.allCards, mine = false) }
-    val mine = nounsFrom(Deck.entries.flatMap { repo.cardsOf(it) }, mine = true)
+fun GenderHub(repo: Repo, p: Progress, onPlay: (GenderMode) -> Unit, onScope: (Boolean) -> Unit) {
+    val (all, mine) = genderPool(repo, p)
+    val totalAll = remember(repo) { nounsFrom(repo.allCards, mine = false).size } + nounsFrom(Deck.entries.flatMap { repo.cardsOf(it) }, mine = true).size
+    val learnedCount = genderPool(repo, p.copy(genderLearnedOnly = true)).let { it.first.size + it.second.size }
+    val empty = all.isEmpty() && mine.isEmpty()
     val stats = p.genderStats
     val seen = stats.values.sumOf { it.right + it.wrong }
     val right = stats.values.sumOf { it.right }
@@ -77,8 +79,14 @@ fun GenderHub(repo: Repo, p: Progress, onPlay: (GenderMode) -> Unit) {
                 Spacer(Modifier.width(10.dp))
             }
         }
-        Text("Guess the article. ${all.size + mine.size} nouns, one tap each.", color = C.Muted, fontSize = 15.sp)
-        Spacer(Modifier.height(18.dp))
+        Text("Guess the article, one tap each.", color = C.Muted, fontSize = 15.sp)
+        Spacer(Modifier.height(16.dp))
+        ScopeSwitch(p.genderLearnedOnly, totalAll, learnedCount, onScope)
+        if (empty) Text(
+            "No learned nouns yet. Finish a lesson in Learn, or study Class or Finds, and they'll show up here.",
+            color = C.Muted, fontSize = 14.sp, modifier = Modifier.padding(top = 10.dp),
+        )
+        Spacer(Modifier.height(16.dp))
 
         PaperCard(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(18.dp)) {
@@ -101,10 +109,28 @@ fun GenderHub(repo: Repo, p: Progress, onPlay: (GenderMode) -> Unit) {
             }
         }
         Spacer(Modifier.height(18.dp))
-        ModeCard(Icons.Rounded.Timer, "Sprint", "60 seconds, as many as you can", "Best ${p.bestSprint}", true) { onPlay(GenderMode.Sprint) }
-        ModeCard(Icons.Rounded.Casino, "Round of 20", "A relaxed set, favouring nouns you don't know yet", null, true) { onPlay(GenderMode.Round) }
+        ModeCard(Icons.Rounded.Timer, "Sprint", "60 seconds, as many as you can", "Best ${p.bestSprint}", all.isNotEmpty()) { onPlay(GenderMode.Sprint) }
+        ModeCard(Icons.Rounded.Casino, "Round of 20", "A relaxed set, favouring nouns you don't know yet", null, all.isNotEmpty()) { onPlay(GenderMode.Round) }
         ModeCard(Icons.Rounded.Healing, "Weak spots", if (weak == 0) "Nouns you get wrong will collect here" else "Nouns you've got wrong before", if (weak > 0) "$weak" else null, weak > 0) { onPlay(GenderMode.Weak) }
         ModeCard(Icons.AutoMirrored.Rounded.MenuBook, "My nouns", if (mine.isEmpty()) "No nouns in Class or Finds yet" else "Nouns from your Class and Finds decks", if (mine.isNotEmpty()) "${mine.size}" else null, mine.isNotEmpty()) { onPlay(GenderMode.Mine) }
+    }
+}
+
+/** Segmented two-option switch: all nouns vs. only learned ones. */
+@Composable
+private fun ScopeSwitch(learnedOnly: Boolean, totalAll: Int, learned: Int, onScope: (Boolean) -> Unit) {
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(50)).background(C.Sunk).padding(4.dp)) {
+        listOf(false to "All nouns · $totalAll", true to "Learned · $learned").forEach { (value, label) ->
+            val on = learnedOnly == value
+            Box(
+                Modifier.weight(1f).clip(RoundedCornerShape(50)).background(if (on) C.Card else Color.Transparent)
+                    .then(if (on) Modifier.border(1.dp, C.Line, RoundedCornerShape(50)) else Modifier)
+                    .clickable { if (!on) onScope(value) }.padding(vertical = 10.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(label, color = if (on) C.Accent else C.Muted, fontWeight = if (on) FontWeight.Bold else FontWeight.Medium, fontSize = 14.sp)
+            }
+        }
     }
 }
 

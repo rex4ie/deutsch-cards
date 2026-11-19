@@ -46,6 +46,7 @@ fun HomeScaffold(
     onStudy: (List<Card>, String, Boolean) -> Unit,
     onStudyDeck: (Deck, List<Card>, String, Boolean) -> Unit,
     onGender: (GenderMode) -> Unit,
+    onGenderScope: (Boolean) -> Unit,
     updateAvailable: Boolean,
     onAbout: () -> Unit,
 ) {
@@ -55,7 +56,7 @@ fun HomeScaffold(
             when (tab) {
                 Screen.Learn -> LearnPath(repo, progress, onOpen)
                 Screen.Review -> ReviewDashboard(repo, progress, onStudy)
-                Screen.Artikel -> GenderHub(repo, progress, onGender)
+                Screen.Artikel -> GenderHub(repo, progress, onGender, onGenderScope)
                 Screen.Finds -> MyLessonsScreen(repo, progress, Deck.Finds) { c, t, cram -> onStudyDeck(Deck.Finds, c, t, cram) }
                 else -> MyLessonsScreen(repo, progress, Deck.Class) { c, t, cram -> onStudyDeck(Deck.Class, c, t, cram) }
             }

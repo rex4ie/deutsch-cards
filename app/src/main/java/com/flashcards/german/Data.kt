@@ -81,6 +81,8 @@ data class Progress(
     /** der/die/das game: per-noun results and best sprint score, kept apart from everything else. */
     val genderStats: Map<String, WordStat> = emptyMap(),
     val bestSprint: Int = 0,
+    /** Artikel tab: false = all nouns (default), true = only nouns already learned. Remembered. */
+    val genderLearnedOnly: Boolean = false,
     val myXp: Int = 0,
     val xp: Int = 0,
     val streak: Int = 0,
@@ -247,6 +249,17 @@ fun nounsFrom(cards: List<Card>, mine: Boolean): List<GNoun> = cards.mapNotNull 
     if (!mine && pluralEn.containsMatchIn(c.en.trim())) return@mapNotNull null   // likely plural
     GNoun(c.id, m.groupValues[1], word, c.en, c.takeIf { it.hasAudio }, mine)
 }.distinctBy { it.article + it.word }
+
+/**
+ * Nouns for the Artikel game, honouring the "learned only" switch. Learned = in a finished
+ * Learn lesson (it has a review schedule) or studied in the Class / Finds decks.
+ */
+fun genderPool(repo: Repo, p: Progress): Pair<List<GNoun>, List<GNoun>> {
+    val all = nounsFrom(repo.allCards, mine = false)
+    val mine = nounsFrom(Deck.entries.flatMap { repo.cardsOf(it) }, mine = true)
+    if (!p.genderLearnedOnly) return all to mine
+    return all.filter { it.id in p.cards } to mine.filter { it.id in p.myCards || it.id in p.findCards }
+}
 
 /** Common gender rules, used as hints after a wrong answer. */
 fun genderHint(word: String): String? {
