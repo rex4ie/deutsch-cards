@@ -17,9 +17,10 @@ import com.flashcards.german.ui.*
 sealed interface Screen {
     data object Learn : Screen
     data object Review : Screen
+    data object Mine : Screen
     data object About : Screen
-    data class PlayLesson(val lesson: Lesson) : Screen
-    data class Study(val cards: List<Card>, val title: String, val cram: Boolean) : Screen
+    data class Play(val item: PathItem) : Screen
+    data class Study(val cards: List<Card>, val title: String, val cram: Boolean, val mine: Boolean = false) : Screen
 }
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         val repo = Repo(applicationContext)
         setContent {
             AppTheme {
-                var progress by remember { mutableStateOf(repo.load()) }
+                var progress by remember { mutableStateOf(repo.load().migrate(repo)) }
                 var screen by remember { mutableStateOf<Screen>(Screen.Learn) }
                 var tab by remember { mutableStateOf<Screen>(Screen.Learn) }
                 var updateState by remember { mutableStateOf<UpdateState>(UpdateState.Idle) }
@@ -44,40 +45,74 @@ class MainActivity : ComponentActivity() {
                 Box(Modifier.fillMaxSize().background(C.Bg).systemBarsPadding()) {
                     AnimatedContent(screen, transitionSpec = { fadeIn() togetherWith fadeOut() }, label = "nav") { s ->
                         when (s) {
-                            Screen.Learn, Screen.Review -> HomeScaffold(
+                            Screen.Learn, Screen.Review, Screen.Mine -> HomeScaffold(
                                 tab = s,
                                 onTab = { tab = it; screen = it },
                                 repo = repo,
                                 progress = progress,
-                                onOpenLesson = { screen = Screen.PlayLesson(it) },
+                                onOpen = { screen = Screen.Play(it) },
                                 onStudy = { cards, title, cram -> screen = Screen.Study(cards, title, cram) },
+                                onStudyMine = { cards, title, cram -> screen = Screen.Study(cards, title, cram, mine = true) },
                                 updateAvailable = updateState is UpdateState.Available,
                                 onAbout = { screen = Screen.About },
                             )
                             Screen.About -> AboutScreen(repo, progress, updateState) { screen = tab }
-                            is Screen.PlayLesson -> LessonScreen(
-                                lesson = s.lesson, repo = repo,
-                                onExit = { screen = tab },
-                                onFinished = { xp ->
-                                    val now = System.currentTimeMillis()
-                                    val cards = progress.cards.toMutableMap()
-                                    s.lesson.cards.forEach { c ->
-                                        if (c.id !in cards) cards[c.id] = CardState(reps = 1, intervalDays = 1.0, due = now + Srs.DAY)
+                            is Screen.Play -> {
+                                val item = s.item
+                                val exercises = remember(item) {
+                                    when (item) {
+                                        is PathItem.LessonStop -> lessonExercises(item.lesson, repo.allCards)
+                                        is PathItem.ReviewStop -> reviewExercises(progress.weakestCards(repo, 8, item.afterLesson), repo.allCards)
                                     }
-                                    update(progress.copy(cards = cards, completedLessons = progress.completedLessons + s.lesson.id).withActivity(xp))
-                                },
-                            )
+                                }
+                                val (title, kicker, words) = when (item) {
+                                    is PathItem.LessonStop -> Triple(
+                                        item.lesson.title.substringBefore(" & ") + if (item.lesson.parts > 1) " ${item.lesson.part}/${item.lesson.parts}" else "",
+                                        "Lesson ${item.lesson.id}", item.lesson.cards.size,
+                                    )
+                                    is PathItem.ReviewStop -> Triple("Review", "Checkpoint ${item.n}", exercises.mapNotNull { it.card }.distinct().size)
+                                }
+                                LessonScreen(
+                                    title = title, kicker = kicker, build = { exercises }, repo = repo, wordCount = words,
+                                    onExit = { screen = tab },
+                                    onFinished = { res ->
+                                        val now = System.currentTimeMillis()
+                                        val cards = progress.cards.toMutableMap()
+                                        val stats = progress.words.toMutableMap()
+                                        (res.right.keys + res.wrong.keys).forEach { id ->
+                                            val w = stats[id] ?: WordStat()
+                                            stats[id] = w.copy(right = w.right + (res.right[id] ?: 0), wrong = w.wrong + (res.wrong[id] ?: 0), last = now)
+                                        }
+                                        var p = progress.copy(words = stats)
+                                        p = when (item) {
+                                            is PathItem.LessonStop -> {
+                                                item.lesson.cards.forEach { c ->
+                                                    if (c.id !in cards) cards[c.id] = CardState(reps = 1, intervalDays = 1.0, due = now + Srs.DAY)
+                                                }
+                                                p.copy(cards = cards, completedLessons = p.completedLessons + item.lesson.id)
+                                            }
+                                            is PathItem.ReviewStop -> p.copy(completedReviews = p.completedReviews + item.n)
+                                        }
+                                        update(p.withActivity(res.xp))
+                                    },
+                                )
+                            }
                             is Screen.Study -> StudyScreen(
                                 cards = s.cards, title = s.title, cram = s.cram, repo = repo,
-                                progress = progress,
+                                stateOf = { c -> if (s.mine) progress.myCards[c.id] else progress.cards[c.id] },
                                 onRate = { card, rating ->
                                     if (!s.cram) {
-                                        val st = progress.cards[card.id] ?: CardState()
-                                        update(progress.copy(cards = progress.cards + (card.id to Srs.schedule(st, rating))))
+                                        if (s.mine) {
+                                            val st = progress.myCards[card.id] ?: CardState()
+                                            update(progress.copy(myCards = progress.myCards + (card.id to Srs.schedule(st, rating))))
+                                        } else {
+                                            val st = progress.cards[card.id] ?: CardState()
+                                            update(progress.copy(cards = progress.cards + (card.id to Srs.schedule(st, rating))))
+                                        }
                                     }
                                 },
                                 onDone = { reviewed ->
-                                    if (reviewed > 0) update(progress.withActivity(reviewed))
+                                    if (reviewed > 0) update(if (s.mine) progress.copy(myXp = progress.myXp + reviewed) else progress.withActivity(reviewed))
                                     screen = tab
                                 },
                             )

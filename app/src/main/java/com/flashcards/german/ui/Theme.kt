@@ -1,6 +1,8 @@
 package com.flashcards.german.ui
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,124 +16,176 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/** Palette: printed index cards — warm paper, black ink, one red accent. */
 object C {
-    val Bg = Color(0xFF0F1222)
-    val Surface = Color(0xFF1A1E33)
-    val Surface2 = Color(0xFF242945)
-    val Border = Color(0xFF2F355A)
-    val Text = Color(0xFFF2F3FA)
-    val Muted = Color(0xFF9097B8)
-    val Primary = Color(0xFF7C5CFF)
-    val PrimaryDark = Color(0xFF5A3FD6)
-    val Green = Color(0xFF22C55E)
-    val GreenDark = Color(0xFF16934A)
-    val Red = Color(0xFFEF4444)
-    val RedDark = Color(0xFFB92F2F)
-    val Amber = Color(0xFFFFB020)
-    val Blue = Color(0xFF38BDF8)
-    val Pink = Color(0xFFF472B6)
+    val Bg = Color(0xFFF2EDE3)        // paper
+    val Card = Color(0xFFFBF8F2)      // index card
+    val Ink = Color(0xFF1C1A17)
+    val Muted = Color(0xFF746C60)
+    val Line = Color(0xFFDCD3C3)
+    val Rule = Color(0xFFC9DCE6)      // blue ruling on index cards
+    val Red = Color(0xFFC23B2A)
+    val RedSoft = Color(0xFFF4DCD6)
+    val Green = Color(0xFF2D7A4C)
+    val GreenSoft = Color(0xFFD9EBDD)
+    val Gold = Color(0xFFCF961A)
+    val Der = Color(0xFF2A5F8C)
+    val Die = Color(0xFFA9375A)
+    val Das = Color(0xFF2D7A4C)
 }
+
+val Serif = FontFamily.Serif
+val Mono = FontFamily.Monospace
 
 @Composable
 fun AppTheme(content: @Composable () -> Unit) {
     MaterialTheme(
-        colorScheme = darkColorScheme(
-            primary = C.Primary, background = C.Bg, surface = C.Surface,
-            onPrimary = Color.White, onBackground = C.Text, onSurface = C.Text,
+        colorScheme = lightColorScheme(
+            primary = C.Ink, background = C.Bg, surface = C.Card,
+            onPrimary = C.Card, onBackground = C.Ink, onSurface = C.Ink,
         ),
+        typography = Typography(bodyLarge = TextStyle(color = C.Ink, fontSize = 16.sp)),
         content = content,
     )
 }
 
-/** Chunky "3D" button: a coloured face sitting on a darker base, pressing sinks it. */
+/** Small uppercase monospace label, like a typed catalogue tag. */
 @Composable
-fun ChunkyButton(
+fun Label(text: String, color: Color = C.Muted, modifier: Modifier = Modifier) {
+    Text(text.uppercase(), color = color, fontFamily = Mono, fontSize = 11.sp, letterSpacing = 1.5.sp, fontWeight = FontWeight.Medium, modifier = modifier)
+}
+
+@Composable
+fun Heading(text: String, size: Int = 28, color: Color = C.Ink, modifier: Modifier = Modifier, align: TextAlign? = null) {
+    Text(text, color = color, fontFamily = Serif, fontSize = size.sp, fontWeight = FontWeight.Bold, lineHeight = (size * 1.15).sp, modifier = modifier, textAlign = align)
+}
+
+/** Paper card with a hard, printed offset shadow. */
+@Composable
+fun PaperCard(modifier: Modifier = Modifier, shadow: Dp = 4.dp, border: Color = C.Ink, bg: Color = C.Card, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier.padding(end = shadow, bottom = shadow)) {
+        Box(Modifier.matchParentSize().offset(shadow, shadow).clip(RoundedCornerShape(6.dp)).background(border))
+        Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(6.dp)).background(bg).border(1.5.dp, border, RoundedCornerShape(6.dp)), content = content)
+    }
+}
+
+/** Button that is pressed "into" its printed shadow. */
+@Composable
+fun InkButton(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = C.Primary,
-    shade: Color = C.PrimaryDark,
-    textColor: Color = Color.White,
+    color: Color = C.Ink,
+    textColor: Color = C.Card,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     val src = remember { MutableInteractionSource() }
     val pressed by src.collectIsPressedAsState()
-    val drop by animateDpAsState(if (pressed || !enabled) 0.dp else 4.dp, label = "drop")
-    val face = if (enabled) color else C.Surface2
-    val base = if (enabled) shade else C.Surface2
-    Box(
-        modifier
-            .height(56.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(base)
-            .clickable(src, null, enabled = enabled, onClick = onClick)
-    ) {
+    val off by animateDpAsState(if (pressed || !enabled) 0.dp else 4.dp, label = "off")
+    Box(modifier.height(58.dp).clickable(src, null, enabled = enabled, onClick = onClick)) {
+        Box(Modifier.fillMaxWidth().height(54.dp).offset(4.dp, 4.dp).clip(RoundedCornerShape(6.dp)).background(if (enabled) C.Ink else C.Line))
         Box(
-            Modifier.fillMaxWidth().height(52.dp).offset(y = 4.dp - drop)
-                .clip(RoundedCornerShape(16.dp)).background(face),
+            Modifier.fillMaxWidth().height(54.dp).offset(4.dp - off, 4.dp - off).clip(RoundedCornerShape(6.dp))
+                .background(if (enabled) color else C.Bg).border(1.5.dp, if (enabled) C.Ink else C.Line, RoundedCornerShape(6.dp)),
             contentAlignment = Alignment.Center,
         ) {
-            Text(text.uppercase(), color = if (enabled) textColor else C.Muted, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.sp)
+            Text(text.uppercase(), color = if (enabled) textColor else C.Muted, fontFamily = Mono, fontWeight = FontWeight.Bold, letterSpacing = 2.sp, fontSize = 14.sp)
         }
-    }
-}
-
-/** Selectable option tile used in multiple-choice games. */
-@Composable
-fun OptionTile(text: String, state: TileState, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val (bg, border) = when (state) {
-        TileState.Idle -> C.Surface to C.Border
-        TileState.Selected -> C.Primary.copy(alpha = .18f) to C.Primary
-        TileState.Correct -> C.Green.copy(alpha = .18f) to C.Green
-        TileState.Wrong -> C.Red.copy(alpha = .18f) to C.Red
-        TileState.Faded -> C.Bg to C.Surface2
-    }
-    Box(
-        modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(bg)
-            .border(2.dp, border, RoundedCornerShape(16.dp))
-            .clickable(enabled = state != TileState.Faded, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 16.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text, color = if (state == TileState.Faded) C.Surface2 else C.Text,
-            fontSize = 17.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center,
-        )
     }
 }
 
 enum class TileState { Idle, Selected, Correct, Wrong, Faded }
 
 @Composable
-fun SpeakerButton(size: Int = 56, onClick: () -> Unit) {
+fun OptionTile(text: String, state: TileState, modifier: Modifier = Modifier, serif: Boolean = false, onClick: () -> Unit) {
+    val (bg, border, fg) = when (state) {
+        TileState.Idle -> Triple(C.Card, C.Ink, C.Ink)
+        TileState.Selected -> Triple(C.Ink, C.Ink, C.Card)
+        TileState.Correct -> Triple(C.GreenSoft, C.Green, C.Green)
+        TileState.Wrong -> Triple(C.RedSoft, C.Red, C.Red)
+        TileState.Faded -> Triple(C.Bg, C.Line, C.Line)
+    }
     Box(
-        Modifier.size(size.dp).clip(CircleShape).background(C.Blue).clickable(onClick = onClick),
+        modifier.clip(RoundedCornerShape(6.dp)).background(bg)
+            .border(1.5.dp, border, RoundedCornerShape(6.dp))
+            .clickable(enabled = state != TileState.Faded, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 15.dp),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Text(text, color = fg, fontSize = 17.sp, fontFamily = if (serif) Serif else FontFamily.Default, fontWeight = FontWeight.Medium)
+    }
+}
+
+/** Speaker glyph drawn in ink, no emoji. */
+@Composable
+fun SpeakerButton(size: Int = 52, filled: Boolean = true, onClick: () -> Unit) {
+    Box(
+        Modifier.size(size.dp).clip(CircleShape).background(if (filled) C.Ink else C.Card)
+            .border(1.5.dp, C.Ink, CircleShape).clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
-    ) { Text("🔊", fontSize = (size / 2.4).sp) }
-}
-
-@Composable
-fun Pill(text: String, color: Color) {
-    Box(
-        Modifier.clip(RoundedCornerShape(50)).background(color.copy(alpha = .15f)).padding(horizontal = 12.dp, vertical = 6.dp)
-    ) { Text(text, color = color, fontWeight = FontWeight.Bold, fontSize = 14.sp) }
-}
-
-@Composable
-fun ProgressBar(fraction: Float, modifier: Modifier = Modifier, color: Color = C.Green) {
-    val f by androidx.compose.animation.core.animateFloatAsState(fraction.coerceIn(0f, 1f), label = "p")
-    Box(modifier.height(14.dp).clip(RoundedCornerShape(50)).background(C.Surface2)) {
-        Box(Modifier.fillMaxHeight().fillMaxWidth(f).clip(RoundedCornerShape(50)).background(color)) {
-            Box(Modifier.padding(horizontal = 6.dp, vertical = 3.dp).fillMaxWidth().height(3.dp)
-                .clip(RoundedCornerShape(50)).background(Color.White.copy(alpha = .3f)))
+    ) {
+        val fg = if (filled) C.Card else C.Ink
+        Canvas(Modifier.size((size * 0.46).dp)) {
+            val w = size.width; val h = size.height
+            val p = Path().apply {
+                moveTo(0f, h * .35f); lineTo(w * .25f, h * .35f); lineTo(w * .52f, h * .1f)
+                lineTo(w * .52f, h * .9f); lineTo(w * .25f, h * .65f); lineTo(0f, h * .65f); close()
+            }
+            drawPath(p, fg)
+            drawArc(fg, -45f, 90f, false, Offset(w * .45f, h * .3f), androidx.compose.ui.geometry.Size(w * .3f, h * .4f), style = Stroke(w * .08f, cap = StrokeCap.Round))
+            drawArc(fg, -50f, 100f, false, Offset(w * .4f, h * .12f), androidx.compose.ui.geometry.Size(w * .58f, h * .76f), style = Stroke(w * .08f, cap = StrokeCap.Round))
         }
+    }
+}
+
+@Composable
+fun Tag(text: String, color: Color = C.Ink, filled: Boolean = false) {
+    Box(
+        Modifier.clip(RoundedCornerShape(4.dp)).background(if (filled) color else Color.Transparent)
+            .border(1.dp, color, RoundedCornerShape(4.dp)).padding(horizontal = 8.dp, vertical = 3.dp)
+    ) { Text(text.uppercase(), color = if (filled) C.Card else color, fontFamily = Mono, fontSize = 11.sp, letterSpacing = 1.sp, fontWeight = FontWeight.Bold) }
+}
+
+/** Thin segmented progress bar. */
+@Composable
+fun ProgressBar(fraction: Float, modifier: Modifier = Modifier, color: Color = C.Ink) {
+    val f by animateFloatAsState(fraction.coerceIn(0f, 1f), label = "p")
+    Box(modifier.height(10.dp).clip(RoundedCornerShape(2.dp)).border(1.5.dp, C.Ink, RoundedCornerShape(2.dp)).background(C.Card)) {
+        Box(Modifier.fillMaxHeight().fillMaxWidth(f).background(color))
+    }
+}
+
+/** German word with its article coloured by gender. */
+@Composable
+fun GenderedText(de: String, size: Int, align: TextAlign = TextAlign.Center) {
+    val color = when {
+        de.startsWith("der ") -> C.Der
+        de.startsWith("die ") -> C.Die
+        de.startsWith("das ") -> C.Das
+        else -> C.Ink
+    }
+    Text(de, color = color, fontFamily = Serif, fontSize = size.sp, fontWeight = FontWeight.Bold, textAlign = align, lineHeight = (size * 1.2).sp)
+}
+
+/** Simple ink check mark. */
+@Composable
+fun CheckMark(color: Color, size: Dp = 18.dp, stroke: Float = 3f) {
+    Canvas(Modifier.size(size)) {
+        val w = this.size.width
+        val p = Path().apply { moveTo(w * .15f, w * .52f); lineTo(w * .4f, w * .76f); lineTo(w * .86f, w * .26f) }
+        drawPath(p, color, style = Stroke(stroke.dp.toPx(), cap = StrokeCap.Round))
     }
 }

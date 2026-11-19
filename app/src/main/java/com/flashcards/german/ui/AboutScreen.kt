@@ -57,62 +57,66 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
     LaunchedEffect(Unit) { if (state == UpdateState.Idle) check() }
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("←", color = C.Text, fontSize = 26.sp, modifier = Modifier.clickable(onClick = onBack).padding(end = 16.dp))
-            Text("About", color = C.Text, fontSize = 24.sp, fontWeight = FontWeight.ExtraBold)
-        }
-        Spacer(Modifier.height(24.dp))
-        Column(
-            Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp)).background(C.Surface).padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text("🇩🇪", fontSize = 56.sp)
-            Text("Deutsch Cards", color = C.Text, fontSize = 26.sp, fontWeight = FontWeight.ExtraBold)
-            Text("Version ${BuildConfig.VERSION_NAME}", color = C.Muted)
-            Spacer(Modifier.height(20.dp))
-            when (val s = state) {
-                UpdateState.Idle, UpdateState.Checking -> Text("Checking for updates…", color = C.Muted)
-                UpdateState.UpToDate -> Pill("✓ You're on the latest version", C.Green)
-                is UpdateState.Failed -> Text(s.message, color = C.Red, textAlign = TextAlign.Center)
-                is UpdateState.Available -> Pill("New version 1.0.${s.release.versionCode} available", C.Amber)
-                is UpdateState.Downloading -> {
-                    Text("Downloading… ${(s.fraction * 100).toInt()}%", color = C.Muted)
-                    Spacer(Modifier.height(8.dp))
-                    ProgressBar(s.fraction, Modifier.fillMaxWidth(), C.Primary)
+        Text("← Back", color = C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold, modifier = Modifier.clickable(onClick = onBack).padding(vertical = 8.dp))
+        Spacer(Modifier.height(20.dp))
+        Label("About", C.Red)
+        Heading("Wortschatz", 40)
+        Label("Version ${BuildConfig.VERSION_NAME}")
+        Spacer(Modifier.height(28.dp))
+        PaperCard(Modifier.fillMaxWidth()) {
+            Column(Modifier.padding(20.dp)) {
+                Label("Updates")
+                Spacer(Modifier.height(8.dp))
+                when (val s = state) {
+                    UpdateState.Idle, UpdateState.Checking -> Heading("Checking…", 22, C.Muted)
+                    UpdateState.UpToDate -> Heading("You're up to date.", 22, C.Green)
+                    is UpdateState.Failed -> Text(s.message, color = C.Red)
+                    is UpdateState.Available -> Heading("Version 1.0.${s.release.versionCode} is ready.", 22, C.Red)
+                    is UpdateState.Downloading -> {
+                        Heading("Downloading ${(s.fraction * 100).toInt()} %", 22)
+                        Spacer(Modifier.height(10.dp))
+                        ProgressBar(s.fraction, Modifier.fillMaxWidth(), C.Green)
+                    }
                 }
+                Spacer(Modifier.height(18.dp))
+                when (val s = state) {
+                    is UpdateState.Available -> InkButton("Download & install", Modifier.fillMaxWidth(), color = C.Red) { install(s.release) }
+                    is UpdateState.Downloading, UpdateState.Checking -> InkButton("Please wait", Modifier.fillMaxWidth(), enabled = false) {}
+                    else -> InkButton("Check for updates", Modifier.fillMaxWidth()) { check() }
+                }
+                if (!Updater.canInstall(ctx)) Text(
+                    "Android will ask once for permission to install updates.",
+                    color = C.Muted, fontSize = 13.sp, modifier = Modifier.padding(top = 12.dp),
+                )
             }
-            Spacer(Modifier.height(20.dp))
-            when (val s = state) {
-                is UpdateState.Available -> ChunkyButton("Download & install", Modifier.fillMaxWidth(), color = C.Green, shade = C.GreenDark) { install(s.release) }
-                is UpdateState.Downloading, UpdateState.Checking -> ChunkyButton("Please wait", Modifier.fillMaxWidth(), enabled = false) {}
-                else -> ChunkyButton("Check for updates", Modifier.fillMaxWidth()) { check() }
-            }
-            if (!Updater.canInstall(ctx)) Text(
-                "You'll be asked once to allow this app to install updates.",
-                color = C.Muted, fontSize = 12.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 10.dp),
-            )
         }
-        Spacer(Modifier.height(16.dp))
-        Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp)).background(C.Surface).padding(20.dp)) {
-            Row2("Lessons", "${progress.completedLessons.size} / ${repo.lessons.size} complete")
-            Row2("Words seen", "${progress.cards.size} / ${repo.allCards.size}")
-            Row2("Total XP", "${progress.xp}")
-            Row2("Audio", "Microsoft Edge neural TTS (Katja)")
-            Row2("Words", "Collins German 3000 Words and Phrases")
-        }
+        Spacer(Modifier.height(28.dp))
+        Label("Your progress")
+        Spacer(Modifier.height(4.dp))
+        Row2("Lessons", "${progress.completedLessons.size} / ${repo.lessons.size}")
+        Row2("Words seen", "${progress.cards.size} / ${repo.allCards.size}")
+        Row2("Experience", "${progress.xp} xp")
+        Row2("My lessons", "${progress.myCards.size} cards studied")
+        Spacer(Modifier.height(28.dp))
+        Label("Credits")
+        Spacer(Modifier.height(4.dp))
+        Row2("Words", "Collins German 3000")
+        Row2("Voice", "Edge neural TTS · Katja")
         Spacer(Modifier.height(16.dp))
         Text(
-            "Source on GitHub", color = C.Blue, fontWeight = FontWeight.Bold,
-            modifier = Modifier.clickable { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Updater.REPO_URL))) }.padding(8.dp),
+            "Source on GitHub →", color = C.Red, fontFamily = Mono, fontWeight = FontWeight.Bold,
+            modifier = Modifier.clickable { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Updater.REPO_URL))) }.padding(vertical = 8.dp),
         )
     }
 }
 
 @Composable
 private fun Row2(k: String, v: String) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-        Text(k, color = C.Muted)
-        Spacer(Modifier.width(16.dp))
-        Text(v, color = C.Text, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.End)
+    Column {
+        Row(Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
+            Text(k, color = C.Muted, fontFamily = Serif, fontSize = 16.sp, modifier = Modifier.weight(1f))
+            Text(v, color = C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold, fontSize = 14.sp, textAlign = TextAlign.End)
+        }
+        Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
     }
 }

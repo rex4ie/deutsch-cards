@@ -6,7 +6,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,7 +25,7 @@ import com.flashcards.german.*
 
 @Composable
 fun StudyScreen(
-    cards: List<Card>, title: String, cram: Boolean, repo: Repo, progress: Progress,
+    cards: List<Card>, title: String, cram: Boolean, repo: Repo, stateOf: (Card) -> CardState?,
     onRate: (Card, Rating) -> Unit, onDone: (reviewed: Int) -> Unit,
 ) {
     val queue = remember { mutableStateListOf<Card>().apply { addAll(cards) } }
@@ -31,19 +34,20 @@ fun StudyScreen(
     var flipped by remember { mutableStateOf(false) }
     val counts = remember { mutableStateMapOf<Rating, Int>() }
 
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
+    Column(Modifier.fillMaxSize().padding(20.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("✕", color = C.Muted, fontSize = 24.sp, modifier = Modifier.clickable { onDone(reviewed) }.padding(end = 16.dp))
+            Text("✕", color = C.Ink, fontSize = 22.sp, modifier = Modifier.clickable { onDone(reviewed) }.padding(end = 16.dp))
             Column(Modifier.weight(1f)) {
-                Text(title, color = C.Text, fontWeight = FontWeight.ExtraBold, fontSize = 18.sp)
-                Text(if (cram) "Practice mode · doesn't affect schedule" else "${queue.size} left", color = C.Muted, fontSize = 13.sp)
+                Heading(title, 20)
+                Label(if (cram) "Practice · schedule unchanged" else "${queue.size} remaining")
             }
-            Pill(if (germanFront) "DE → EN" else "EN → DE", C.Primary)
-            Spacer(Modifier.width(4.dp))
-            Text("⇄", color = C.Text, fontSize = 22.sp, modifier = Modifier.clickable { germanFront = !germanFront; flipped = false }.padding(8.dp))
+            Box(
+                Modifier.clip(RoundedCornerShape(4.dp)).border(1.5.dp, C.Ink, RoundedCornerShape(4.dp))
+                    .clickable { germanFront = !germanFront; flipped = false }.padding(horizontal = 10.dp, vertical = 6.dp)
+            ) { Text(if (germanFront) "DE → EN" else "EN → DE", fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink) }
         }
-        Spacer(Modifier.height(10.dp))
-        ProgressBar(reviewed.toFloat() / (reviewed + queue.size).coerceAtLeast(1), Modifier.fillMaxWidth(), C.Primary)
+        Spacer(Modifier.height(14.dp))
+        ProgressBar(reviewed.toFloat() / (reviewed + queue.size).coerceAtLeast(1), Modifier.fillMaxWidth())
 
         val card = queue.firstOrNull()
         if (card == null) {
@@ -53,53 +57,60 @@ fun StudyScreen(
         LaunchedEffect(card, flipped, germanFront) {
             if (germanFront && !flipped || !germanFront && flipped) repo.play(card)
         }
-        val rot by animateFloatAsState(if (flipped) 180f else 0f, tween(350), label = "flip")
+        val rot by animateFloatAsState(if (flipped) 180f else 0f, tween(380), label = "flip")
+        val showBack = rot > 90f
         Box(
             Modifier.weight(1f).fillMaxWidth().padding(vertical = 20.dp)
-                .graphicsLayer { rotationY = rot; cameraDistance = 14f * density }
-                .clip(RoundedCornerShape(28.dp)).background(C.Surface)
-                .border(2.dp, C.Border, RoundedCornerShape(28.dp))
-                .clickable(enabled = !flipped) { flipped = true },
-            contentAlignment = Alignment.Center,
+                .graphicsLayer { rotationY = rot; cameraDistance = 16f * density }
+                .clickable(enabled = !flipped) { flipped = true }
         ) {
-            Column(
-                Modifier.fillMaxWidth().padding(28.dp).graphicsLayer { rotationY = if (rot > 90f) 180f else 0f },
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                val showBack = rot > 90f
-                val state = progress.cards[card.id]
-                if (state != null && state.reps == 0 && state.lapses > 0) Pill("relearning", C.Red)
-                Spacer(Modifier.height(8.dp))
-                if (germanFront) GenderedText(card.de, 32) else Text(card.en, color = C.Text, fontSize = 30.sp, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center)
-                if (showBack) {
-                    Box(Modifier.padding(vertical = 22.dp).fillMaxWidth(.6f).height(2.dp).background(C.Border))
-                    if (germanFront) Text(card.en, color = C.Text, fontSize = 26.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
-                    else GenderedText(card.de, 30)
-                    if (card.section.isNotBlank() && card.section != "vocabulary") {
-                        Spacer(Modifier.height(12.dp)); Pill(card.section, C.Muted)
+            PaperCard(Modifier.fillMaxSize()) {
+                Column(Modifier.fillMaxSize().graphicsLayer { rotationY = if (showBack) 180f else 0f }) {
+                    // index-card header with red margin rule
+                    Row(Modifier.fillMaxWidth().height(38.dp).padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Label(card.section.takeIf { it.isNotBlank() && it != "vocabulary" } ?: "Karteikarte", C.Red)
+                        Spacer(Modifier.weight(1f))
+                        val st = stateOf(card)
+                        if (st != null && st.lapses > 0) Label("${st.lapses}× forgotten", C.Muted)
                     }
-                } else {
-                    Spacer(Modifier.height(28.dp))
-                    Text("Tap to reveal", color = C.Muted, fontSize = 14.sp)
+                    Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Red.copy(alpha = .6f)))
+                    Column(
+                        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
+                    ) {
+                        if (germanFront) GenderedText(card.de, 32) else Heading(card.en, 30, align = TextAlign.Center)
+                        if (showBack) {
+                            Box(Modifier.padding(vertical = 18.dp).width(48.dp).height(1.dp).background(C.Rule))
+                            if (germanFront) Text(card.en, color = C.Ink, fontFamily = Serif, fontSize = 24.sp, textAlign = TextAlign.Center)
+                            else GenderedText(card.de, 30)
+                            Spacer(Modifier.height(18.dp))
+                            if (card.hasAudio) SpeakerButton(48, filled = false) { repo.play(card) }
+                            if (card.note.isNotBlank()) Note(card.note)
+                            if (card.exDe.isNotBlank()) Example(card)
+                        } else {
+                            Spacer(Modifier.height(26.dp))
+                            if (germanFront && card.hasAudio) SpeakerButton(48, filled = false) { repo.play(card) }
+                            Spacer(Modifier.height(18.dp))
+                            Label("Tap to reveal")
+                        }
+                    }
                 }
-                Spacer(Modifier.height(24.dp))
-                if (germanFront || showBack) SpeakerButton(52) { repo.play(card) }
             }
         }
 
         if (!flipped) {
-            ChunkyButton("Show answer", Modifier.fillMaxWidth()) { flipped = true }
+            InkButton("Show answer", Modifier.fillMaxWidth()) { flipped = true }
         } else {
-            val st = progress.cards[card.id] ?: CardState()
+            val st = stateOf(card) ?: CardState()
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(
-                    Triple(Rating.Again, C.Red, C.RedDark), Triple(Rating.Hard, C.Amber, Color(0xFFC98400)),
-                    Triple(Rating.Good, C.Green, C.GreenDark), Triple(Rating.Easy, C.Blue, Color(0xFF1F8FC0)),
-                ).forEach { (r, c, d) ->
+                    Triple(Rating.Again, C.Red, C.Card), Triple(Rating.Hard, C.Card, C.Ink),
+                    Triple(Rating.Good, C.Green, C.Card), Triple(Rating.Easy, C.Ink, C.Card),
+                ).forEach { (r, bg, fg) ->
                     Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(if (cram) "" else Srs.label(st, r), color = C.Muted, fontSize = 12.sp)
+                        Label(if (cram) " " else Srs.label(st, r), C.Muted)
                         Spacer(Modifier.height(4.dp))
-                        ChunkyButton(r.name, Modifier.fillMaxWidth(), color = c, shade = d) {
+                        InkButton(r.name, Modifier.fillMaxWidth(), color = bg, textColor = fg) {
                             onRate(card, r)
                             counts[r] = (counts[r] ?: 0) + 1
                             queue.removeAt(0)
@@ -113,19 +124,47 @@ fun StudyScreen(
     }
 }
 
+/** Example sentence, with the vocabulary word highlighted. No audio by design. */
+@Composable
+private fun Example(card: Card) {
+    Column(Modifier.fillMaxWidth().padding(top = 24.dp)) {
+        Box(Modifier.fillMaxWidth().height(1.dp).background(C.Rule))
+        Spacer(Modifier.height(14.dp))
+        Label("Beispiel", C.Red)
+        Spacer(Modifier.height(6.dp))
+        Text(card.exDe, color = C.Ink, fontFamily = Serif, fontSize = 18.sp, lineHeight = 25.sp)
+        Text(card.exEn, color = C.Muted, fontFamily = Serif, fontStyle = FontStyle.Italic, fontSize = 15.sp, lineHeight = 21.sp, modifier = Modifier.padding(top = 4.dp))
+    }
+}
+
+@Composable
+private fun Note(text: String) {
+    Column(Modifier.fillMaxWidth().padding(top = 24.dp)) {
+        Box(Modifier.fillMaxWidth().height(1.dp).background(C.Rule))
+        Spacer(Modifier.height(14.dp))
+        Label("Notiz", C.Red)
+        Spacer(Modifier.height(6.dp))
+        Text(text, color = C.Ink, fontSize = 15.sp, lineHeight = 22.sp)
+    }
+}
+
 @Composable
 private fun SessionSummary(reviewed: Int, counts: Map<Rating, Int>, modifier: Modifier, onDone: () -> Unit) {
-    Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-        Text("✨", fontSize = 80.sp)
-        Text("Session complete", color = C.Text, fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
-        Text("$reviewed cards reviewed", color = C.Muted, modifier = Modifier.padding(top = 4.dp, bottom = 24.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            Pill("Again ${counts[Rating.Again] ?: 0}", C.Red)
-            Pill("Hard ${counts[Rating.Hard] ?: 0}", C.Amber)
-            Pill("Good ${counts[Rating.Good] ?: 0}", C.Green)
-            Pill("Easy ${counts[Rating.Easy] ?: 0}", C.Blue)
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
+        Label("Session finished", C.Green)
+        Heading("$reviewed cards reviewed", 32, modifier = Modifier.padding(top = 6.dp, bottom = 24.dp))
+        PaperCard(Modifier.fillMaxWidth()) {
+            Column(Modifier.padding(horizontal = 20.dp, vertical = 6.dp)) {
+                listOf(Rating.Again to C.Red, Rating.Hard to C.Ink, Rating.Good to C.Green, Rating.Easy to C.Ink).forEachIndexed { i, (r, c) ->
+                    if (i > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(C.Rule))
+                    Row(Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
+                        Text(r.name, color = c, fontFamily = Serif, fontSize = 17.sp, modifier = Modifier.weight(1f))
+                        Text("${counts[r] ?: 0}", color = C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
         }
         Spacer(Modifier.height(40.dp))
-        ChunkyButton("Done", Modifier.fillMaxWidth(), color = C.Green, shade = C.GreenDark, onClick = onDone)
+        InkButton("Done", Modifier.fillMaxWidth(), color = C.Green, onClick = onDone)
     }
 }
