@@ -18,7 +18,7 @@ data class Card(
     val hasAudio: Boolean get() = !audio.startsWith("my:")
 }
 
-/** The learner's own lessons (grammar, vocab, …) imported from a my_lessons.json file on the phone. */
+/** The learner's own lessons (grammar, vocab, …) generated from local notes into assets/my_lessons.json. */
 @Serializable
 data class MyCard(val front: String, val back: String, val note: String = "")
 
@@ -133,20 +133,9 @@ class Repo(private val ctx: Context) {
             })
         }
 
-    /** The learner's own lessons, imported from a file on the phone (never bundled in the app). */
-    private val myFile = File(ctx.filesDir, "my_lessons.json")
-    var myLessons: List<MyLesson> by androidx.compose.runtime.mutableStateOf(
-        runCatching { json.decodeFromString<List<MyLesson>>(myFile.readText()) }.getOrDefault(emptyList())
-    )
-        private set
-
-    /** Validates and stores an imported my_lessons.json; returns the number of lessons. */
-    fun importMyLessons(text: String): Int {
-        val parsed = json.decodeFromString<List<MyLesson>>(text)
-        myFile.writeText(text)
-        myLessons = parsed
-        return parsed.size
-    }
+    /** The learner's own lessons, generated from local notes into assets/my_lessons.json. */
+    val myLessons: List<MyLesson> =
+        asset("my_lessons.json")?.let { json.decodeFromString<List<MyLesson>>(it) } ?: emptyList()
 
     /** Each PDF page split into bite-sized lessons of at most [MAX_WORDS] words. */
     val lessons: List<Lesson> = run {

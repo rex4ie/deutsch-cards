@@ -5,14 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.FileUpload
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -22,16 +16,6 @@ import com.flashcards.german.*
 /** Separate Anki-style deck built from the learner's own daily lessons. */
 @Composable
 fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boolean) -> Unit) {
-    val ctx = LocalContext.current
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        if (uri == null) return@rememberLauncherForActivityResult
-        val msg = runCatching {
-            val text = ctx.contentResolver.openInputStream(uri)!!.bufferedReader(Charsets.UTF_8).use { it.readText() }
-            "Imported ${repo.importMyLessons(text)} lessons"
-        }.getOrElse { "That file isn't a valid my_lessons.json" }
-        Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show()
-    }
-    val doImport = { picker.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) }
     val now = System.currentTimeMillis()
     val lessons = repo.myLessons
     val all = lessons.flatMap { it.asCards() }
@@ -45,21 +29,17 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
             Heading("Nothing here yet", 30, modifier = Modifier.padding(top = 6.dp, bottom = 10.dp))
             Text(
                 "Lessons from your own classes (grammar, vocabulary, anything) live here as their own deck, " +
-                    "with separate stats. Import the my_lessons.json file from your phone to get started.",
+                    "with separate stats. New lessons arrive with app updates.",
                 color = C.Muted, fontFamily = Serif, fontSize = 17.sp, lineHeight = 25.sp,
             )
-            Spacer(Modifier.height(28.dp))
-            InkButton("Import lessons", Modifier.fillMaxWidth(), color = C.Red) { doImport() }
+
         }
         return
     }
 
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp)) {
         item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Label("My lessons", modifier = Modifier.weight(1f))
-                IconBtn(Icons.Rounded.FileUpload, "Import lessons file") { doImport() }
-            }
+            Label("My lessons")
             Row(verticalAlignment = Alignment.Bottom, modifier = Modifier.padding(top = 6.dp)) {
                 Heading("${all.size}", 56)
                 Spacer(Modifier.width(8.dp))
