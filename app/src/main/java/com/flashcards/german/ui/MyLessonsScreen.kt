@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,6 +20,20 @@ import com.flashcards.german.*
 /** Separate Anki-style deck built from the learner's own daily lessons. */
 @Composable
 fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boolean) -> Unit) {
+    val scope = rememberCoroutineScope()
+    var syncing by remember { mutableStateOf(false) }
+    var status by remember { mutableStateOf<String?>(null) }
+    fun sync() {
+        if (syncing) return
+        syncing = true
+        scope.launch {
+            status = runCatching { repo.refreshMyLessons() }.fold(
+                { "Up to date · $it lessons" }, { "Offline · showing saved lessons" },
+            )
+            syncing = false
+        }
+    }
+    LaunchedEffect(Unit) { sync() }
     val now = System.currentTimeMillis()
     val lessons = repo.myLessons
     val all = lessons.flatMap { it.asCards() }
@@ -25,11 +43,16 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
 
     if (lessons.isEmpty()) {
         Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.Center) {
-            Label("My lessons", C.Accent)
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Label("My lessons", C.Accent, Modifier.weight(1f))
+                if (syncing) CircularProgressIndicator(Modifier.size(20.dp).padding(2.dp), color = C.Accent, strokeWidth = 2.dp)
+                else IconBtn(Icons.Rounded.Refresh, "Check for new lessons", tint = C.Muted) { sync() }
+            }
+            status?.let { Text(it, color = C.Muted, fontSize = 12.sp) }
             Heading("Nothing here yet", 30, modifier = Modifier.padding(top = 6.dp, bottom = 10.dp))
             Text(
                 "Lessons from your own classes (grammar, vocabulary, anything) live here as their own deck, " +
-                    "with separate stats. New lessons arrive with app updates.",
+                    "with separate stats. New lessons appear here as soon as they are pushed, no app update needed.",
                 color = C.Muted, fontFamily = Serif, fontSize = 17.sp, lineHeight = 25.sp,
             )
 
@@ -39,7 +62,12 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
 
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp)) {
         item {
-            Label("My lessons")
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Label("My lessons", C.Accent, Modifier.weight(1f))
+                if (syncing) CircularProgressIndicator(Modifier.size(20.dp).padding(2.dp), color = C.Accent, strokeWidth = 2.dp)
+                else IconBtn(Icons.Rounded.Refresh, "Check for new lessons", tint = C.Muted) { sync() }
+            }
+            status?.let { Text(it, color = C.Muted, fontSize = 12.sp) }
             Row(verticalAlignment = Alignment.Bottom, modifier = Modifier.padding(top = 6.dp)) {
                 Heading("${all.size}", 56)
                 Spacer(Modifier.width(8.dp))

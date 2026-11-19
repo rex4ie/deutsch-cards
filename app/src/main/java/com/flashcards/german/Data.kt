@@ -2,6 +2,8 @@ package com.flashcards.german
 
 import android.content.Context
 import android.media.MediaPlayer
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -133,9 +135,33 @@ class Repo(private val ctx: Context) {
             })
         }
 
-    /** The learner's own lessons, generated from local notes into assets/my_lessons.json. */
-    val myLessons: List<MyLesson> =
-        asset("my_lessons.json")?.let { json.decodeFromString<List<MyLesson>>(it) } ?: emptyList()
+    /**
+     * The learner's own lessons. Fetched on demand from the repo (no app update needed),
+     * cached on the phone, with the copy bundled in the APK as a fallback.
+     */
+    private val myCache = File(ctx.filesDir, "my_lessons.json")
+    var myLessons: List<MyLesson> by androidx.compose.runtime.mutableStateOf(
+        (runCatching { myCache.readText() }.getOrNull() ?: asset("my_lessons.json"))
+            ?.let { runCatching { json.decodeFromString<List<MyLesson>>(it) }.getOrNull() } ?: emptyList()
+    )
+        private set
+
+    /** Downloads the latest my_lessons.json; returns the number of lessons, or throws. */
+    suspend fun refreshMyLessons(): Int = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        val url = java.net.URL("https://raw.githubusercontent.com/${Updater.REPO}/main/app/src/main/assets/my_lessons.json?t=${System.currentTimeMillis()}")
+        val conn = (url.openConnection() as java.net.HttpURLConnection).apply {
+            connectTimeout = 10_000; readTimeout = 15_000; useCaches = false
+            setRequestProperty("Cache-Control", "no-cache")
+        }
+        try {
+            if (conn.responseCode != 200) error("GitHub answered ${conn.responseCode}")
+            val text = conn.inputStream.bufferedReader(Charsets.UTF_8).readText()
+            val parsed = json.decodeFromString<List<MyLesson>>(text)
+            myCache.writeText(text)
+            myLessons = parsed
+            parsed.size
+        } finally { conn.disconnect() }
+    }
 
     /** Each PDF page split into bite-sized lessons of at most [MAX_WORDS] words. */
     val lessons: List<Lesson> = run {
