@@ -19,10 +19,11 @@ sealed interface Screen {
     data object Review : Screen
     data object Mine : Screen
     data object Artikel : Screen
+    data object Finds : Screen
     data class Gender(val mode: GenderMode, val nouns: List<GNoun>) : Screen
     data object About : Screen
     data class Play(val item: PathItem) : Screen
-    data class Study(val cards: List<Card>, val title: String, val cram: Boolean, val mine: Boolean = false) : Screen
+    data class Study(val cards: List<Card>, val title: String, val cram: Boolean, val deck: Deck? = null) : Screen
 }
 
 class MainActivity : ComponentActivity() {
@@ -47,17 +48,17 @@ class MainActivity : ComponentActivity() {
                 Box(Modifier.fillMaxSize().background(C.Bg).systemBarsPadding()) {
                     AnimatedContent(screen, transitionSpec = { fadeIn() togetherWith fadeOut() }, label = "nav") { s ->
                         when (s) {
-                            Screen.Learn, Screen.Review, Screen.Mine, Screen.Artikel -> HomeScaffold(
+                            Screen.Learn, Screen.Review, Screen.Mine, Screen.Artikel, Screen.Finds -> HomeScaffold(
                                 tab = s,
                                 onTab = { tab = it; screen = it },
                                 repo = repo,
                                 progress = progress,
                                 onOpen = { screen = Screen.Play(it) },
                                 onStudy = { cards, title, cram -> screen = Screen.Study(cards, title, cram) },
-                                onStudyMine = { cards, title, cram -> screen = Screen.Study(cards, title, cram, mine = true) },
+                                onStudyDeck = { deck, cards, title, cram -> screen = Screen.Study(cards, title, cram, deck) },
                                 onGender = { mode ->
                                     val all = nounsFrom(repo.allCards, mine = false)
-                                    val mine = nounsFrom(repo.myLessons.flatMap { it.asCards() }, mine = true)
+                                    val mine = nounsFrom(Deck.entries.flatMap { repo.cardsOf(it) }, mine = true)
                                     screen = Screen.Gender(mode, pickNouns(mode, all, mine, progress.genderStats))
                                 },
                                 updateAvailable = updateState is UpdateState.Available,
@@ -123,12 +124,13 @@ class MainActivity : ComponentActivity() {
                             }
                             is Screen.Study -> StudyScreen(
                                 cards = s.cards, title = s.title, cram = s.cram, repo = repo,
-                                stateOf = { c -> if (s.mine) progress.myCards[c.id] else progress.cards[c.id] },
+                                stateOf = { c -> s.deck?.let { progress.deck(it)[c.id] } ?: progress.cards[c.id] },
                                 onRate = { card, rating ->
                                     if (!s.cram) {
-                                        if (s.mine) {
-                                            val st = progress.myCards[card.id] ?: CardState()
-                                            update(progress.copy(myCards = progress.myCards + (card.id to Srs.schedule(st, rating))))
+                                        val d = s.deck
+                                        if (d != null) {
+                                            val st = progress.deck(d)[card.id] ?: CardState()
+                                            update(progress.withDeck(d, progress.deck(d) + (card.id to Srs.schedule(st, rating))))
                                         } else {
                                             val st = progress.cards[card.id] ?: CardState()
                                             update(progress.copy(cards = progress.cards + (card.id to Srs.schedule(st, rating))))
@@ -136,7 +138,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 },
                                 onDone = { reviewed ->
-                                    if (reviewed > 0) update(if (s.mine) progress.copy(myXp = progress.myXp + reviewed) else progress.withActivity(reviewed))
+                                    if (reviewed > 0) update(if (s.deck != null) progress.copy(myXp = progress.myXp + reviewed) else progress.withActivity(reviewed))
                                     screen = tab
                                 },
                             )

@@ -17,9 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flashcards.german.*
 
-/** Separate Anki-style deck built from the learner's own daily lessons. */
+/** One of the learner's personal Anki-style decks (Class or Finds), each with its own stats. */
 @Composable
-fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boolean) -> Unit) {
+fun MyLessonsScreen(repo: Repo, p: Progress, deck: Deck, onStudy: (List<Card>, String, Boolean) -> Unit) {
+    val states = p.deck(deck)
     val scope = rememberCoroutineScope()
     var syncing by remember { mutableStateOf(false) }
     var status by remember { mutableStateOf<String?>(null) }
@@ -27,32 +28,32 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
         if (syncing) return
         syncing = true
         scope.launch {
-            status = runCatching { repo.refreshMyLessons() }.fold(
+            status = runCatching { repo.refresh(deck) }.fold(
                 { "Up to date · $it lessons" }, { "Offline · showing saved lessons" },
             )
             syncing = false
         }
     }
-    LaunchedEffect(Unit) { sync() }
+    LaunchedEffect(deck) { status = null; sync() }
     val now = System.currentTimeMillis()
-    val lessons = repo.myLessons
-    val all = lessons.flatMap { it.asCards() }
-    val fresh = all.filter { it.id !in p.myCards }
-    val due = all.filter { p.myCards[it.id]?.let { s -> s.due <= now } == true }
+    val lessons = repo.lessonsOf(deck)
+    val all = repo.cardsOf(deck)
+    val fresh = all.filter { it.id !in states }
+    val due = all.filter { states[it.id]?.let { s -> s.due <= now } == true }
     val queue = due + fresh
 
     if (lessons.isEmpty()) {
         Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.Center) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                Label("My lessons", C.Accent, Modifier.weight(1f))
+                Label(deck.title, C.Accent, Modifier.weight(1f))
                 if (syncing) CircularProgressIndicator(Modifier.size(20.dp).padding(2.dp), color = C.Accent, strokeWidth = 2.dp)
                 else IconBtn(Icons.Rounded.Refresh, "Check for new lessons", tint = C.Muted) { sync() }
             }
             status?.let { Text(it, color = C.Muted, fontSize = 12.sp) }
             Heading("Nothing here yet", 30, modifier = Modifier.padding(top = 6.dp, bottom = 10.dp))
             Text(
-                "Lessons from your own classes (grammar, vocabulary, anything) live here as their own deck, " +
-                    "with separate stats. New lessons appear here as soon as they are pushed, no app update needed.",
+                "${deck.blurb} live here as their own deck, with separate stats. " +
+                    "New ones appear as soon as they are pushed, no app update needed.",
                 color = C.Muted, fontFamily = Serif, fontSize = 17.sp, lineHeight = 25.sp,
             )
 
@@ -63,7 +64,7 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp)) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                Label("My lessons", C.Accent, Modifier.weight(1f))
+                Label(deck.title, C.Accent, Modifier.weight(1f))
                 if (syncing) CircularProgressIndicator(Modifier.size(20.dp).padding(2.dp), color = C.Accent, strokeWidth = 2.dp)
                 else IconBtn(Icons.Rounded.Refresh, "Check for new lessons", tint = C.Muted) { sync() }
             }
@@ -78,17 +79,17 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
                 Row(Modifier.padding(20.dp)) {
                     Count("New", fresh.size, C.Der, Modifier.weight(1f))
                     Count("Due", due.size, C.Red, Modifier.weight(1f))
-                    Count("Mature", p.myCards.values.count { it.intervalDays >= 21 }, C.Green, Modifier.weight(1f))
+                    Count("Mature", states.values.count { it.intervalDays >= 21 }, C.Green, Modifier.weight(1f))
                 }
             }
             Spacer(Modifier.height(20.dp))
             InkButton(
                 if (queue.isEmpty()) "All caught up" else "Study ${queue.size} cards",
                 Modifier.fillMaxWidth(), color = C.Accent, enabled = queue.isNotEmpty(),
-            ) { onStudy(due.shuffled() + fresh, "My lessons", false) }
+            ) { onStudy(due.shuffled() + fresh, deck.title, false) }
             Spacer(Modifier.height(12.dp))
             InkButton("Review all ${all.size} cards", Modifier.fillMaxWidth(), color = C.Card, textColor = C.Accent) {
-                onStudy(all.shuffled(), "My lessons · all", true)
+                onStudy(all.shuffled(), "${deck.title} · all", true)
             }
             Spacer(Modifier.height(28.dp))
             Label("Lessons")
@@ -96,11 +97,11 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
             Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
         }
         items(lessons.reversed(), key = { it.id }) { l ->
-            val cards = l.asCards()
-            val lNew = cards.count { it.id !in p.myCards }
-            val lDue = cards.count { p.myCards[it.id]?.let { s -> s.due <= now } == true }
+            val cards = l.asCards(deck)
+            val lNew = cards.count { it.id !in states }
+            val lDue = cards.count { states[it.id]?.let { s -> s.due <= now } == true }
             Row(
-                Modifier.fillMaxWidth().clickable { onStudy(cards.filter { it.id !in p.myCards || p.myCards[it.id]!!.due <= now }.ifEmpty { cards.shuffled() }, l.title, lNew + lDue == 0) }
+                Modifier.fillMaxWidth().clickable { onStudy(cards.filter { it.id !in states || states[it.id]!!.due <= now }.ifEmpty { cards.shuffled() }, l.title, lNew + lDue == 0) }
                     .padding(vertical = 14.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {

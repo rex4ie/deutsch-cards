@@ -32,7 +32,7 @@ import com.flashcards.german.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-enum class GenderMode(val title: String) { Sprint("Sprint"), Round("Round of 20"), Weak("Weak spots"), Mine("My lessons") }
+enum class GenderMode(val title: String) { Sprint("Sprint"), Round("Round of 20"), Weak("Weak spots"), Mine("My nouns") }
 
 data class GenderResult(val right: Map<String, Int>, val wrong: Map<String, Int>, val sprintScore: Int?)
 
@@ -57,7 +57,7 @@ fun pickNouns(mode: GenderMode, all: List<GNoun>, mine: List<GNoun>, stats: Map<
 @Composable
 fun GenderHub(repo: Repo, p: Progress, onPlay: (GenderMode) -> Unit) {
     val all = remember(repo) { nounsFrom(repo.allCards, mine = false) }
-    val mine = nounsFrom(repo.myLessons.flatMap { it.asCards() }, mine = true)
+    val mine = nounsFrom(Deck.entries.flatMap { repo.cardsOf(it) }, mine = true)
     val stats = p.genderStats
     val seen = stats.values.sumOf { it.right + it.wrong }
     val right = stats.values.sumOf { it.right }
@@ -104,7 +104,7 @@ fun GenderHub(repo: Repo, p: Progress, onPlay: (GenderMode) -> Unit) {
         ModeCard(Icons.Rounded.Timer, "Sprint", "60 seconds, as many as you can", "Best ${p.bestSprint}", true) { onPlay(GenderMode.Sprint) }
         ModeCard(Icons.Rounded.Casino, "Round of 20", "A relaxed set, favouring nouns you don't know yet", null, true) { onPlay(GenderMode.Round) }
         ModeCard(Icons.Rounded.Healing, "Weak spots", if (weak == 0) "Nouns you get wrong will collect here" else "Nouns you've got wrong before", if (weak > 0) "$weak" else null, weak > 0) { onPlay(GenderMode.Weak) }
-        ModeCard(Icons.AutoMirrored.Rounded.MenuBook, "My lessons", if (mine.isEmpty()) "No nouns in your lessons yet" else "Nouns from your own class notes", if (mine.isNotEmpty()) "${mine.size}" else null, mine.isNotEmpty()) { onPlay(GenderMode.Mine) }
+        ModeCard(Icons.AutoMirrored.Rounded.MenuBook, "My nouns", if (mine.isEmpty()) "No nouns in Class or Finds yet" else "Nouns from your Class and Finds decks", if (mine.isNotEmpty()) "${mine.size}" else null, mine.isNotEmpty()) { onPlay(GenderMode.Mine) }
     }
 }
 

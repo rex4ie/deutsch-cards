@@ -6,6 +6,7 @@ on:
     # Personal lessons are fetched by the app at runtime; changing only them needs no new APK.
     paths-ignore:
       - "app/src/main/assets/my_lessons.json"
+      - "app/src/main/assets/my_finds.json"
       - "**.md"
   workflow_dispatch:
 

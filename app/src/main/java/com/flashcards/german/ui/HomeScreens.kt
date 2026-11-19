@@ -44,7 +44,7 @@ fun HomeScaffold(
     progress: Progress,
     onOpen: (PathItem) -> Unit,
     onStudy: (List<Card>, String, Boolean) -> Unit,
-    onStudyMine: (List<Card>, String, Boolean) -> Unit,
+    onStudyDeck: (Deck, List<Card>, String, Boolean) -> Unit,
     onGender: (GenderMode) -> Unit,
     updateAvailable: Boolean,
     onAbout: () -> Unit,
@@ -56,16 +56,18 @@ fun HomeScaffold(
                 Screen.Learn -> LearnPath(repo, progress, onOpen)
                 Screen.Review -> ReviewDashboard(repo, progress, onStudy)
                 Screen.Artikel -> GenderHub(repo, progress, onGender)
-                else -> MyLessonsScreen(repo, progress, onStudyMine)
+                Screen.Finds -> MyLessonsScreen(repo, progress, Deck.Finds) { c, t, cram -> onStudyDeck(Deck.Finds, c, t, cram) }
+                else -> MyLessonsScreen(repo, progress, Deck.Class) { c, t, cram -> onStudyDeck(Deck.Class, c, t, cram) }
             }
         }
-        BottomBar(tab, onTab, dueCount(progress), myDueCount(repo, progress))
+        BottomBar(tab, onTab, dueCount(progress), myDueCount(repo, progress, Deck.Class), myDueCount(repo, progress, Deck.Finds))
     }
 }
 
-fun myDueCount(repo: Repo, p: Progress): Int {
+fun myDueCount(repo: Repo, p: Progress, d: Deck): Int {
     val now = System.currentTimeMillis()
-    return repo.myLessons.flatMap { it.asCards() }.count { p.myCards[it.id]?.let { s -> s.due <= now } ?: true }
+    val st = p.deck(d)
+    return repo.cardsOf(d).count { st[it.id]?.let { s -> s.due <= now } ?: true }
 }
 
 fun dueCount(p: Progress): Int {
@@ -105,14 +107,15 @@ private fun StatChip(icon: ImageVector, text: String, tint: Color) {
 
 /** Material 3 style navigation bar with a pill indicator behind the active icon. */
 @Composable
-private fun BottomBar(tab: Screen, onTab: (Screen) -> Unit, due: Int, myDue: Int) {
+private fun BottomBar(tab: Screen, onTab: (Screen) -> Unit, due: Int, myDue: Int, findsDue: Int) {
     Row(
         Modifier.fillMaxWidth().background(C.Card).border(1.dp, C.Line).padding(vertical = 10.dp),
     ) {
         NavItem(Icons.Rounded.Forest, "Learn", null, tab == Screen.Learn, Modifier.weight(1f)) { onTab(Screen.Learn) }
         NavItem(Icons.Rounded.Style, "Review", due.takeIf { it > 0 }, tab == Screen.Review, Modifier.weight(1f)) { onTab(Screen.Review) }
         NavItem(Icons.Rounded.Category, "Artikel", null, tab == Screen.Artikel, Modifier.weight(1f)) { onTab(Screen.Artikel) }
-        NavItem(Icons.AutoMirrored.Rounded.MenuBook, "Mine", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
+        NavItem(Icons.AutoMirrored.Rounded.MenuBook, "Class", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
+        NavItem(Icons.Rounded.Headphones, "Finds", findsDue.takeIf { it > 0 }, tab == Screen.Finds, Modifier.weight(1f)) { onTab(Screen.Finds) }
     }
 }
 

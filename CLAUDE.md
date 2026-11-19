@@ -9,7 +9,7 @@ from the owner's own class notes.
 - There is no local Android toolchain. **GitHub Actions is the compiler**: every push to
   `main` builds a signed APK and publishes it to the `latest` release. The app's About page
   installs it (self-updater). Check a run with `gh run watch <id>`.
-- Pushes that only touch `app/src/main/assets/my_lessons.json` or `*.md` skip the APK build
+- Pushes that only touch `my_lessons.json`, `my_finds.json` or `*.md` skip the APK build
   (`paths-ignore` in `.github/workflows/build-apk.yml`).
 - Signing secrets: `SIGNING_KEYSTORE_B64`, `SIGNING_PASSWORD` (already set on the repo).
 - `versionCode` = GitHub run number. Never hand-edit it.
@@ -55,6 +55,22 @@ When asked to update the lessons:
    `git status` that nothing under `My Lessons/` is staged.
 6. No app update is needed: the Mine tab downloads the file from
    `raw.githubusercontent.com` when opened (or via its refresh button).
+
+## "Update my finds" workflow
+
+A second, completely separate personal deck: words from videos, songs, podcasts and the
+owner's own research. Same rules as above, with these differences:
+
+| | Class ("update my lessons") | Finds ("update my finds") |
+|---|---|---|
+| Notes (local only, gitignored) | `My Lessons/notes/` | `My Finds/notes/` |
+| Output (pushed) | `app/src/main/assets/my_lessons.json` | `app/src/main/assets/my_finds.json` |
+| Card ids | `my:<lessonId>:<i>` | `find:<lessonId>:<i>` |
+| App tab | Class | Finds |
+
+Never mix the two: a word from a song goes in Finds even if it also came up in class.
+For a song or video, use the source as the lesson `title` (e.g. "Sonne – Rammstein") and
+`topic` "song", "video", "podcast" or "research"; put the line it appeared in into `note`.
 
 ## Other data
 

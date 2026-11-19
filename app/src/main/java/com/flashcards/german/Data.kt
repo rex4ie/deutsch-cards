@@ -17,7 +17,16 @@ data class Card(
     val exDe: String = "", val exEn: String = "", val note: String = "",
 ) {
     val id: String get() = audio
-    val hasAudio: Boolean get() = !audio.startsWith("my:")
+    val hasAudio: Boolean get() = audio.endsWith(".webm")
+}
+
+/**
+ * The learner's two personal decks, kept completely apart: lessons from class, and
+ * words gathered from videos, songs and research. Each has its own file and schedule.
+ */
+enum class Deck(val file: String, val prefix: String, val title: String, val blurb: String) {
+    Class("my_lessons.json", "my", "Class", "Lessons from your German classes"),
+    Finds("my_finds.json", "find", "Finds", "Words from videos, songs and your own research"),
 }
 
 /** The learner's own lessons (grammar, vocab, …) generated from local notes into assets/my_lessons.json. */
@@ -26,8 +35,8 @@ data class MyCard(val front: String, val back: String, val note: String = "")
 
 @Serializable
 data class MyLesson(val id: String, val title: String, val date: String = "", val topic: String = "", val cards: List<MyCard>) {
-    fun asCards(): List<Card> = cards.mapIndexed { i, c ->
-        Card(en = c.back, de = c.front, section = topic, audio = "my:$id:$i", note = c.note)
+    fun asCards(deck: Deck = Deck.Class): List<Card> = cards.mapIndexed { i, c ->
+        Card(en = c.back, de = c.front, section = topic, audio = "${deck.prefix}:$id:$i", note = c.note)
     }
 }
 
@@ -68,6 +77,7 @@ data class Progress(
     val words: Map<String, WordStat> = emptyMap(),
     /** Scheduling for "My lessons" cards, kept apart from the Collins deck. */
     val myCards: Map<String, CardState> = emptyMap(),
+    val findCards: Map<String, CardState> = emptyMap(),
     /** der/die/das game: per-noun results and best sprint score, kept apart from everything else. */
     val genderStats: Map<String, WordStat> = emptyMap(),
     val bestSprint: Int = 0,
@@ -139,29 +149,33 @@ class Repo(private val ctx: Context) {
         }
 
     /**
-     * The learner's own lessons. Fetched on demand from the repo (no app update needed),
-     * cached on the phone, with the copy bundled in the APK as a fallback.
+     * Personal decks. Fetched on demand from the repo (no app update needed), cached on the
+     * phone, with the copy bundled in the APK as a fallback.
      */
-    private val myCache = File(ctx.filesDir, "my_lessons.json")
-    var myLessons: List<MyLesson> by androidx.compose.runtime.mutableStateOf(
-        (runCatching { myCache.readText() }.getOrNull() ?: asset("my_lessons.json"))
-            ?.let { runCatching { json.decodeFromString<List<MyLesson>>(it) }.getOrNull() } ?: emptyList()
-    )
-        private set
+    private val deckState = androidx.compose.runtime.mutableStateMapOf<Deck, List<MyLesson>>().apply {
+        Deck.entries.forEach { d ->
+            val text = runCatching { File(ctx.filesDir, d.file).readText() }.getOrNull() ?: asset(d.file)
+            put(d, text?.let { runCatching { json.decodeFromString<List<MyLesson>>(it) }.getOrNull() } ?: emptyList())
+        }
+    }
+    fun lessonsOf(d: Deck): List<MyLesson> = deckState[d] ?: emptyList()
+    fun cardsOf(d: Deck): List<Card> = lessonsOf(d).flatMap { it.asCards(d) }
+    val myLessons: List<MyLesson> get() = lessonsOf(Deck.Class)
 
-    /** Downloads the latest my_lessons.json; returns the number of lessons, or throws. */
-    suspend fun refreshMyLessons(): Int = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-        val url = java.net.URL("https://raw.githubusercontent.com/${Updater.REPO}/main/app/src/main/assets/my_lessons.json?t=${System.currentTimeMillis()}")
+    /** Downloads the latest file for [d]; returns the number of lessons, or throws. */
+    suspend fun refresh(d: Deck): Int = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        val url = java.net.URL("https://raw.githubusercontent.com/${Updater.REPO}/main/app/src/main/assets/${d.file}?t=${System.currentTimeMillis()}")
         val conn = (url.openConnection() as java.net.HttpURLConnection).apply {
             connectTimeout = 10_000; readTimeout = 15_000; useCaches = false
             setRequestProperty("Cache-Control", "no-cache")
         }
         try {
+            if (conn.responseCode == 404) { deckState[d] = emptyList(); return@withContext 0 }
             if (conn.responseCode != 200) error("GitHub answered ${conn.responseCode}")
             val text = conn.inputStream.bufferedReader(Charsets.UTF_8).readText()
             val parsed = json.decodeFromString<List<MyLesson>>(text)
-            myCache.writeText(text)
-            myLessons = parsed
+            File(ctx.filesDir, d.file).writeText(text)
+            deckState[d] = parsed
             parsed.size
         } finally { conn.disconnect() }
     }
@@ -247,6 +261,9 @@ fun genderHint(word: String): String? {
         else -> null
     }
 }
+
+fun Progress.deck(d: Deck): Map<String, CardState> = if (d == Deck.Class) myCards else findCards
+fun Progress.withDeck(d: Deck, m: Map<String, CardState>): Progress = if (d == Deck.Class) copy(myCards = m) else copy(findCards = m)
 
 fun Progress.isDone(item: PathItem) = when (item) {
     is PathItem.LessonStop -> item.lesson.id in completedLessons
