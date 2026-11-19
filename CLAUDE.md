@@ -41,6 +41,8 @@ When asked to update the lessons:
      (rule, example, exception). Plain text, no markdown.
    - Grammar: turn rules into question/answer cards (e.g. front "Perfekt of gehen",
      back "ist gegangen"), not paragraphs.
+   - Nouns: put the article on the front, singular, e.g. front "der Tisch", back "table".
+     Cards whose front is exactly "der/die/das + Noun" also feed the der/die/das (Artikel) game.
    - One lesson per note file / class day. `topic` is a short tag (grammar, vocab, …).
 3. **Keep progress stable.** Card ids are `my:<lessonId>:<cardIndex>` and the app's review
    schedule is keyed on them. So:
