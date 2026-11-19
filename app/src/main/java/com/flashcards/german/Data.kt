@@ -68,6 +68,9 @@ data class Progress(
     val words: Map<String, WordStat> = emptyMap(),
     /** Scheduling for "My lessons" cards, kept apart from the Collins deck. */
     val myCards: Map<String, CardState> = emptyMap(),
+    /** der/die/das game: per-noun results and best sprint score, kept apart from everything else. */
+    val genderStats: Map<String, WordStat> = emptyMap(),
+    val bestSprint: Int = 0,
     val myXp: Int = 0,
     val xp: Int = 0,
     val streak: Int = 0,
@@ -211,6 +214,37 @@ class Repo(private val ctx: Context) {
                 prepare(); start()
             }
         }
+    }
+}
+
+/** A noun for the der/die/das game. [card] is kept so audio can be played when it exists. */
+data class GNoun(val id: String, val article: String, val word: String, val en: String, val card: Card?, val mine: Boolean)
+
+private val articleRx = Regex("""^(der|die|das) (\S+(?: \S+)?)$""")
+private val pluralEn = Regex("""(?i)([^su]s|es)$""")
+
+/** Picks single singular nouns ("die Schule", "der platte Reifen") out of a list of cards. */
+fun nounsFrom(cards: List<Card>, mine: Boolean): List<GNoun> = cards.mapNotNull { c ->
+    val de = c.de.trim()
+    if ('/' in de) return@mapNotNull null
+    val m = articleRx.matchEntire(de) ?: return@mapNotNull null
+    val word = m.groupValues[2]
+    if (!word.split(' ').last().first().isUpperCase()) return@mapNotNull null   // verb phrases
+    if (!mine && pluralEn.containsMatchIn(c.en.trim())) return@mapNotNull null   // likely plural
+    GNoun(c.id, m.groupValues[1], word, c.en, c.takeIf { it.hasAudio }, mine)
+}.distinctBy { it.article + it.word }
+
+/** Common gender rules, used as hints after a wrong answer. */
+fun genderHint(word: String): String? {
+    val w = word.split(' ').last().lowercase()
+    return when {
+        w.endsWith("ung") || w.endsWith("heit") || w.endsWith("keit") || w.endsWith("schaft") ||
+            w.endsWith("tion") || w.endsWith("ion") || w.endsWith("tät") || w.endsWith("ik") || w.endsWith("ie") -> "Nouns ending in -ung, -heit, -keit, -schaft, -ion, -tät, -ik, -ie are always die."
+        w.endsWith("chen") || w.endsWith("lein") -> "-chen and -lein make every noun das."
+        w.endsWith("ment") || w.endsWith("um") -> "Most nouns ending in -ment or -um are das."
+        w.endsWith("ling") || w.endsWith("ismus") || w.endsWith("ist") || w.endsWith("or") -> "Nouns ending in -ling, -ismus, -ist, -or are usually der."
+        w.endsWith("e") -> "Most nouns ending in -e are die (with exceptions like der Junge, der Käse)."
+        else -> null
     }
 }
 

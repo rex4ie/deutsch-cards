@@ -18,6 +18,8 @@ sealed interface Screen {
     data object Learn : Screen
     data object Review : Screen
     data object Mine : Screen
+    data object Artikel : Screen
+    data class Gender(val mode: GenderMode, val nouns: List<GNoun>) : Screen
     data object About : Screen
     data class Play(val item: PathItem) : Screen
     data class Study(val cards: List<Card>, val title: String, val cram: Boolean, val mine: Boolean = false) : Screen
@@ -45,7 +47,7 @@ class MainActivity : ComponentActivity() {
                 Box(Modifier.fillMaxSize().background(C.Bg).systemBarsPadding()) {
                     AnimatedContent(screen, transitionSpec = { fadeIn() togetherWith fadeOut() }, label = "nav") { s ->
                         when (s) {
-                            Screen.Learn, Screen.Review, Screen.Mine -> HomeScaffold(
+                            Screen.Learn, Screen.Review, Screen.Mine, Screen.Artikel -> HomeScaffold(
                                 tab = s,
                                 onTab = { tab = it; screen = it },
                                 repo = repo,
@@ -53,8 +55,30 @@ class MainActivity : ComponentActivity() {
                                 onOpen = { screen = Screen.Play(it) },
                                 onStudy = { cards, title, cram -> screen = Screen.Study(cards, title, cram) },
                                 onStudyMine = { cards, title, cram -> screen = Screen.Study(cards, title, cram, mine = true) },
+                                onGender = { mode ->
+                                    val all = nounsFrom(repo.allCards, mine = false)
+                                    val mine = nounsFrom(repo.myLessons.flatMap { it.asCards() }, mine = true)
+                                    screen = Screen.Gender(mode, pickNouns(mode, all, mine, progress.genderStats))
+                                },
                                 updateAvailable = updateState is UpdateState.Available,
                                 onAbout = { screen = Screen.About },
+                            )
+                            is Screen.Gender -> GenderGame(
+                                s.mode, s.nouns, progress.bestSprint, repo,
+                                onExit = { screen = tab },
+                                onFinish = { res ->
+                                    val now = System.currentTimeMillis()
+                                    val stats = progress.genderStats.toMutableMap()
+                                    (res.right.keys + res.wrong.keys).forEach { id ->
+                                        val w = stats[id] ?: WordStat()
+                                        stats[id] = w.copy(right = w.right + (res.right[id] ?: 0), wrong = w.wrong + (res.wrong[id] ?: 0), last = now)
+                                    }
+                                    val answered = res.right.values.sum() + res.wrong.values.sum()
+                                    update(
+                                        progress.copy(genderStats = stats, bestSprint = maxOf(progress.bestSprint, res.sprintScore ?: 0))
+                                            .let { if (answered > 0) it.withActivity(res.right.values.sum()) else it }
+                                    )
+                                },
                             )
                             Screen.About -> AboutScreen(repo, progress, updateState) { screen = tab }
                             is Screen.Play -> {

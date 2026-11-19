@@ -45,6 +45,7 @@ fun HomeScaffold(
     onOpen: (PathItem) -> Unit,
     onStudy: (List<Card>, String, Boolean) -> Unit,
     onStudyMine: (List<Card>, String, Boolean) -> Unit,
+    onGender: (GenderMode) -> Unit,
     updateAvailable: Boolean,
     onAbout: () -> Unit,
 ) {
@@ -54,6 +55,7 @@ fun HomeScaffold(
             when (tab) {
                 Screen.Learn -> LearnPath(repo, progress, onOpen)
                 Screen.Review -> ReviewDashboard(repo, progress, onStudy)
+                Screen.Artikel -> GenderHub(repo, progress, onGender)
                 else -> MyLessonsScreen(repo, progress, onStudyMine)
             }
         }
@@ -109,6 +111,7 @@ private fun BottomBar(tab: Screen, onTab: (Screen) -> Unit, due: Int, myDue: Int
     ) {
         NavItem(Icons.Rounded.Forest, "Learn", null, tab == Screen.Learn, Modifier.weight(1f)) { onTab(Screen.Learn) }
         NavItem(Icons.Rounded.Style, "Review", due.takeIf { it > 0 }, tab == Screen.Review, Modifier.weight(1f)) { onTab(Screen.Review) }
+        NavItem(Icons.Rounded.Category, "Artikel", null, tab == Screen.Artikel, Modifier.weight(1f)) { onTab(Screen.Artikel) }
         NavItem(Icons.AutoMirrored.Rounded.MenuBook, "Mine", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
     }
 }
