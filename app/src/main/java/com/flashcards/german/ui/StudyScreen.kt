@@ -47,13 +47,13 @@ fun StudyScreen(
                 Label(if (cram) "Practice · schedule unchanged" else "${queue.size} remaining")
             }
             Box(
-                Modifier.clip(RoundedCornerShape(4.dp)).border(1.5.dp, C.Ink, RoundedCornerShape(4.dp))
+                Modifier.clip(RoundedCornerShape(4.dp)).border(1.dp, C.Line, RoundedCornerShape(4.dp))
                     .clickable { germanFront = !germanFront; flipped = false }.padding(horizontal = 10.dp, vertical = 6.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(if (germanFront) "DE" else "EN", fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink)
+                    Text(if (germanFront) "DE" else "EN", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink)
                     Icon(Icons.Rounded.SwapHoriz, "Swap direction", tint = C.Ink, modifier = Modifier.padding(horizontal = 4.dp).size(18.dp))
-                    Text(if (germanFront) "EN" else "DE", fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink)
+                    Text(if (germanFront) "EN" else "DE", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink)
                 }
             }
         }
@@ -79,12 +79,12 @@ fun StudyScreen(
                 Column(Modifier.fillMaxSize().graphicsLayer { rotationY = if (showBack) 180f else 0f }) {
                     // index-card header with red margin rule
                     Row(Modifier.fillMaxWidth().height(38.dp).padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Label(card.section.takeIf { it.isNotBlank() && it != "vocabulary" } ?: "Karteikarte", C.Red)
+                        Label(card.section.takeIf { it.isNotBlank() && it != "vocabulary" } ?: "Karteikarte", C.Accent)
                         Spacer(Modifier.weight(1f))
                         val st = stateOf(card)
                         if (st != null && st.lapses > 0) Label("${st.lapses}× forgotten", C.Muted)
                     }
-                    Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Red.copy(alpha = .6f)))
+                    Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Accent.copy(alpha = .6f)))
                     Column(
                         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
@@ -115,8 +115,8 @@ fun StudyScreen(
             val st = stateOf(card) ?: CardState()
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(
-                    Triple(Rating.Again, C.Red, C.Card), Triple(Rating.Hard, C.Card, C.Ink),
-                    Triple(Rating.Good, C.Green, C.Card), Triple(Rating.Easy, C.Ink, C.Card),
+                    Triple(Rating.Again, C.Red, C.OnAccent), Triple(Rating.Hard, C.Card, C.Ink),
+                    Triple(Rating.Good, C.Green, C.OnAccent), Triple(Rating.Easy, C.Accent, C.OnAccent),
                 ).forEach { (r, bg, fg) ->
                     Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
                         Label(if (cram) " " else Srs.label(st, r), C.Muted)
@@ -141,7 +141,7 @@ private fun Example(card: Card) {
     Column(Modifier.fillMaxWidth().padding(top = 24.dp)) {
         Box(Modifier.fillMaxWidth().height(1.dp).background(C.Rule))
         Spacer(Modifier.height(14.dp))
-        Label("Beispiel", C.Red)
+        Label("Beispiel", C.Accent)
         Spacer(Modifier.height(6.dp))
         Text(card.exDe, color = C.Ink, fontFamily = Serif, fontSize = 18.sp, lineHeight = 25.sp)
         Text(card.exEn, color = C.Muted, fontFamily = Serif, fontStyle = FontStyle.Italic, fontSize = 15.sp, lineHeight = 21.sp, modifier = Modifier.padding(top = 4.dp))
@@ -153,7 +153,7 @@ private fun Note(text: String) {
     Column(Modifier.fillMaxWidth().padding(top = 24.dp)) {
         Box(Modifier.fillMaxWidth().height(1.dp).background(C.Rule))
         Spacer(Modifier.height(14.dp))
-        Label("Notiz", C.Red)
+        Label("Notiz", C.Accent)
         Spacer(Modifier.height(6.dp))
         Text(text, color = C.Ink, fontSize = 15.sp, lineHeight = 22.sp)
     }
@@ -166,11 +166,11 @@ private fun SessionSummary(reviewed: Int, counts: Map<Rating, Int>, modifier: Mo
         Heading("$reviewed cards reviewed", 32, modifier = Modifier.padding(top = 6.dp, bottom = 24.dp))
         PaperCard(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 6.dp)) {
-                listOf(Rating.Again to C.Red, Rating.Hard to C.Ink, Rating.Good to C.Green, Rating.Easy to C.Ink).forEachIndexed { i, (r, c) ->
+                listOf(Rating.Again to C.Red, Rating.Hard to C.Ink, Rating.Good to C.Green, Rating.Easy to C.Accent).forEachIndexed { i, (r, c) ->
                     if (i > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(C.Rule))
                     Row(Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
                         Text(r.name, color = c, fontFamily = Serif, fontSize = 17.sp, modifier = Modifier.weight(1f))
-                        Text("${counts[r] ?: 0}", color = C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold)
+                        Text("${counts[r] ?: 0}", color = C.Ink, fontWeight = FontWeight.Bold)
                     }
                 }
             }

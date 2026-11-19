@@ -112,7 +112,7 @@ fun LessonScreen(
             Spacer(Modifier.width(8.dp))
             ProgressBar(done.toFloat() / (done + queue.size).coerceAtLeast(1), Modifier.weight(1f), C.Green)
             Spacer(Modifier.width(12.dp))
-            Label(if (streak >= 3) "$streak in a row" else "${done}/${done + queue.size}", if (streak >= 3) C.Red else C.Muted)
+            Label(if (streak >= 3) "$streak in a row" else "${done}/${done + queue.size}", if (streak >= 3) C.Gold else C.Muted)
         }
         val current = queue.firstOrNull()
         if (current == null) { LaunchedEffect(Unit) { finished = true }; return@Column }
@@ -207,7 +207,7 @@ private fun FeedbackBar(ex: Ex, checked: Boolean?, enabled: Boolean, onClick: ()
             InkButton(
                 when { ex is Ex.Teach -> "Got it"; checked == null -> "Check"; else -> "Continue" },
                 Modifier.fillMaxWidth(),
-                color = when (checked) { true -> C.Green; false -> C.Red; null -> C.Ink },
+                color = when (checked) { true -> C.Green; false -> C.Red; null -> C.Accent },
                 enabled = checked != null || enabled, onClick = onClick,
             )
         }
@@ -227,9 +227,9 @@ private fun TeachView(card: Card, repo: Repo) {
     PaperCard(Modifier.fillMaxWidth()) {
         Column {
             Box(Modifier.fillMaxWidth().height(36.dp).padding(horizontal = 16.dp), contentAlignment = Alignment.CenterStart) {
-                Label(card.section.takeIf { it.isNotBlank() && it != "vocabulary" } ?: "Vokabel", C.Red)
+                Label(card.section.takeIf { it.isNotBlank() && it != "vocabulary" } ?: "Vokabel", C.Accent)
             }
-            Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Red.copy(alpha = .6f)))
+            Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Accent.copy(alpha = .6f)))
             Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(Modifier.height(12.dp))
                 GenderedText(card.de, 32)
@@ -300,7 +300,7 @@ private fun TypeView(card: Card, checked: Boolean?, register: (Boolean, () -> Bo
         keyboardActions = KeyboardActions(onDone = { onSubmit() }),
         shape = RoundedCornerShape(6.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = C.Ink, unfocusedBorderColor = C.Ink, cursorColor = C.Red,
+            focusedBorderColor = C.Accent, unfocusedBorderColor = C.Line, cursorColor = C.Accent,
             focusedContainerColor = C.Card, unfocusedContainerColor = C.Card, disabledContainerColor = C.Card, disabledTextColor = C.Ink, disabledBorderColor = C.Line,
         ),
     )
@@ -308,7 +308,7 @@ private fun TypeView(card: Card, checked: Boolean?, register: (Boolean, () -> Bo
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         listOf("ä", "ö", "ü", "ß").forEach { ch ->
             Box(
-                Modifier.size(46.dp).clip(RoundedCornerShape(6.dp)).background(C.Card).border(1.5.dp, C.Ink, RoundedCornerShape(6.dp))
+                Modifier.size(46.dp).clip(RoundedCornerShape(6.dp)).background(C.Card).border(1.dp, C.Line, RoundedCornerShape(6.dp))
                     .clickable(enabled = checked == null) {
                         val t = value.text.substring(0, value.selection.start) + ch + value.text.substring(value.selection.end)
                         value = TextFieldValue(t, TextRange(value.selection.start + 1))
@@ -380,10 +380,10 @@ private fun LessonComplete(title: String, kicker: String, xp: Int, mistakes: Int
                 .padding(horizontal = 26.dp, vertical = 12.dp),
             contentAlignment = Alignment.Center,
         ) {
-            Text("GESCHAFFT", color = C.Green.copy(alpha = alpha.value), fontFamily = Mono, fontWeight = FontWeight.Black, fontSize = 30.sp, letterSpacing = 4.sp)
+            Text("GESCHAFFT", color = C.Green.copy(alpha = alpha.value), fontWeight = FontWeight.Black, fontSize = 30.sp, letterSpacing = 4.sp)
         }
         Spacer(Modifier.height(32.dp))
-        Label(kicker, C.Red)
+        Label(kicker, C.Accent)
         Heading("$title complete", 30, align = TextAlign.Center, modifier = Modifier.padding(top = 6.dp))
         Spacer(Modifier.height(32.dp))
         PaperCard(Modifier.fillMaxWidth()) {
@@ -406,6 +406,6 @@ private fun LessonComplete(title: String, kicker: String, xp: Int, mistakes: Int
 private fun StatLine(k: String, v: String) {
     Row(Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
         Text(k, color = C.Muted, fontFamily = Serif, fontSize = 16.sp, modifier = Modifier.weight(1f))
-        Text(v, color = C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        Text(v, color = C.Ink, fontWeight = FontWeight.Bold, fontSize = 16.sp)
     }
 }

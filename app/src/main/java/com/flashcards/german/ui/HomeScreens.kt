@@ -2,6 +2,10 @@ package com.flashcards.german.ui
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -70,96 +74,79 @@ fun dueCount(p: Progress): Int {
 @Composable
 private fun TopBar(p: Progress, updateAvailable: Boolean, onAbout: () -> Unit) {
     Row(
-        Modifier.fillMaxWidth().padding(start = 20.dp, end = 12.dp, top = 14.dp, bottom = 10.dp),
+        Modifier.fillMaxWidth().padding(start = 20.dp, end = 10.dp, top = 14.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(Modifier.weight(1f)) {
-            Heading("Wortschatz", 26)
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp), modifier = Modifier.padding(top = 2.dp)) {
-                StatIcon(Icons.Rounded.LocalFireDepartment, "${p.streak}", if (p.streak > 0) C.Red else C.Muted)
-                StatIcon(Icons.Rounded.Bolt, "${p.xp} xp", C.Gold)
-                StatIcon(Icons.Rounded.Style, "${p.cards.size}", C.Ink)
-            }
-        }
+        Heading("Wortschatz", 26, modifier = Modifier.weight(1f))
+        StatChip(Icons.Rounded.LocalFireDepartment, "${p.streak}", if (p.streak > 0) C.Gold else C.Muted)
+        Spacer(Modifier.width(6.dp))
+        StatChip(Icons.Rounded.Bolt, "${p.xp}", C.Gold)
         Box(contentAlignment = Alignment.TopEnd) {
-            IconBtn(if (updateAvailable) Icons.Rounded.SystemUpdate else Icons.Rounded.Info, if (updateAvailable) "Update available" else "About", onClick = onAbout)
-            if (updateAvailable) Box(Modifier.padding(8.dp).size(9.dp).clip(CircleShape).background(C.Red))
+            IconBtn(if (updateAvailable) Icons.Rounded.SystemUpdate else Icons.Rounded.Info, if (updateAvailable) "Update available" else "About", tint = C.Muted, onClick = onAbout)
+            if (updateAvailable) Box(Modifier.padding(9.dp).size(9.dp).clip(CircleShape).background(C.Red))
         }
     }
-    Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Ink))
 }
 
 @Composable
-private fun StatIcon(icon: ImageVector, text: String, tint: Color) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+private fun StatChip(icon: ImageVector, text: String, tint: Color) {
+    Row(
+        Modifier.clip(RoundedCornerShape(50)).background(C.Card).border(1.dp, C.Line, RoundedCornerShape(50))
+            .padding(horizontal = 10.dp, vertical = 5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Icon(icon, null, tint = tint, modifier = Modifier.size(16.dp))
-        Spacer(Modifier.width(3.dp))
-        Text(text, color = C.Ink, fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        Spacer(Modifier.width(4.dp))
+        Text(text, color = C.Ink, fontSize = 13.sp, fontWeight = FontWeight.Bold)
     }
 }
 
+/** Material 3 style navigation bar with a pill indicator behind the active icon. */
 @Composable
 private fun BottomBar(tab: Screen, onTab: (Screen) -> Unit, due: Int, myDue: Int) {
-    Column {
-        Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Ink))
-        Row(Modifier.fillMaxWidth().background(C.Card)) {
-            NavItem(Icons.Rounded.School, "Learn", null, tab == Screen.Learn, Modifier.weight(1f)) { onTab(Screen.Learn) }
-            Box(Modifier.width(1.5.dp).height(62.dp).background(C.Ink))
-            NavItem(Icons.Rounded.Style, "Review", due.takeIf { it > 0 }, tab == Screen.Review, Modifier.weight(1f)) { onTab(Screen.Review) }
-            Box(Modifier.width(1.5.dp).height(62.dp).background(C.Ink))
-            NavItem(Icons.AutoMirrored.Rounded.MenuBook, "Mine", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
-        }
+    Row(
+        Modifier.fillMaxWidth().background(C.Card).border(1.dp, C.Line).padding(vertical = 10.dp),
+    ) {
+        NavItem(Icons.Rounded.Forest, "Learn", null, tab == Screen.Learn, Modifier.weight(1f)) { onTab(Screen.Learn) }
+        NavItem(Icons.Rounded.Style, "Review", due.takeIf { it > 0 }, tab == Screen.Review, Modifier.weight(1f)) { onTab(Screen.Review) }
+        NavItem(Icons.AutoMirrored.Rounded.MenuBook, "Mine", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
     }
 }
 
 @Composable
 private fun NavItem(icon: ImageVector, label: String, badge: Int?, active: Boolean, modifier: Modifier, onClick: () -> Unit) {
-    val fg = if (active) C.Card else C.Ink
+    val w by animateDpAsState(if (active) 64.dp else 40.dp, label = "pill")
     Column(
-        modifier.height(62.dp).background(if (active) C.Ink else C.Card).clickable(onClick = onClick),
-        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
+        modifier.clip(RoundedCornerShape(16.dp)).clickable(onClick = onClick),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(contentAlignment = Alignment.TopEnd) {
-            Icon(icon, null, tint = fg, modifier = Modifier.padding(horizontal = 10.dp).size(24.dp))
+            Box(
+                Modifier.width(w).height(32.dp).clip(RoundedCornerShape(50)).background(if (active) C.AccentSoft else Color.Transparent),
+                contentAlignment = Alignment.Center,
+            ) { Icon(icon, label, tint = if (active) C.Accent else C.Muted, modifier = Modifier.size(24.dp)) }
             if (badge != null) Box(
-                Modifier.offset(x = 4.dp, y = (-4).dp).clip(CircleShape).background(C.Red).padding(horizontal = 5.dp)
-            ) { Text(if (badge > 99) "99+" else "$badge", color = C.Card, fontFamily = Mono, fontSize = 10.sp, fontWeight = FontWeight.Bold) }
+                Modifier.offset(x = 2.dp, y = (-2).dp).clip(CircleShape).background(C.Red).padding(horizontal = 5.dp, vertical = 1.dp)
+            ) { Text(if (badge > 99) "99+" else "$badge", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold) }
         }
-        Spacer(Modifier.height(3.dp))
-        Text(label.uppercase(), color = fg, fontFamily = Mono, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp, fontSize = 11.sp)
+        Spacer(Modifier.height(4.dp))
+        Text(label, color = if (active) C.Ink else C.Muted, fontWeight = if (active) FontWeight.Bold else FontWeight.Medium, fontSize = 12.sp)
     }
 }
 
-// ---------------------------------------------------------------- Learn path
+// ---------------------------------------------------------------- Learn trail
 
 private enum class Status { Done, Current, Locked }
 
-@Composable
-private fun LearnPath(repo: Repo, p: Progress, onOpen: (PathItem) -> Unit) {
-    val path = repo.path
-    val currentIdx = path.indexOfFirst { !p.isDone(it) }.let { if (it < 0) path.size else it }
-    val state = rememberLazyListState(initialFirstVisibleItemIndex = (currentIdx - 2).coerceAtLeast(0))
-    val unitTotals = remember(path) { path.groupingBy { unitOf(it) }.eachCount() }
-
-    LazyColumn(state = state, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(top = 8.dp, bottom = 48.dp)) {
-        itemsIndexed(path, key = { _, it -> it.key }) { i, item ->
-            val unit = unitOf(item)
-            val status = when {
-                p.isDone(item) -> Status.Done
-                i == currentIdx -> Status.Current
-                else -> Status.Locked
-            }
-            if (i == 0 || unitOf(path[i - 1]) != unit) {
-                val doneInUnit = path.count { unitOf(it) == unit && p.isDone(it) }
-                UnitHeader(item, unit + 1, doneInUnit, unitTotals[unit] ?: 0)
-            }
-            val isLastInUnit = i == path.lastIndex || unitOf(path[i + 1]) != unit
-            PathRow(item, status, isFirst = i == 0 || unitOf(path[i - 1]) != unit, isLast = isLastInUnit) {
-                if (status != Status.Locked) onOpen(item)
-            }
-        }
-    }
+/** One row in the trail list: a chapter banner or a stepping stone. */
+private sealed interface TrailEntry {
+    data class Chapter(val n: Int, val lesson: Lesson, val done: Int, val total: Int) : TrailEntry
+    data class Stone(val item: PathItem, val index: Int, val status: Status, val x: Float, val nextX: Float?) : TrailEntry
 }
+
+private val STONE_ROW = 104.dp
+/** Horizontal positions of the stones, as a fraction of half the width, making a gentle S-curve. */
+private val wave = floatArrayOf(0f, 0.42f, 0.62f, 0.42f, 0f, -0.42f, -0.62f, -0.42f)
 
 private fun unitOf(item: PathItem) = when (item) {
     is PathItem.LessonStop -> item.unit
@@ -167,100 +154,190 @@ private fun unitOf(item: PathItem) = when (item) {
 }
 
 @Composable
-private fun UnitHeader(first: PathItem, n: Int, done: Int, total: Int) {
-    val lesson = (first as? PathItem.LessonStop)?.lesson ?: return
-    Column(Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 28.dp, bottom = 10.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Label("Unit %02d".format(n), C.Red)
-            Spacer(Modifier.weight(1f))
-            Label("$done / $total", if (done == total) C.Green else C.Muted)
-        }
-        Spacer(Modifier.height(4.dp))
-        Heading(lesson.unitTitle, 26)
-        if (lesson.titleDe.isNotBlank()) Text(
-            lesson.titleDe.substringBefore(" & "), color = C.Muted, fontFamily = Serif,
-            fontSize = 17.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
-        )
-        Spacer(Modifier.height(10.dp))
-        Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
-    }
-}
-
-@Composable
-private fun PathRow(item: PathItem, status: Status, isFirst: Boolean, isLast: Boolean, onClick: () -> Unit) {
-    val isReview = item is PathItem.ReviewStop
-    val title: String
-    val sub: String
-    when (item) {
-        is PathItem.LessonStop -> {
-            val l = item.lesson
-            title = if (l.parts > 1) "${l.title.substringBefore(" & ")} — part ${l.part}" else l.title
-            sub = l.cards.take(3).joinToString(", ") { it.de } + if (l.cards.size > 3) "…" else ""
-        }
-        is PathItem.ReviewStop -> {
-            title = "Review checkpoint"
-            sub = "Your trickiest words so far"
-        }
-    }
-    Row(
-        Modifier.fillMaxWidth().height(IntrinsicSize.Min)
-            .clickable(enabled = status != Status.Locked, onClick = onClick)
-            .background(if (status == Status.Current) C.Card else Color.Transparent)
-            .padding(horizontal = 20.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        // rail + node
-        Box(Modifier.width(40.dp).fillMaxHeight(), contentAlignment = Alignment.Center) {
-            Canvas(Modifier.fillMaxSize()) {
-                val x = size.width / 2
-                val c = if (status == Status.Done) C.Ink else C.Line
-                if (!isFirst) drawLine(c, Offset(x, 0f), Offset(x, size.height / 2), 2.dp.toPx())
-                if (!isLast) drawLine(if (status == Status.Done) C.Ink else C.Line, Offset(x, size.height / 2), Offset(x, size.height), 2.dp.toPx())
+private fun LearnPath(repo: Repo, p: Progress, onOpen: (PathItem) -> Unit) {
+    val path = repo.path
+    val currentIdx = path.indexOfFirst { !p.isDone(it) }.let { if (it < 0) path.size else it }
+    val entries = remember(path, p.completedLessons, p.completedReviews) {
+        val out = mutableListOf<TrailEntry>()
+        val unitTotals = path.groupingBy { unitOf(it) }.eachCount()
+        path.forEachIndexed { i, item ->
+            val unit = unitOf(item)
+            if (i == 0 || unitOf(path[i - 1]) != unit) {
+                val first = (item as PathItem.LessonStop).lesson
+                out += TrailEntry.Chapter(unit + 1, first, path.count { unitOf(it) == unit && p.isDone(it) }, unitTotals[unit] ?: 0)
             }
-            Node(status, isReview)
-        }
-        Spacer(Modifier.width(14.dp))
-        Column(Modifier.weight(1f).padding(vertical = 16.dp)) {
-            Text(
-                title, fontFamily = Serif, fontSize = 18.sp, fontWeight = FontWeight.Bold,
-                color = if (status == Status.Locked) C.Muted else C.Ink,
-                fontStyle = if (isReview) androidx.compose.ui.text.font.FontStyle.Italic else null,
+            val sameUnitNext = i < path.lastIndex && unitOf(path[i + 1]) == unit
+            out += TrailEntry.Stone(
+                item, i,
+                when { p.isDone(item) -> Status.Done; i == currentIdx -> Status.Current; else -> Status.Locked },
+                wave[i % wave.size], if (sameUnitNext) wave[(i + 1) % wave.size] else null,
             )
-            Text(sub, color = C.Muted, fontSize = 13.sp, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
         }
-        Spacer(Modifier.width(10.dp))
-        when (status) {
-            Status.Done -> Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Rounded.CheckCircle, null, tint = C.Green, modifier = Modifier.size(16.dp)); Spacer(Modifier.width(4.dp)); Label("Done", C.Green)
+        out
+    }
+    val currentEntry = entries.indexOfFirst { it is TrailEntry.Stone && it.status == Status.Current }
+    // +1 for the hero card at the top; land with the current stone a little below the top
+    val state = rememberLazyListState(initialFirstVisibleItemIndex = if (currentEntry <= 1) 0 else currentEntry - 1)
+
+    LazyColumn(state = state, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 56.dp)) {
+        item(key = "hero") { ContinueCard(path.getOrNull(currentIdx), currentIdx, path.size, p, onOpen) }
+        items(entries.size, key = { i -> entries[i].let { if (it is TrailEntry.Stone) it.item.key else "c${(it as TrailEntry.Chapter).n}" } }) { i ->
+            when (val e = entries[i]) {
+                is TrailEntry.Chapter -> ChapterBanner(e)
+                is TrailEntry.Stone -> StoneRow(e) { if (e.status != Status.Locked) onOpen(e.item) }
             }
-            Status.Current -> Tag("Start", C.Red, filled = true)
-            Status.Locked -> {}
         }
     }
 }
 
 @Composable
-private fun Node(status: Status, review: Boolean) {
-    val pulse = rememberInfiniteTransition(label = "pulse")
-    val ring by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(1400), RepeatMode.Restart), label = "r")
-    val shape = if (review) RoundedCornerShape(4.dp) else CircleShape
-    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(34.dp)) {
-        if (status == Status.Current) Canvas(Modifier.fillMaxSize()) {
-            drawCircle(C.Red.copy(alpha = 1f - ring), radius = size.minDimension / 2 * (0.7f + ring * 0.5f), style = Stroke(2.dp.toPx()))
+private fun ContinueCard(item: PathItem?, idx: Int, total: Int, p: Progress, onOpen: (PathItem) -> Unit) {
+    Column(
+        Modifier.fillMaxWidth().padding(16.dp).clip(RoundedCornerShape(24.dp)).background(C.Accent).padding(20.dp)
+    ) {
+        if (item == null) {
+            Label("Alles geschafft", C.OnAccent.copy(alpha = .8f))
+            Heading("Every lesson complete", 26, C.OnAccent)
+            Text("Keep your words fresh in Review.", color = C.OnAccent.copy(alpha = .85f), modifier = Modifier.padding(top = 4.dp))
+            return@Column
         }
-        Box(
-            Modifier.size(26.dp).then(if (review) Modifier.rotate(45f) else Modifier).clip(shape)
-                .background(when (status) { Status.Done -> C.Ink; Status.Current -> C.Red; Status.Locked -> C.Bg })
-                .border(2.dp, when (status) { Status.Locked -> C.Line; Status.Current -> C.Red; Status.Done -> C.Ink }, shape),
-            contentAlignment = Alignment.Center,
-        ) {
-            Box(if (review) Modifier.rotate(-45f) else Modifier) {
-                when (status) {
-                    Status.Done -> Icon(Icons.Rounded.Check, "Done", tint = C.Card, modifier = Modifier.size(17.dp))
-                    Status.Locked -> Icon(Icons.Rounded.Lock, "Locked", tint = C.Line, modifier = Modifier.size(13.dp))
-                    Status.Current -> if (review) Icon(Icons.Rounded.Replay, null, tint = C.Card, modifier = Modifier.size(15.dp))
+        val (kicker, title, words) = when (item) {
+            is PathItem.LessonStop -> Triple(
+                "Lesson ${item.lesson.id} · ${idx * 100 / total.coerceAtLeast(1)}% of the path",
+                item.lesson.unitTitle + if (item.lesson.parts > 1) " ${item.lesson.part}/${item.lesson.parts}" else "",
+                item.lesson.cards.take(4).map { it.de },
+            )
+            is PathItem.ReviewStop -> Triple("Checkpoint ${item.n}", "Review your trickiest words", emptyList())
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(if (item is PathItem.ReviewStop) Icons.Rounded.Replay else Icons.Rounded.Hiking, null, tint = C.OnAccent, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(6.dp))
+            Label(kicker, C.OnAccent.copy(alpha = .85f))
+        }
+        Spacer(Modifier.height(6.dp))
+        Heading(title, 26, C.OnAccent)
+        if (words.isNotEmpty()) {
+            Spacer(Modifier.height(12.dp))
+            @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                words.forEach {
+                    Box(Modifier.clip(RoundedCornerShape(50)).background(C.OnAccent.copy(alpha = .14f)).padding(horizontal = 10.dp, vertical = 5.dp)) {
+                        Text(it, color = C.OnAccent, fontFamily = Serif, fontSize = 14.sp)
+                    }
                 }
             }
+        }
+        Spacer(Modifier.height(18.dp))
+        InkButton(
+            if (p.completedLessons.isEmpty() && item is PathItem.LessonStop && item.lesson.id == 1) "Start your first lesson" else "Continue",
+            Modifier.fillMaxWidth(), color = C.OnAccent, textColor = C.Accent,
+        ) { onOpen(item) }
+    }
+}
+
+@Composable
+private fun ChapterBanner(c: TrailEntry.Chapter) {
+    Row(
+        Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 22.dp, bottom = 10.dp)
+            .clip(RoundedCornerShape(18.dp)).background(C.Card).border(1.dp, C.Line, RoundedCornerShape(18.dp)).padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)).background(C.AccentSoft), contentAlignment = Alignment.Center) {
+            Icon(if (c.done == c.total) Icons.Rounded.EmojiEvents else Icons.Rounded.Park, null, tint = if (c.done == c.total) C.Gold else C.Accent)
+        }
+        Spacer(Modifier.width(14.dp))
+        Column(Modifier.weight(1f)) {
+            Label("Chapter ${c.n}", C.Accent)
+            Text(c.lesson.unitTitle, color = C.Ink, fontFamily = Serif, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            if (c.lesson.titleDe.isNotBlank()) Text(
+                c.lesson.titleDe.substringBefore(" & ").replaceFirstChar { it.uppercase() },
+                color = C.Muted, fontFamily = Serif, fontSize = 14.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+            )
+            Spacer(Modifier.height(8.dp))
+            ProgressBar(c.done.toFloat() / c.total.coerceAtLeast(1), Modifier.fillMaxWidth().height(6.dp))
+        }
+        Spacer(Modifier.width(12.dp))
+        Text("${c.done}/${c.total}", color = C.Muted, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+private fun StoneRow(s: TrailEntry.Stone, onClick: () -> Unit) {
+    val review = s.item is PathItem.ReviewStop
+    val trailDone = C.Moss
+    val trailTodo = C.Line
+    Box(Modifier.fillMaxWidth().height(STONE_ROW)) {
+        // the trail segment to the next stone, drawn as a soft S-curve
+        Canvas(Modifier.matchParentSize()) {
+            val half = size.width / 2
+            val stoneY = 40.dp.toPx()
+            val x0 = half + s.x * half * 0.62f
+            val next = s.nextX ?: return@Canvas
+            val x1 = half + next * half * 0.62f
+            val y1 = size.height + stoneY
+            val path = Path().apply {
+                moveTo(x0, stoneY)
+                cubicTo(x0, stoneY + (y1 - stoneY) * .5f, x1, stoneY + (y1 - stoneY) * .5f, x1, y1)
+            }
+            drawPath(
+                path, if (s.status == Status.Done) trailDone else trailTodo,
+                style = Stroke(
+                    width = 7.dp.toPx(), cap = StrokeCap.Round,
+                    pathEffect = if (s.status == Status.Done) null else PathEffect.dashPathEffect(floatArrayOf(2f, 22f)),
+                ),
+            )
+        }
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val half = maxWidth / 2
+            val cx = half + half * s.x * 0.62f
+            Column(
+                Modifier.offset(x = cx - 60.dp, y = 0.dp).width(120.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Stone(s.status, review, onClick)
+                Spacer(Modifier.height(4.dp))
+                val label = when (val it = s.item) {
+                    is PathItem.LessonStop -> if (it.lesson.parts > 1) "${it.lesson.unitTitle} ${it.lesson.part}" else it.lesson.unitTitle
+                    is PathItem.ReviewStop -> "Checkpoint"
+                }
+                Text(
+                    label, color = if (s.status == Status.Locked) C.Muted else C.Ink, fontSize = 12.sp,
+                    fontWeight = if (s.status == Status.Current) FontWeight.Bold else FontWeight.Medium,
+                    maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun Stone(status: Status, review: Boolean, onClick: () -> Unit) {
+    val pulse = rememberInfiniteTransition(label = "pulse")
+    val ring by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(1600), RepeatMode.Restart), label = "r")
+    val size = if (status == Status.Current) 76.dp else 64.dp
+    val shape = if (review) RoundedCornerShape(22.dp) else CircleShape
+    val face = when (status) {
+        Status.Done -> if (review) C.Gold else C.Accent
+        Status.Current -> if (review) C.Gold else C.Accent
+        Status.Locked -> C.Sunk
+    }
+    val accentForRing = face
+    Box(Modifier.size(80.dp), contentAlignment = Alignment.Center) {
+        if (status == Status.Current) Canvas(Modifier.fillMaxSize()) {
+            drawCircle(accentForRing.copy(alpha = (1f - ring) * .6f), radius = this.size.minDimension / 2 * (0.8f + ring * 0.25f), style = Stroke(3.dp.toPx()))
+        }
+        Box(
+            Modifier.size(size).clip(shape).background(face)
+                .then(if (status == Status.Locked) Modifier.border(2.dp, C.Line, shape) else Modifier)
+                .clickable(enabled = status != Status.Locked, onClick = onClick),
+            contentAlignment = Alignment.Center,
+        ) {
+            val (icon, tint) = when (status) {
+                Status.Done -> Icons.Rounded.Check to C.OnAccent
+                Status.Current -> (if (review) Icons.Rounded.Replay else Icons.Rounded.PlayArrow) to C.OnAccent
+                Status.Locked -> (if (review) Icons.Rounded.Replay else Icons.Rounded.Lock) to C.Muted
+            }
+            Icon(icon, null, tint = tint, modifier = Modifier.size(if (status == Status.Current) 38.dp else 28.dp))
         }
     }
 }
@@ -290,7 +367,7 @@ private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, Strin
         Spacer(Modifier.height(10.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Legend(C.Green, "Mature $mature")
-            Legend(C.Ink, "Learning $young")
+            Legend(C.Accent, "Learning $young")
             Legend(C.Line, "New ${total - seen}")
         }
         Spacer(Modifier.height(28.dp))
@@ -309,11 +386,11 @@ private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, Strin
         Spacer(Modifier.weight(1f))
         InkButton(
             if (due.isEmpty()) "No reviews due" else "Review due cards",
-            Modifier.fillMaxWidth(), color = C.Red, enabled = due.isNotEmpty(),
+            Modifier.fillMaxWidth(), color = C.Accent, enabled = due.isNotEmpty(),
         ) { onStudy(due.shuffled(), "Due reviews", false) }
         Spacer(Modifier.height(12.dp))
         InkButton(
-            "Review all $seen words", Modifier.fillMaxWidth(), color = C.Card, textColor = C.Ink, enabled = seen > 0,
+            "Review all $seen words", Modifier.fillMaxWidth(), color = C.Card, textColor = C.Accent, enabled = seen > 0,
         ) { onStudy(seenCards.shuffled(), "All words", true) }
         if (seen == 0) Text(
             "Finish a lesson in Learn and its words land here.",
@@ -326,21 +403,19 @@ private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, Strin
 private fun BankBar(mature: Int, young: Int, total: Int) {
     val a by animateFloatAsState(mature.toFloat() / total, tween(800), label = "a")
     val b by animateFloatAsState(young.toFloat() / total, tween(800), label = "b")
-    Canvas(Modifier.fillMaxWidth().height(22.dp)) {
-        drawRect(C.Card)
-        drawRect(C.Green, size = Size(size.width * a, size.height))
-        drawRect(C.Ink, Offset(size.width * a, 0f), Size(size.width * b, size.height))
-        // tick every 10%
-        for (i in 1..9) drawLine(C.Line, Offset(size.width * i / 10, size.height * .7f), Offset(size.width * i / 10, size.height), 1.dp.toPx(), StrokeCap.Butt)
-        drawRect(C.Ink, style = Stroke(1.5.dp.toPx()))
+    val bg = C.Sunk; val g = C.Green; val acc = C.Accent
+    Canvas(Modifier.fillMaxWidth().height(16.dp).clip(RoundedCornerShape(50))) {
+        drawRect(bg)
+        drawRect(g, size = Size(size.width * a, size.height))
+        drawRect(acc, Offset(size.width * a, 0f), Size(size.width * b, size.height))
     }
 }
 
 @Composable
 private fun Legend(color: Color, text: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(Modifier.size(10.dp).background(color).border(1.dp, C.Ink))
+        Box(Modifier.size(10.dp).clip(CircleShape).background(color))
         Spacer(Modifier.width(6.dp))
-        Label(text, C.Ink)
+        Label(text, C.Muted)
     }
 }

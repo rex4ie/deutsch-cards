@@ -25,7 +25,7 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
 
     if (lessons.isEmpty()) {
         Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.Center) {
-            Label("My lessons", C.Red)
+            Label("My lessons", C.Accent)
             Heading("Nothing here yet", 30, modifier = Modifier.padding(top = 6.dp, bottom = 10.dp))
             Text(
                 "Lessons from your own classes (grammar, vocabulary, anything) live here as their own deck, " +
@@ -56,16 +56,16 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
             Spacer(Modifier.height(20.dp))
             InkButton(
                 if (queue.isEmpty()) "All caught up" else "Study ${queue.size} cards",
-                Modifier.fillMaxWidth(), color = C.Red, enabled = queue.isNotEmpty(),
+                Modifier.fillMaxWidth(), color = C.Accent, enabled = queue.isNotEmpty(),
             ) { onStudy(due.shuffled() + fresh, "My lessons", false) }
             Spacer(Modifier.height(12.dp))
-            InkButton("Review all ${all.size} cards", Modifier.fillMaxWidth(), color = C.Card, textColor = C.Ink) {
+            InkButton("Review all ${all.size} cards", Modifier.fillMaxWidth(), color = C.Card, textColor = C.Accent) {
                 onStudy(all.shuffled(), "My lessons · all", true)
             }
             Spacer(Modifier.height(28.dp))
             Label("Lessons")
             Spacer(Modifier.height(8.dp))
-            Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Ink))
+            Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
         }
         items(lessons.reversed(), key = { it.id }) { l ->
             val cards = l.asCards()
@@ -92,7 +92,7 @@ fun MyLessonsScreen(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boole
 @Composable
 private fun Count(label: String, n: Int, color: androidx.compose.ui.graphics.Color, modifier: Modifier) {
     Column(modifier) {
-        Text("$n", color = color, fontFamily = Mono, fontSize = 26.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+        Text("$n", color = color, fontSize = 26.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
         Label(label)
     }
 }

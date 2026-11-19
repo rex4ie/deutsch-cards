@@ -63,7 +63,7 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp)) {
         IconBtn(Icons.AutoMirrored.Rounded.ArrowBack, "Back", onClick = onBack)
         Spacer(Modifier.height(20.dp))
-        Label("About", C.Red)
+        Label("About", C.Accent)
         Heading("Wortschatz", 40)
         Label("Version ${BuildConfig.VERSION_NAME}")
         Spacer(Modifier.height(28.dp))
@@ -75,7 +75,7 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
                     UpdateState.Idle, UpdateState.Checking -> Heading("Checking…", 22, C.Muted)
                     UpdateState.UpToDate -> Heading("You're up to date.", 22, C.Green)
                     is UpdateState.Failed -> Text(s.message, color = C.Red)
-                    is UpdateState.Available -> Heading("Version 1.0.${s.release.versionCode} is ready.", 22, C.Red)
+                    is UpdateState.Available -> Heading("Version 1.0.${s.release.versionCode} is ready.", 22, C.Accent)
                     is UpdateState.Downloading -> {
                         Heading("Downloading ${(s.fraction * 100).toInt()} %", 22)
                         Spacer(Modifier.height(10.dp))
@@ -84,7 +84,7 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
                 }
                 Spacer(Modifier.height(18.dp))
                 when (val s = state) {
-                    is UpdateState.Available -> InkButton("Download & install", Modifier.fillMaxWidth(), color = C.Red) { install(s.release) }
+                    is UpdateState.Available -> InkButton("Download & install", Modifier.fillMaxWidth(), color = C.Accent) { install(s.release) }
                     is UpdateState.Downloading, UpdateState.Checking -> InkButton("Please wait", Modifier.fillMaxWidth(), enabled = false) {}
                     else -> InkButton("Check for updates", Modifier.fillMaxWidth()) { check() }
                 }
@@ -111,9 +111,9 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
             Modifier.clickable { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Updater.REPO_URL))) }.padding(vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("Source on GitHub", color = C.Red, fontFamily = Mono, fontWeight = FontWeight.Bold)
+            Text("Source on GitHub", color = C.Accent, fontWeight = FontWeight.Bold)
             Spacer(Modifier.width(6.dp))
-            Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, tint = C.Red, modifier = Modifier.size(16.dp))
+            Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, tint = C.Accent, modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -123,7 +123,7 @@ private fun Row2(k: String, v: String) {
     Column {
         Row(Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
             Text(k, color = C.Muted, fontFamily = Serif, fontSize = 16.sp, modifier = Modifier.weight(1f))
-            Text(v, color = C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold, fontSize = 14.sp, textAlign = TextAlign.End)
+            Text(v, color = C.Ink, fontWeight = FontWeight.Bold, fontSize = 14.sp, textAlign = TextAlign.End)
         }
         Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
     }
