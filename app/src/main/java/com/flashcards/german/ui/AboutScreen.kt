@@ -12,6 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -94,6 +96,18 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
                 )
             }
         }
+        Spacer(Modifier.height(28.dp))
+        Label("Settings")
+        Spacer(Modifier.height(4.dp))
+        var sfx by remember { mutableStateOf(Sfx.enabled) }
+        Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text("Sound effects", color = C.Muted, fontFamily = Serif, fontSize = 16.sp, modifier = Modifier.weight(1f))
+            Switch(
+                checked = sfx, onCheckedChange = { sfx = it; Sfx.setEnabled(it); if (it) Sfx.play(Sound.Correct) },
+                colors = SwitchDefaults.colors(checkedTrackColor = C.Accent, checkedThumbColor = C.OnAccent),
+            )
+        }
+        Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
         Spacer(Modifier.height(28.dp))
         Label("Your progress")
         Spacer(Modifier.height(4.dp))

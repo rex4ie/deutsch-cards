@@ -164,6 +164,7 @@ private fun ExerciseHost(ex: Ex, repo: Repo, onWordResult: (Card, Boolean) -> Un
         val ok = checkAction()
         checked = ok
         if (!ok) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        Sfx.play(if (ok) Sound.Correct else Sound.Wrong)
         ex.card?.let { repo.play(it); onWordResult(it, ok) }
     }
 
@@ -333,9 +334,9 @@ private fun MatchView(cards: List<Card>, repo: Repo, onWordResult: (Card, Boolea
     LaunchedEffect(selLeft, selRight) {
         val l = selLeft; val r = selRight
         if (l != null && r != null) {
-            if (l == r) { matched += l; onWordResult(l, true); selLeft = null; selRight = null }
+            if (l == r) { matched += l; Sfx.play(Sound.Correct); onWordResult(l, true); selLeft = null; selRight = null }
             else {
-                wrong = l to r; onWordResult(l, false)
+                wrong = l to r; Sfx.play(Sound.Wrong); onWordResult(l, false)
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 delay(550); wrong = null; selLeft = null; selRight = null
             }
@@ -364,6 +365,7 @@ private fun MatchView(cards: List<Card>, repo: Repo, onWordResult: (Card, Boolea
 @Composable
 private fun LessonComplete(title: String, kicker: String, xp: Int, mistakes: Int, answered: Int, words: Int, onExit: () -> Unit) {
     val accuracy = 100 * answered / (answered + mistakes).coerceAtLeast(1)
+    LaunchedEffect(Unit) { Sfx.play(Sound.Done) }
     val stamp = remember { Animatable(2.4f) }
     val alpha = remember { Animatable(0f) }
     LaunchedEffect(Unit) {

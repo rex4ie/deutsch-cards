@@ -209,12 +209,14 @@ fun GenderGame(mode: GenderMode, nouns: List<GNoun>, best: Int, repo: Repo, onEx
         n.card?.let { repo.play(it) }
         if (ok) {
             right[n.id] = (right[n.id] ?: 0) + 1; score++; streak++
+            Sfx.play(Sound.Correct)
             scope.launch { pop.snapTo(1.08f); pop.animateTo(1f, spring(dampingRatio = .4f)) }
             scope.launch { delay(if (sprint) 350 else 650); if (answered != null) next() }
         } else {
             wrong[n.id] = (wrong[n.id] ?: 0) + 1; streak = 0
             if (missed.none { it.id == n.id }) missed += n
             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            Sfx.play(Sound.Wrong)
             scope.launch { repeat(3) { shake.animateTo(14f, tween(45)); shake.animateTo(-14f, tween(45)) }; shake.animateTo(0f, tween(45)) }
             if (sprint) scope.launch { delay(1100); if (answered != null) next() }
         }

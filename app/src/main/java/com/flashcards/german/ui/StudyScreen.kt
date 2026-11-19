@@ -123,6 +123,7 @@ fun StudyScreen(
                         Spacer(Modifier.height(4.dp))
                         InkButton(r.name, Modifier.fillMaxWidth(), color = bg, textColor = fg) {
                             onRate(card, r)
+                            Sfx.play(if (r == Rating.Again) Sound.Wrong else Sound.Correct)
                             counts[r] = (counts[r] ?: 0) + 1
                             queue.removeAt(0)
                             if (r == Rating.Again) queue.add(minOf(queue.size, 3), card) else reviewed++

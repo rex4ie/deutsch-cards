@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val repo = Repo(applicationContext)
+        Sfx.init(applicationContext)
         setContent {
             AppTheme {
                 var progress by remember { mutableStateOf(repo.load().migrate(repo)) }
