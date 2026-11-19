@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "2026-11-19",
+    "title": "Own research",
+    "date": "19 Nov 2026",
+    "topic": "research",
+    "cards": [
+      { "front": "gehören", "back": "to belong to", "note": "takes the dative: Das Buch gehört mir. Perfekt: hat gehört" }
+    ]
+  }
+]
