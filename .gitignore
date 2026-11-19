@@ -5,3 +5,6 @@ local.properties
 *.iml
 .claude/
 Resrources/*.pdf
+
+# Personal lessons stay on this computer
+My Lessons/
