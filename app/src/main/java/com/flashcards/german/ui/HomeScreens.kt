@@ -11,7 +11,12 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.automirrored.rounded.MenuBook
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -70,13 +75,27 @@ private fun TopBar(p: Progress, updateAvailable: Boolean, onAbout: () -> Unit) {
     ) {
         Column(Modifier.weight(1f)) {
             Heading("Wortschatz", 26)
-            Label("${p.streak}-day streak  ·  ${p.xp} xp  ·  ${p.cards.size} words")
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp), modifier = Modifier.padding(top = 2.dp)) {
+                StatIcon(Icons.Rounded.LocalFireDepartment, "${p.streak}", if (p.streak > 0) C.Red else C.Muted)
+                StatIcon(Icons.Rounded.Bolt, "${p.xp} xp", C.Gold)
+                StatIcon(Icons.Rounded.Style, "${p.cards.size}", C.Ink)
+            }
         }
-        Box(Modifier.clip(RoundedCornerShape(4.dp)).clickable(onClick = onAbout).padding(8.dp)) {
-            if (updateAvailable) Tag("Update", C.Red, filled = true) else Tag("About")
+        Box(contentAlignment = Alignment.TopEnd) {
+            IconBtn(if (updateAvailable) Icons.Rounded.SystemUpdate else Icons.Rounded.Info, if (updateAvailable) "Update available" else "About", onClick = onAbout)
+            if (updateAvailable) Box(Modifier.padding(8.dp).size(9.dp).clip(CircleShape).background(C.Red))
         }
     }
     Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Ink))
+}
+
+@Composable
+private fun StatIcon(icon: ImageVector, text: String, tint: Color) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(icon, null, tint = tint, modifier = Modifier.size(16.dp))
+        Spacer(Modifier.width(3.dp))
+        Text(text, color = C.Ink, fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+    }
 }
 
 @Composable
@@ -84,28 +103,30 @@ private fun BottomBar(tab: Screen, onTab: (Screen) -> Unit, due: Int, myDue: Int
     Column {
         Box(Modifier.fillMaxWidth().height(1.5.dp).background(C.Ink))
         Row(Modifier.fillMaxWidth().background(C.Card)) {
-            NavItem("Learn", null, tab == Screen.Learn, Modifier.weight(1f)) { onTab(Screen.Learn) }
-            Box(Modifier.width(1.5.dp).height(56.dp).background(C.Ink))
-            NavItem("Review", due.takeIf { it > 0 }, tab == Screen.Review, Modifier.weight(1f)) { onTab(Screen.Review) }
-            Box(Modifier.width(1.5.dp).height(56.dp).background(C.Ink))
-            NavItem("Mine", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
+            NavItem(Icons.Rounded.School, "Learn", null, tab == Screen.Learn, Modifier.weight(1f)) { onTab(Screen.Learn) }
+            Box(Modifier.width(1.5.dp).height(62.dp).background(C.Ink))
+            NavItem(Icons.Rounded.Style, "Review", due.takeIf { it > 0 }, tab == Screen.Review, Modifier.weight(1f)) { onTab(Screen.Review) }
+            Box(Modifier.width(1.5.dp).height(62.dp).background(C.Ink))
+            NavItem(Icons.AutoMirrored.Rounded.MenuBook, "Mine", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
         }
     }
 }
 
 @Composable
-private fun NavItem(label: String, badge: Int?, active: Boolean, modifier: Modifier, onClick: () -> Unit) {
-    Row(
-        modifier.height(56.dp).background(if (active) C.Ink else C.Card).clickable(onClick = onClick),
-        horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically,
+private fun NavItem(icon: ImageVector, label: String, badge: Int?, active: Boolean, modifier: Modifier, onClick: () -> Unit) {
+    val fg = if (active) C.Card else C.Ink
+    Column(
+        modifier.height(62.dp).background(if (active) C.Ink else C.Card).clickable(onClick = onClick),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
     ) {
-        Text(label.uppercase(), color = if (active) C.Card else C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold, letterSpacing = 2.sp, fontSize = 14.sp)
-        if (badge != null) {
-            Spacer(Modifier.width(8.dp))
-            Box(Modifier.clip(CircleShape).background(C.Red).padding(horizontal = 7.dp, vertical = 1.dp)) {
-                Text("$badge", color = C.Card, fontFamily = Mono, fontSize = 11.sp, fontWeight = FontWeight.Bold)
-            }
+        Box(contentAlignment = Alignment.TopEnd) {
+            Icon(icon, null, tint = fg, modifier = Modifier.padding(horizontal = 10.dp).size(24.dp))
+            if (badge != null) Box(
+                Modifier.offset(x = 4.dp, y = (-4).dp).clip(CircleShape).background(C.Red).padding(horizontal = 5.dp)
+            ) { Text(if (badge > 99) "99+" else "$badge", color = C.Card, fontFamily = Mono, fontSize = 10.sp, fontWeight = FontWeight.Bold) }
         }
+        Spacer(Modifier.height(3.dp))
+        Text(label.uppercase(), color = fg, fontFamily = Mono, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp, fontSize = 11.sp)
     }
 }
 
@@ -209,7 +230,9 @@ private fun PathRow(item: PathItem, status: Status, isFirst: Boolean, isLast: Bo
         }
         Spacer(Modifier.width(10.dp))
         when (status) {
-            Status.Done -> Tag("Done", C.Green)
+            Status.Done -> Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Rounded.CheckCircle, null, tint = C.Green, modifier = Modifier.size(16.dp)); Spacer(Modifier.width(4.dp)); Label("Done", C.Green)
+            }
             Status.Current -> Tag("Start", C.Red, filled = true)
             Status.Locked -> {}
         }
@@ -231,7 +254,13 @@ private fun Node(status: Status, review: Boolean) {
                 .border(2.dp, when (status) { Status.Locked -> C.Line; Status.Current -> C.Red; Status.Done -> C.Ink }, shape),
             contentAlignment = Alignment.Center,
         ) {
-            if (status == Status.Done) Box(if (review) Modifier.rotate(-45f) else Modifier) { CheckMark(C.Card, 16.dp, 2.5f) }
+            Box(if (review) Modifier.rotate(-45f) else Modifier) {
+                when (status) {
+                    Status.Done -> Icon(Icons.Rounded.Check, "Done", tint = C.Card, modifier = Modifier.size(17.dp))
+                    Status.Locked -> Icon(Icons.Rounded.Lock, "Locked", tint = C.Line, modifier = Modifier.size(13.dp))
+                    Status.Current -> if (review) Icon(Icons.Rounded.Replay, null, tint = C.Card, modifier = Modifier.size(15.dp))
+                }
+            }
         }
     }
 }

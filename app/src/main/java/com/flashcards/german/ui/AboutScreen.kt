@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -57,7 +61,7 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
     LaunchedEffect(Unit) { if (state == UpdateState.Idle) check() }
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp)) {
-        Text("← Back", color = C.Ink, fontFamily = Mono, fontWeight = FontWeight.Bold, modifier = Modifier.clickable(onClick = onBack).padding(vertical = 8.dp))
+        IconBtn(Icons.AutoMirrored.Rounded.ArrowBack, "Back", onClick = onBack)
         Spacer(Modifier.height(20.dp))
         Label("About", C.Red)
         Heading("Wortschatz", 40)
@@ -103,10 +107,14 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
         Row2("Words", "Collins German 3000")
         Row2("Voice", "Edge neural TTS · Katja")
         Spacer(Modifier.height(16.dp))
-        Text(
-            "Source on GitHub →", color = C.Red, fontFamily = Mono, fontWeight = FontWeight.Bold,
-            modifier = Modifier.clickable { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Updater.REPO_URL))) }.padding(vertical = 8.dp),
-        )
+        Row(
+            Modifier.clickable { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Updater.REPO_URL))) }.padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text("Source on GitHub", color = C.Red, fontFamily = Mono, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.width(6.dp))
+            Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, tint = C.Red, modifier = Modifier.size(16.dp))
+        }
     }
 }
 

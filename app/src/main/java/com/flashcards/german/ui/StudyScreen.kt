@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.SwapHoriz
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -36,7 +40,8 @@ fun StudyScreen(
 
     Column(Modifier.fillMaxSize().padding(20.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("✕", color = C.Ink, fontSize = 22.sp, modifier = Modifier.clickable { onDone(reviewed) }.padding(end = 16.dp))
+            IconBtn(Icons.Rounded.Close, "End session") { onDone(reviewed) }
+            Spacer(Modifier.width(8.dp))
             Column(Modifier.weight(1f)) {
                 Heading(title, 20)
                 Label(if (cram) "Practice · schedule unchanged" else "${queue.size} remaining")
@@ -44,7 +49,13 @@ fun StudyScreen(
             Box(
                 Modifier.clip(RoundedCornerShape(4.dp)).border(1.5.dp, C.Ink, RoundedCornerShape(4.dp))
                     .clickable { germanFront = !germanFront; flipped = false }.padding(horizontal = 10.dp, vertical = 6.dp)
-            ) { Text(if (germanFront) "DE → EN" else "EN → DE", fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink) }
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(if (germanFront) "DE" else "EN", fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink)
+                    Icon(Icons.Rounded.SwapHoriz, "Swap direction", tint = C.Ink, modifier = Modifier.padding(horizontal = 4.dp).size(18.dp))
+                    Text(if (germanFront) "EN" else "DE", fontFamily = Mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = C.Ink)
+                }
+            }
         }
         Spacer(Modifier.height(14.dp))
         ProgressBar(reviewed.toFloat() / (reviewed + queue.size).coerceAtLeast(1), Modifier.fillMaxWidth())

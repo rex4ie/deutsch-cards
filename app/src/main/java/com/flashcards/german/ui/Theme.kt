@@ -11,7 +11,11 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.*
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -137,18 +141,17 @@ fun SpeakerButton(size: Int = 52, filled: Boolean = true, onClick: () -> Unit) {
             .border(1.5.dp, C.Ink, CircleShape).clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        val fg = if (filled) C.Card else C.Ink
-        Canvas(Modifier.size((size * 0.46).dp)) {
-            val w = this.size.width; val h = this.size.height
-            val p = Path().apply {
-                moveTo(0f, h * .35f); lineTo(w * .25f, h * .35f); lineTo(w * .52f, h * .1f)
-                lineTo(w * .52f, h * .9f); lineTo(w * .25f, h * .65f); lineTo(0f, h * .65f); close()
-            }
-            drawPath(p, fg)
-            drawArc(fg, -45f, 90f, false, Offset(w * .45f, h * .3f), androidx.compose.ui.geometry.Size(w * .3f, h * .4f), style = Stroke(w * .08f, cap = StrokeCap.Round))
-            drawArc(fg, -50f, 100f, false, Offset(w * .4f, h * .12f), androidx.compose.ui.geometry.Size(w * .58f, h * .76f), style = Stroke(w * .08f, cap = StrokeCap.Round))
-        }
+        Icon(Icons.AutoMirrored.Rounded.VolumeUp, "Play audio", tint = if (filled) C.Card else C.Ink, modifier = Modifier.size((size * 0.5).dp))
     }
+}
+
+/** Plain tappable icon (close, back, swap…). */
+@Composable
+fun IconBtn(icon: ImageVector, label: String, tint: Color = C.Ink, onClick: () -> Unit) {
+    Box(
+        Modifier.size(44.dp).clip(CircleShape).clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) { Icon(icon, label, tint = tint, modifier = Modifier.size(26.dp)) }
 }
 
 @Composable

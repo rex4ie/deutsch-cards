@@ -899,7 +899,7 @@
    },
    {
     "en": "I work part-/full-time.",
-    "de": "Ich habe eine Teilzeit- / Vollzeit- beschäftigung.",
+    "de": "Ich habe eine Teilzeit- / Vollzeitbeschäftigung.",
     "section": "",
     "audio": "006_10.webm"
    },
@@ -2051,7 +2051,7 @@
    },
    {
     "en": "back seat",
-    "de": "der Rücksitz ntpl fpl",
+    "de": "der Rücksitz",
     "section": "vocabulary",
     "audio": "012_19.webm"
    },
@@ -2457,7 +2457,7 @@
    },
    {
     "en": "speed limit",
-    "de": "die Geschwindig- keitsbegrenzung",
+    "de": "die Geschwindigkeitsbegrenzung",
     "section": "vocabulary",
     "audio": "014_15.webm"
    },
@@ -2481,7 +2481,7 @@
    },
    {
     "en": "car insurance",
-    "de": "die Kraftfahrzeug- versicherung",
+    "de": "die Kraftfahrzeugversicherung",
     "section": "vocabulary",
     "audio": "014_19.webm"
    },
@@ -2529,13 +2529,13 @@
    },
    {
     "en": "roadworks",
-    "de": "die Straßenarbeiten fpl",
+    "de": "die Straßenarbeiten",
     "section": "vocabulary",
     "audio": "014_27.webm"
    },
    {
     "en": "accessible parking space",
-    "de": "der Behinderten- parkplatz",
+    "de": "der Behindertenparkplatz",
     "section": "vocabulary",
     "audio": "014_28.webm"
    },
@@ -2699,7 +2699,7 @@
    },
    {
     "en": "speed camera",
-    "de": "die Geschwindig- keitskamera",
+    "de": "die Geschwindigkeitskamera",
     "section": "vocabulary",
     "audio": "015_23.webm"
    },
@@ -2785,7 +2785,7 @@
    },
    {
     "en": "jump leads",
-    "de": "die Starthilfekabel ntpl",
+    "de": "die Starthilfekabel",
     "section": "",
     "audio": "016_03.webm"
    },
@@ -2887,7 +2887,7 @@
    },
    {
     "en": "to catch the bus",
-    "de": "den Bus nehmen fpl",
+    "de": "den Bus nehmen",
     "section": "vocabulary",
     "audio": "016_20.webm"
    },
@@ -3009,7 +3009,7 @@
    },
    {
     "en": "crossbar",
-    "de": "die Querstange mpl",
+    "de": "die Querstange",
     "section": "bicycle",
     "audio": "017_10.webm"
    },
@@ -3173,7 +3173,7 @@
    },
    {
     "en": "high-speed train",
-    "de": "der Hochgeschwin­ digkeitszug",
+    "de": "der Hochgeschwindigkeitszug",
     "section": "vocabulary",
     "audio": "018_06.webm"
    },
@@ -3245,13 +3245,13 @@
    },
    {
     "en": "left luggage",
-    "de": "die Gepäckaufbe- wahrung",
+    "de": "die Gepäckaufbewahrung",
     "section": "vocabulary",
     "audio": "018_18.webm"
    },
    {
     "en": "railcard",
-    "de": "die Bahnkarte mpl",
+    "de": "die Bahnkarte",
     "section": "vocabulary",
     "audio": "018_19.webm"
    },
@@ -3269,7 +3269,7 @@
    },
    {
     "en": "leather gloves",
-    "de": "die Lederhandschuhe mpl",
+    "de": "die Lederhandschuhe",
     "section": "vocabulary",
     "audio": "018_22.webm"
    },
@@ -3325,7 +3325,7 @@
   "cards": [
    {
     "en": "seat reservation",
-    "de": "die Sitzplatz- reservierung",
+    "de": "die Sitzplatzreservierung",
     "section": "",
     "audio": "019_00.webm"
    },
@@ -3451,7 +3451,7 @@
    },
    {
     "en": "customs",
-    "de": "die Zollabfertigung fpl",
+    "de": "die Zollabfertigung",
     "section": "vocabulary",
     "audio": "019_21.webm"
    },
@@ -3517,7 +3517,7 @@
    },
    {
     "en": "economy class",
-    "de": "die Touristenklasse fpl",
+    "de": "die Touristenklasse",
     "section": "vocabulary",
     "audio": "019_32.webm"
    }
@@ -4035,7 +4035,7 @@
    },
    {
     "en": "estate agent",
-    "de": "der Immobilien­ händler / die Immobilienhändlerin",
+    "de": "der Immobilienhändler / die Immobilienhändlerin",
     "section": "types of building",
     "audio": "023_10.webm"
    },
@@ -4611,7 +4611,7 @@
    },
    {
     "en": "coffee table",
-    "de": "der Couchtisch fpl mpl",
+    "de": "der Couchtisch",
     "section": "lounge",
     "audio": "026_11.webm"
    },
@@ -5137,7 +5137,7 @@
    },
    {
     "en": "to clear the table",
-    "de": "den Tisch abräumen fpl",
+    "de": "den Tisch abräumen",
     "section": "vocabulary",
     "audio": "028_28.webm"
    }
@@ -5369,7 +5369,7 @@
    },
    {
     "en": "toiletries",
-    "de": "die Toilettenartikel mpl",
+    "de": "die Toilettenartikel",
     "section": "vocabulary",
     "audio": "030_08.webm"
    },
@@ -5435,7 +5435,7 @@
    },
    {
     "en": "to wash one's hands",
-    "de": "sich die Hände waschen mpl",
+    "de": "sich die Hände waschen",
     "section": "vocabulary",
     "audio": "030_19.webm"
    },
@@ -5489,7 +5489,7 @@
    },
    {
     "en": "to go to the toilet",
-    "de": "auf die Toilette gehen ntpl",
+    "de": "auf die Toilette gehen",
     "section": "vocabulary",
     "audio": "030_28.webm"
    }
@@ -5709,7 +5709,7 @@
    },
    {
     "en": "gardening gloves",
-    "de": "die Gartenhandschuhe mpl",
+    "de": "die Gartenhandschuhe",
     "section": "general",
     "audio": "032_05.webm"
    },
@@ -5811,7 +5811,7 @@
    },
    {
     "en": "path",
-    "de": "der Pfad ntpl",
+    "de": "der Pfad",
     "section": "garden",
     "audio": "032_22.webm"
    },
@@ -5841,7 +5841,7 @@
    },
    {
     "en": "Wellington boots",
-    "de": "die Gummistiefel mpl",
+    "de": "die Gummistiefel",
     "section": "garden",
     "audio": "032_27.webm"
    },
@@ -5871,7 +5871,7 @@
    },
    {
     "en": "flowerpot",
-    "de": "der Blumentopf fpl",
+    "de": "der Blumentopf",
     "section": "garden",
     "audio": "032_32.webm"
    }
@@ -5885,13 +5885,13 @@
   "cards": [
    {
     "en": "utility room",
-    "de": "der Hauswirt- schaftsraum",
+    "de": "der Hauswirtschaftsraum",
     "section": "vocabulary",
     "audio": "033_00.webm"
    },
    {
     "en": "household appliances",
-    "de": "die Haushaltsgeräte ntpl",
+    "de": "die Haushaltsgeräte",
     "section": "vocabulary",
     "audio": "033_01.webm"
    },
@@ -6011,13 +6011,13 @@
    },
    {
     "en": "dishwasher",
-    "de": "die Geschirr­ spülmaschine",
+    "de": "die Geschirrspülmaschine",
     "section": "vocabulary",
     "audio": "033_21.webm"
    },
    {
     "en": "dustbin",
-    "de": "der Mülleimer fpl",
+    "de": "der Mülleimer",
     "section": "vocabulary",
     "audio": "033_22.webm"
    },
@@ -6047,7 +6047,7 @@
    },
    {
     "en": "rubber gloves",
-    "de": "die Gummihandschuhe mpl",
+    "de": "die Gummihandschuhe",
     "section": "vocabulary",
     "audio": "033_27.webm"
    },
@@ -6249,7 +6249,7 @@
    },
    {
     "en": "to go shopping",
-    "de": "einkaufen gehen ntpl",
+    "de": "einkaufen gehen",
     "section": "vocabulary",
     "audio": "035_20.webm"
    },
@@ -6303,7 +6303,7 @@
    },
    {
     "en": "till point",
-    "de": "die Kasse fpl fpl",
+    "de": "die Kasse",
     "section": "vocabulary",
     "audio": "035_29.webm"
    }
@@ -6383,7 +6383,7 @@
    },
    {
     "en": "icing sugar",
-    "de": "der Puderzucker mpl ntpl",
+    "de": "der Puderzucker",
     "section": "groceries",
     "audio": "036_11.webm"
    },
@@ -6521,7 +6521,7 @@
    },
    {
     "en": "pepper",
-    "de": "der Pfeffer fpl fpl",
+    "de": "der Pfeffer",
     "section": "groceries",
     "audio": "036_34.webm"
    }
@@ -6553,7 +6553,7 @@
    },
    {
     "en": "crisps",
-    "de": "die Kartoffelchips mpl",
+    "de": "die Kartoffelchips",
     "section": "snacks",
     "audio": "037_03.webm"
    },
@@ -6643,7 +6643,7 @@
    },
    {
     "en": "produce",
-    "de": "die Produkte fpl fpl mpl ntpl",
+    "de": "die Produkte",
     "section": "vocabulary",
     "audio": "037_18.webm"
    },
@@ -6703,7 +6703,7 @@
    },
    {
     "en": "home-made",
-    "de": "selbstgemacht fpl pl",
+    "de": "selbstgemacht",
     "section": "vocabulary",
     "audio": "037_28.webm"
    }
@@ -7085,7 +7085,7 @@
    },
    {
     "en": "(fish)bone",
-    "de": "die Gräte fpl",
+    "de": "die Gräte",
     "section": "vocabulary",
     "audio": "039_21.webm"
    },
@@ -7237,7 +7237,7 @@
    },
    {
     "en": "lobster",
-    "de": "der Hummer fpl",
+    "de": "der Hummer",
     "section": "seafood",
     "audio": "040_12.webm"
    },
@@ -7461,7 +7461,7 @@
    },
    {
     "en": "goose",
-    "de": "die Gans fpl",
+    "de": "die Gans",
     "section": "vocabulary",
     "audio": "041_09.webm"
    },
@@ -7593,7 +7593,7 @@
    },
    {
     "en": "steak",
-    "de": "das Steak ntpl",
+    "de": "das Steak",
     "section": "vocabulary",
     "audio": "041_31.webm"
    }
@@ -7721,7 +7721,7 @@
    },
    {
     "en": "sour cream",
-    "de": "die saure Sahne ntpl",
+    "de": "die saure Sahne",
     "section": "vocabulary",
     "audio": "042_19.webm"
    },
@@ -7757,7 +7757,7 @@
    },
    {
     "en": "pancakes",
-    "de": "die Pfannkuchen mpl",
+    "de": "die Pfannkuchen",
     "section": "vocabulary",
     "audio": "042_25.webm"
    },
@@ -8025,19 +8025,19 @@
    },
    {
     "en": "headache",
-    "de": "die Kopfschmerzen mpl",
+    "de": "die Kopfschmerzen",
     "section": "hygiene",
     "audio": "044_11.webm"
    },
    {
     "en": "sore throat",
-    "de": "die Halsschmerzen mpl",
+    "de": "die Halsschmerzen",
     "section": "hygiene",
     "audio": "044_12.webm"
    },
    {
     "en": "stomachache",
-    "de": "die Magenschmerzen mpl",
+    "de": "die Magenschmerzen",
     "section": "hygiene",
     "audio": "044_13.webm"
    },
@@ -8061,7 +8061,7 @@
    },
    {
     "en": "insect repellent",
-    "de": "das Insekten- schutzmittel",
+    "de": "das Insektenschutzmittel",
     "section": "hygiene",
     "audio": "044_17.webm"
    },
@@ -8079,7 +8079,7 @@
    },
    {
     "en": "razor",
-    "de": "der Rasierer mpl",
+    "de": "der Rasierer",
     "section": "hygiene",
     "audio": "044_20.webm"
    },
@@ -8261,13 +8261,13 @@
    },
    {
     "en": "bootees",
-    "de": "die Babyschühchen ntpl",
+    "de": "die Babyschühchen",
     "section": "clothing",
     "audio": "045_18.webm"
    },
    {
     "en": "mittens",
-    "de": "die Fausthandschuhe mpl",
+    "de": "die Fausthandschuhe",
     "section": "clothing",
     "audio": "045_19.webm"
    },
@@ -8401,7 +8401,7 @@
    },
    {
     "en": "stationery",
-    "de": "die Schreibwaren fpl",
+    "de": "die Schreibwaren",
     "section": "vocabulary",
     "audio": "046_10.webm"
    },
@@ -8485,7 +8485,7 @@
    },
    {
     "en": "wet wipes",
-    "de": "die Feuchttücher ntpl",
+    "de": "die Feuchttücher",
     "section": "vocabulary",
     "audio": "046_24.webm"
    },
@@ -8601,7 +8601,7 @@
    },
    {
     "en": "toilets",
-    "de": "die Toilette fpl",
+    "de": "die Toilette",
     "section": "vocabulary",
     "audio": "047_10.webm"
    },
@@ -8733,7 +8733,7 @@
    },
    {
     "en": "accessories",
-    "de": "die Modeaccessoires ntpl",
+    "de": "die Modeaccessoires",
     "section": "vocabulary",
     "audio": "047_32.webm"
    }
@@ -8813,7 +8813,7 @@
    },
    {
     "en": "blouse",
-    "de": "die Bluse mpl mpl ntpl",
+    "de": "die Bluse",
     "section": "clothing",
     "audio": "048_11.webm"
    },
@@ -8885,7 +8885,7 @@
    },
    {
     "en": "bra",
-    "de": "der Büstenhalter ntpl ntpl fpl pl",
+    "de": "der Büstenhalter",
     "section": "clothing",
     "audio": "048_23.webm"
    },
@@ -8951,7 +8951,7 @@
    },
    {
     "en": "coat",
-    "de": "der Mantel fpl",
+    "de": "der Mantel",
     "section": "clothing",
     "audio": "048_34.webm"
    }
@@ -9031,7 +9031,7 @@
    },
    {
     "en": "braces",
-    "de": "die Hosenträger pl pl mpl",
+    "de": "die Hosenträger",
     "section": "accessories",
     "audio": "049_11.webm"
    },
@@ -9103,7 +9103,7 @@
    },
    {
     "en": "necklace",
-    "de": "die Halskette pl fpl mpl mpl",
+    "de": "die Halskette",
     "section": "accessories",
     "audio": "049_23.webm"
    },
@@ -9249,7 +9249,7 @@
    },
    {
     "en": "power tool",
-    "de": "das Elektrowerkzeug mpl mpl mpl fpl",
+    "de": "das Elektrowerkzeug",
     "section": "vocabulary",
     "audio": "050_10.webm"
    },
@@ -9315,7 +9315,7 @@
    },
    {
     "en": "paint",
-    "de": "die Farbe pl fpl mpl mpl mpl",
+    "de": "die Farbe",
     "section": "vocabulary",
     "audio": "050_21.webm"
    },
@@ -9381,7 +9381,7 @@
    },
    {
     "en": "spirit level",
-    "de": "die Wasserwaage fpl mpl mpl fpl",
+    "de": "die Wasserwaage",
     "section": "vocabulary",
     "audio": "050_32.webm"
    }
@@ -9407,7 +9407,7 @@
    },
    {
     "en": "antique shop",
-    "de": "die Antiquitäten- handlung",
+    "de": "die Antiquitätenhandlung",
     "section": "vocabulary",
     "audio": "051_02.webm"
    },
@@ -9449,7 +9449,7 @@
    },
    {
     "en": "electrical retailer",
-    "de": "der Elektrofachmarkt fpl",
+    "de": "der Elektrofachmarkt",
     "section": "vocabulary",
     "audio": "051_09.webm"
    },
@@ -9509,7 +9509,7 @@
    },
    {
     "en": "off-licence",
-    "de": "die Wein- und Spirituosen– handlung",
+    "de": "die Weinund Spirituosen– handlung",
     "section": "vocabulary",
     "audio": "051_19.webm"
    },
@@ -9651,13 +9651,13 @@
    },
    {
     "en": "poached eggs",
-    "de": "die verlorene Eier ntpl",
+    "de": "die verlorene Eier",
     "section": "vocabulary",
     "audio": "053_08.webm"
    },
    {
     "en": "to spread",
-    "de": "aufstreichen ntpl",
+    "de": "aufstreichen",
     "section": "vocabulary",
     "audio": "053_09.webm"
    },
@@ -9693,7 +9693,7 @@
    },
    {
     "en": "boiled eggs",
-    "de": "die gekochten Eier ntpl",
+    "de": "die gekochten Eier",
     "section": "vocabulary",
     "audio": "053_15.webm"
    },
@@ -9705,7 +9705,7 @@
    },
    {
     "en": "cereal",
-    "de": "die Frühstückscerealien pl ntpl",
+    "de": "die Frühstückscerealien",
     "section": "vocabulary",
     "audio": "053_17.webm"
    },
@@ -9827,7 +9827,7 @@
    },
    {
     "en": "chips",
-    "de": "die Pommes ntpl",
+    "de": "die Pommes",
     "section": "sides",
     "audio": "054_09.webm"
    },
@@ -9887,7 +9887,7 @@
    },
    {
     "en": "cucumber salad",
-    "de": "der Gurkensalat mpl",
+    "de": "der Gurkensalat",
     "section": "sides",
     "audio": "054_19.webm"
    },
@@ -9947,7 +9947,7 @@
    },
    {
     "en": "fried potatoes",
-    "de": "die Bratkartoffeln ntpl ntpl",
+    "de": "die Bratkartoffeln",
     "section": "sides",
     "audio": "054_29.webm"
    }
@@ -9979,7 +9979,7 @@
    },
    {
     "en": "beef olives",
-    "de": "die Rinderrouladen fpl",
+    "de": "die Rinderrouladen",
     "section": "classic german dishes",
     "audio": "055_03.webm"
    },
@@ -10015,7 +10015,7 @@
    },
    {
     "en": "blancmange",
-    "de": "der Pudding mpl",
+    "de": "der Pudding",
     "section": "desserts",
     "audio": "055_09.webm"
    },
@@ -10081,13 +10081,13 @@
    },
    {
     "en": "ice cream",
-    "de": "das Eis fpl fpl fpl fpl",
+    "de": "das Eis",
     "section": "desserts",
     "audio": "055_20.webm"
    },
    {
     "en": "potato fritters",
-    "de": "die Kartoffelpuffer mpl",
+    "de": "die Kartoffelpuffer",
     "section": "desserts",
     "audio": "055_21.webm"
    },
@@ -10141,7 +10141,7 @@
    },
    {
     "en": "syllabub",
-    "de": "die Weinschaumcreme fpl fpl",
+    "de": "die Weinschaumcreme",
     "section": "desserts",
     "audio": "055_30.webm"
    }
@@ -10215,7 +10215,7 @@
    },
    {
     "en": "to reserve a table",
-    "de": "einen Tisch reservieren ntpl",
+    "de": "einen Tisch reservieren",
     "section": "vocabulary",
     "audio": "056_10.webm"
    },
@@ -10341,7 +10341,7 @@
    },
    {
     "en": "wine glass",
-    "de": "das Weinglas mpl",
+    "de": "das Weinglas",
     "section": "vocabulary",
     "audio": "056_31.webm"
    }
@@ -10403,7 +10403,7 @@
    },
    {
     "en": "post",
-    "de": "der Beitrag pl",
+    "de": "der Beitrag",
     "section": "vocabulary",
     "audio": "057_08.webm"
    },
@@ -10445,13 +10445,13 @@
    },
    {
     "en": "fries",
-    "de": "die Pommes frites ntpl",
+    "de": "die Pommes frites",
     "section": "vocabulary",
     "audio": "057_15.webm"
    },
    {
     "en": "social media",
-    "de": "die sozialen Netzwerke ntpl",
+    "de": "die sozialen Netzwerke",
     "section": "vocabulary",
     "audio": "057_16.webm"
    },
@@ -10505,7 +10505,7 @@
    },
    {
     "en": "email",
-    "de": "die E-Mail ntpl",
+    "de": "die E-Mail",
     "section": "vocabulary",
     "audio": "057_25.webm"
    }
@@ -10591,7 +10591,7 @@
    },
    {
     "en": "landline",
-    "de": "das Festnetz ntpl",
+    "de": "das Festnetz",
     "section": "",
     "audio": "058_12.webm"
    },
@@ -10875,13 +10875,13 @@
    },
    {
     "en": "playground",
-    "de": "der Schulhof fpl",
+    "de": "der Schulhof",
     "section": "vocabulary",
     "audio": "059_23.webm"
    },
    {
     "en": "halls of residence",
-    "de": "die Studenten- wohnheime",
+    "de": "die Studentenwohnheime",
     "section": "vocabulary",
     "audio": "059_24.webm"
    },
@@ -10941,7 +10941,7 @@
    },
    {
     "en": "to study",
-    "de": "studieren ntpl",
+    "de": "studieren",
     "section": "vocabulary",
     "audio": "059_34.webm"
    }
@@ -11015,7 +11015,7 @@
    },
    {
     "en": "colleague",
-    "de": "der Kollege / die Kollegin mpl mpl",
+    "de": "der Kollege / die Kollegin",
     "section": "vocabulary",
     "audio": "060_10.webm"
    },
@@ -11081,7 +11081,7 @@
    },
    {
     "en": "presentation",
-    "de": "der Vortrag fpl",
+    "de": "der Vortrag",
     "section": "vocabulary",
     "audio": "060_21.webm"
    },
@@ -11317,7 +11317,7 @@
    },
    {
     "en": "sticky notes",
-    "de": "die Post-it-Notizen fpl",
+    "de": "die Post-it-Notizen",
     "section": "",
     "audio": "061_26.webm"
    },
@@ -11481,7 +11481,7 @@
    },
    {
     "en": "mail",
-    "de": "die Post pl",
+    "de": "die Post",
     "section": "vocabulary",
     "audio": "062_21.webm"
    },
@@ -11547,7 +11547,7 @@
    },
    {
     "en": "first-class",
-    "de": "prioritär fpl",
+    "de": "prioritär",
     "section": "vocabulary",
     "audio": "062_32.webm"
    }
@@ -12143,7 +12143,7 @@
    },
    {
     "en": "tourist office",
-    "de": "das Fremdenver­ kehrsbüro",
+    "de": "das Fremdenverkehrsbüro",
     "section": "vocabulary",
     "audio": "066_28.webm"
    },
@@ -12367,7 +12367,7 @@
    },
    {
     "en": "toiletries",
-    "de": "die Toilettenartikel mpl",
+    "de": "die Toilettenartikel",
     "section": "vocabulary",
     "audio": "067_28.webm"
    },
@@ -12507,7 +12507,7 @@
    },
    {
     "en": "parasol",
-    "de": "der Sonnenschirm fpl",
+    "de": "der Sonnenschirm",
     "section": "the seaside",
     "audio": "068_20.webm"
    },
@@ -12567,7 +12567,7 @@
    },
    {
     "en": "beach towel",
-    "de": "das Strandtuch ntpl",
+    "de": "das Strandtuch",
     "section": "the seaside",
     "audio": "068_30.webm"
    }
@@ -12641,7 +12641,7 @@
    },
    {
     "en": "song",
-    "de": "das Lied mpl",
+    "de": "das Lied",
     "section": "vocabulary",
     "audio": "069_10.webm"
    },
@@ -12701,7 +12701,7 @@
    },
    {
     "en": "live music",
-    "de": "die Livemusik fpl fpl",
+    "de": "die Livemusik",
     "section": "vocabulary",
     "audio": "069_20.webm"
    },
@@ -12841,7 +12841,7 @@
    },
    {
     "en": "cymbals",
-    "de": "das Becken mpl",
+    "de": "das Becken",
     "section": "musical instruments",
     "audio": "070_10.webm"
    },
@@ -12907,7 +12907,7 @@
    },
    {
     "en": "piano",
-    "de": "das Klavier pl",
+    "de": "das Klavier",
     "section": "musical instruments",
     "audio": "070_21.webm"
    },
@@ -12973,7 +12973,7 @@
    },
    {
     "en": "xylophone",
-    "de": "das Xylophon mpl",
+    "de": "das Xylophon",
     "section": "musical instruments",
     "audio": "070_32.webm"
    }
@@ -13125,7 +13125,7 @@
    },
    {
     "en": "hand (in cards)",
-    "de": "das Blatt fpl",
+    "de": "das Blatt",
     "section": "vocabulary",
     "audio": "071_23.webm"
    }
@@ -13181,7 +13181,7 @@
    },
    {
     "en": "craft fair",
-    "de": "der Kunsthand­ werksmarkt",
+    "de": "der Kunsthandwerksmarkt",
     "section": "vocabulary",
     "audio": "072_07.webm"
    },
@@ -13265,7 +13265,7 @@
    },
    {
     "en": "papercrafts",
-    "de": "die Papierbastelei fpl mpl",
+    "de": "die Papierbastelei",
     "section": "general crafts",
     "audio": "072_21.webm"
    },
@@ -13393,7 +13393,7 @@
    },
    {
     "en": "fabric",
-    "de": "der Stoff mpl",
+    "de": "der Stoff",
     "section": "sewing accessories",
     "audio": "073_07.webm"
    },
@@ -13441,7 +13441,7 @@
    },
    {
     "en": "pins",
-    "de": "die Stecknadeln fpl fpl fpl",
+    "de": "die Stecknadeln",
     "section": "sewing accessories",
     "audio": "073_15.webm"
    },
@@ -13489,7 +13489,7 @@
    },
    {
     "en": "tape measure",
-    "de": "das Maßband fpl",
+    "de": "das Maßband",
     "section": "sewing accessories",
     "audio": "073_23.webm"
    }
@@ -13559,7 +13559,7 @@
    },
    {
     "en": "teammate",
-    "de": "der Mannschafts- kamerad / die Mannschafts- kameradin",
+    "de": "der Mannschaftskamerad / die Mannschaftskameradin",
     "section": "vocabulary",
     "audio": "075_04.webm"
    },
@@ -13643,7 +13643,7 @@
    },
    {
     "en": "official",
-    "de": "der Offizielle / die Offizielle mpl",
+    "de": "der Offizielle / die Offizielle",
     "section": "vocabulary",
     "audio": "075_18.webm"
    },
@@ -13697,7 +13697,7 @@
    },
    {
     "en": "trophy",
-    "de": "die Trophäe mpl",
+    "de": "die Trophäe",
     "section": "vocabulary",
     "audio": "075_27.webm"
    }
@@ -13819,7 +13819,7 @@
    },
    {
     "en": "rowing machine",
-    "de": "das Rudergerät mpl mpl",
+    "de": "das Rudergerät",
     "section": "the gym",
     "audio": "076_18.webm"
    },
@@ -14007,7 +14007,7 @@
    },
    {
     "en": "assistant referee",
-    "de": "der Schiedrichter­ assistent / die Schiedrichter­ assistentin",
+    "de": "der Schiedrichterassistent / die Schiedrichterassistentin",
     "section": "ß",
     "audio": "077_20.webm"
    },
@@ -14019,7 +14019,7 @@
    },
    {
     "en": "football boots",
-    "de": "die Fußballschuhe mpl",
+    "de": "die Fußballschuhe",
     "section": "ß",
     "audio": "077_22.webm"
    },
@@ -14055,13 +14055,13 @@
    },
    {
     "en": "goalkeeper's gloves",
-    "de": "die Torwarthandschuhe mpl",
+    "de": "die Torwarthandschuhe",
     "section": "ß",
     "audio": "077_28.webm"
    },
    {
     "en": "shin pads",
-    "de": "die Schienbeinschützer mpl",
+    "de": "die Schienbeinschützer",
     "section": "ß",
     "audio": "077_29.webm"
    },
@@ -14225,7 +14225,7 @@
    },
    {
     "en": "mitts",
-    "de": "die Fanghandschuhe mpl",
+    "de": "die Fanghandschuhe",
     "section": "vocabulary",
     "audio": "078_23.webm"
    },
@@ -14237,7 +14237,7 @@
    },
    {
     "en": "skates",
-    "de": "die Schlittschuhe mpl",
+    "de": "die Schlittschuhe",
     "section": "vocabulary",
     "audio": "078_25.webm"
    },
@@ -14261,7 +14261,7 @@
    },
    {
     "en": "basketball shoes",
-    "de": "die Basketballschuhe mpl",
+    "de": "die Basketballschuhe",
     "section": "vocabulary",
     "audio": "078_29.webm"
    }
@@ -14511,7 +14511,7 @@
    },
    {
     "en": "armbands",
-    "de": "die Schwimmflügel mpl",
+    "de": "die Schwimmflügel",
     "section": "pool",
     "audio": "080_07.webm"
    },
@@ -14529,7 +14529,7 @@
    },
    {
     "en": "bodyboarding",
-    "de": "das Bodyboarding fpl",
+    "de": "das Bodyboarding",
     "section": "open water",
     "audio": "080_10.webm"
    },
@@ -14577,7 +14577,7 @@
    },
    {
     "en": "lifeguard",
-    "de": "der Rettungs- schwimmer / die Rettungsschwimmerin",
+    "de": "der Rettungsschwimmer / die Rettungsschwimmerin",
     "section": "open water",
     "audio": "080_18.webm"
    },
@@ -14881,7 +14881,7 @@
    },
    {
     "en": "ski gloves",
-    "de": "die Skihandschuhe mpl",
+    "de": "die Skihandschuhe",
     "section": "skiing and snowboarding",
     "audio": "082_05.webm"
    },
@@ -14905,7 +14905,7 @@
    },
    {
     "en": "fighter",
-    "de": "der Kämpfer / die Kämpferin ntpl mpl",
+    "de": "der Kämpfer / die Kämpferin",
     "section": "vocabulary",
     "audio": "082_09.webm"
    },
@@ -14917,7 +14917,7 @@
    },
    {
     "en": "ice skates",
-    "de": "die Schlittschuhe mpl",
+    "de": "die Schlittschuhe",
     "section": "vocabulary",
     "audio": "082_11.webm"
    },
@@ -14959,7 +14959,7 @@
    },
    {
     "en": "featherweight",
-    "de": "das Federgewicht mpl mpl",
+    "de": "das Federgewicht",
     "section": "vocabulary",
     "audio": "082_18.webm"
    },
@@ -14989,7 +14989,7 @@
    },
    {
     "en": "snowboarding boots",
-    "de": "die Snowboardschuhe mpl",
+    "de": "die Snowboardschuhe",
     "section": "vocabulary",
     "audio": "082_23.webm"
    },
@@ -15039,7 +15039,7 @@
    },
    {
     "en": "boxing gloves",
-    "de": "die Boxhandschuhe mpl",
+    "de": "die Boxhandschuhe",
     "section": "boxing",
     "audio": "083_03.webm"
    },
@@ -15129,7 +15129,7 @@
    },
    {
     "en": "sprint",
-    "de": "der Sprint mpl",
+    "de": "der Sprint",
     "section": "vocabulary",
     "audio": "083_18.webm"
    },
@@ -15395,7 +15395,7 @@
    },
    {
     "en": "hole-in-one",
-    "de": "das Hole-in-one fpl mpl",
+    "de": "das Hole-in-one",
     "section": "vocabulary",
     "audio": "084_34.webm"
    }
@@ -15707,7 +15707,7 @@
    },
    {
     "en": "genitals",
-    "de": "die Geschlechts­ organe",
+    "de": "die Geschlechtsorgane",
     "section": "vocabulary",
     "audio": "087_07.webm"
    },
@@ -15719,7 +15719,7 @@
    },
    {
     "en": "eyelash",
-    "de": "die Wimper ntpl",
+    "de": "die Wimper",
     "section": "vocabulary",
     "audio": "087_09.webm"
    },
@@ -15731,13 +15731,13 @@
    },
    {
     "en": "health insurance",
-    "de": "die Krankenver­ sicherung",
+    "de": "die Krankenversicherung",
     "section": "vocabulary",
     "audio": "087_11.webm"
    },
    {
     "en": "social security card",
-    "de": "die Sozialversicher­ ungskarte",
+    "de": "die Sozialversicherungskarte",
     "section": "vocabulary",
     "audio": "087_12.webm"
    },
@@ -15779,7 +15779,7 @@
    },
    {
     "en": "lips",
-    "de": "die Lippen fpl ntpl",
+    "de": "die Lippen",
     "section": "vocabulary",
     "audio": "087_19.webm"
    },
@@ -16209,7 +16209,7 @@
    },
    {
     "en": "blood",
-    "de": "das Blut mpl",
+    "de": "das Blut",
     "section": "vocabulary",
     "audio": "089_19.webm"
    },
@@ -16337,13 +16337,13 @@
    },
    {
     "en": "concussion",
-    "de": "die Gehirn­ erschütterung",
+    "de": "die Gehirnerschütterung",
     "section": "vocabulary",
     "audio": "090_09.webm"
    },
    {
     "en": "fall",
-    "de": "der Sturz fpl",
+    "de": "der Sturz",
     "section": "vocabulary",
     "audio": "090_10.webm"
    },
@@ -16409,7 +16409,7 @@
    },
    {
     "en": "whiplash",
-    "de": "das Schleudertrauma fpl",
+    "de": "das Schleudertrauma",
     "section": "vocabulary",
     "audio": "090_21.webm"
    },
@@ -16645,7 +16645,7 @@
    },
    {
     "en": "chicken pox",
-    "de": "die Windpocken fpl",
+    "de": "die Windpocken",
     "section": "vocabulary",
     "audio": "091_28.webm"
    }
@@ -16665,7 +16665,7 @@
    },
    {
     "en": "food poisoning",
-    "de": "die Lebensmittel­ vergiftung",
+    "de": "die Lebensmittelvergiftung",
     "section": "",
     "audio": "092_01.webm"
    },
@@ -16743,7 +16743,7 @@
    },
    {
     "en": "period pain",
-    "de": "die Regelschmerzen mpl",
+    "de": "die Regelschmerzen",
     "section": "vocabulary",
     "audio": "092_14.webm"
    },
@@ -16791,7 +16791,7 @@
    },
    {
     "en": "prescription",
-    "de": "das Rezept ntpl",
+    "de": "das Rezept",
     "section": "vocabulary",
     "audio": "092_22.webm"
    },
@@ -16863,7 +16863,7 @@
    },
    {
     "en": "medication",
-    "de": "die Medikamente ntpl",
+    "de": "die Medikamente",
     "section": "vocabulary",
     "audio": "092_34.webm"
    }
@@ -16919,7 +16919,7 @@
    },
    {
     "en": "wisdom teeth",
-    "de": "die Weisheitszähne mpl",
+    "de": "die Weisheitszähne",
     "section": "vocabulary",
     "audio": "093_07.webm"
    },
@@ -16967,7 +16967,7 @@
    },
    {
     "en": "toothache",
-    "de": "die Zahnschmerzen mpl",
+    "de": "die Zahnschmerzen",
     "section": "vocabulary",
     "audio": "093_15.webm"
    },
@@ -17101,13 +17101,13 @@
    },
    {
     "en": "conjunctivitis",
-    "de": "die Bindehaut­ entzündung",
+    "de": "die Bindehautentzündung",
     "section": "vocabulary",
     "audio": "094_08.webm"
    },
    {
     "en": "stye",
-    "de": "das Gerstenkorn fpl",
+    "de": "das Gerstenkorn",
     "section": "vocabulary",
     "audio": "094_09.webm"
    },
@@ -17179,7 +17179,7 @@
    },
    {
     "en": "contact lenses",
-    "de": "die Kontaktlinsen mpl fpl",
+    "de": "die Kontaktlinsen",
     "section": "vocabulary",
     "audio": "094_21.webm"
    },
@@ -17197,7 +17197,7 @@
    },
    {
     "en": "contact lens case",
-    "de": "der Kontaktlinsen­ behälter",
+    "de": "der Kontaktlinsenbehälter",
     "section": "vocabulary",
     "audio": "094_24.webm"
    },
@@ -17239,7 +17239,7 @@
    },
    {
     "en": "optician",
-    "de": "der Optiker / die Optikerin mpl",
+    "de": "der Optiker / die Optikerin",
     "section": "vocabulary",
     "audio": "094_31.webm"
    }
@@ -17289,7 +17289,7 @@
    },
    {
     "en": "radiographer",
-    "de": "der Röntgen- assistent / die Röntgenassistentin",
+    "de": "der Röntgenassistent / die Röntgenassistentin",
     "section": "vocabulary",
     "audio": "095_06.webm"
    },
@@ -17355,7 +17355,7 @@
    },
    {
     "en": "drip",
-    "de": "der Tropf fpl",
+    "de": "der Tropf",
     "section": "vocabulary",
     "audio": "095_17.webm"
    },
@@ -17415,7 +17415,7 @@
    },
    {
     "en": "Zimmer frame®",
-    "de": "der Rollator mpl",
+    "de": "der Rollator",
     "section": "vocabulary",
     "audio": "095_27.webm"
    }
@@ -17531,19 +17531,19 @@
    },
    {
     "en": "pregnancy test",
-    "de": "der Schwanger­ schaftstest",
+    "de": "der Schwangerschaftstest",
     "section": "general",
     "audio": "096_17.webm"
    },
    {
     "en": "sonographer",
-    "de": "der Ultraschalldia­ gnostiker / die Ultraschalldia­ gnostikerin fpl fpl",
+    "de": "der Ultraschalldiagnostiker / die Ultraschalldiagnostikerin",
     "section": "general",
     "audio": "096_18.webm"
    },
    {
     "en": "morning sickness",
-    "de": "die Schwanger­ schaftsübelkeit",
+    "de": "die Schwangerschaftsübelkeit",
     "section": "general",
     "audio": "096_19.webm"
    },
@@ -17689,7 +17689,7 @@
    },
    {
     "en": "reflexology",
-    "de": "die Reflexzonen­ massage",
+    "de": "die Reflexzonenmassage",
     "section": "therapies",
     "audio": "097_16.webm"
    },
@@ -19505,7 +19505,7 @@
    },
    {
     "en": "clouds",
-    "de": "die Wolken fpl",
+    "de": "die Wolken",
     "section": "sky",
     "audio": "108_03.webm"
    },
@@ -19553,7 +19553,7 @@
    },
    {
     "en": "sun",
-    "de": "die Sonne mpl",
+    "de": "die Sonne",
     "section": "sky",
     "audio": "108_11.webm"
    }
@@ -19719,7 +19719,7 @@
    },
    {
     "en": "birth",
-    "de": "die Geburt fpl ntpl",
+    "de": "die Geburt",
     "section": "vocabulary",
     "audio": "110_21.webm"
    },
@@ -19785,7 +19785,7 @@
    },
    {
     "en": "graduation",
-    "de": "die Abschlussfeier fpl fpl",
+    "de": "die Abschlussfeier",
     "section": "vocabulary",
     "audio": "110_32.webm"
    }
@@ -19979,7 +19979,7 @@
    },
    {
     "en": "Christmas lights",
-    "de": "die Weihnachts­ beleuchtung",
+    "de": "die Weihnachtsbeleuchtung",
     "section": "vocabulary",
     "audio": "111_30.webm"
    },
@@ -20047,7 +20047,7 @@
    },
    {
     "en": "Lent",
-    "de": "die Fastenzeit mpl",
+    "de": "die Fastenzeit",
     "section": "vocabulary",
     "audio": "112_07.webm"
    },

@@ -40,6 +40,12 @@ for pno, page in enumerate(doc):
             en = re.sub(r"\s+", " ", " ".join(cur_en)).strip()
             de = re.sub(r"\s+", " ", " ".join(cur_de)).strip()
             de = re.sub(r"\s*/\s*", " / ", de)
+            # join words hyphenated across lines ("Geschwindig- keit") and drop soft hyphens
+            en = re.sub("\u00ad\\s*", "", en)
+            de = re.sub("\u00ad\\s*", "", de)
+            de = re.sub(r"(\w)- ([a-z\u00e4\u00f6\u00fc\u00df])", r"\1\2", de)
+            # grammatical tags (mpl, fpl, ntpl) are often attached to the wrong card: drop them
+            de = re.sub(r"\s+(mpl|fpl|npl|ntpl|pl)\b", "", de)
             if not re.fullmatch(r"\d+", en):
                 cards.append({"en": en, "de": de, "section": section})
         cur_en, cur_de = [], []

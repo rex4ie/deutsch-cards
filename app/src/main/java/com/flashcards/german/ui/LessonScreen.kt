@@ -12,6 +12,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -106,7 +108,8 @@ fun LessonScreen(
 
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text("✕", color = C.Ink, fontSize = 22.sp, modifier = Modifier.clickable { confirmExit = true }.padding(end = 16.dp))
+            IconBtn(Icons.Rounded.Close, "Leave lesson") { confirmExit = true }
+            Spacer(Modifier.width(8.dp))
             ProgressBar(done.toFloat() / (done + queue.size).coerceAtLeast(1), Modifier.weight(1f), C.Green)
             Spacer(Modifier.width(12.dp))
             Label(if (streak >= 3) "$streak in a row" else "${done}/${done + queue.size}", if (streak >= 3) C.Red else C.Muted)
