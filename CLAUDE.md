@@ -16,6 +16,9 @@ from the owner's own class notes.
 
 ## "Update my lessons" workflow
 
+(For sessions started from the phone or the cloud, where `My Lessons/` doesn't exist, the
+notes are pasted into the chat instead; follow `UPDATE_FROM_PHONE.md`.)
+
 The owner pastes daily class notes into `My Lessons/notes/` (any format: word lists,
 grammar rules, sentences, teacher's notes). That folder is **gitignored and must never be
 committed or pushed**: the notes are private.
