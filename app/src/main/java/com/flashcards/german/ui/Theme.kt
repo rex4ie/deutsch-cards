@@ -139,7 +139,7 @@ fun SpeakerButton(size: Int = 52, filled: Boolean = true, onClick: () -> Unit) {
     ) {
         val fg = if (filled) C.Card else C.Ink
         Canvas(Modifier.size((size * 0.46).dp)) {
-            val w = size.width; val h = size.height
+            val w = this.size.width; val h = this.size.height
             val p = Path().apply {
                 moveTo(0f, h * .35f); lineTo(w * .25f, h * .35f); lineTo(w * .52f, h * .1f)
                 lineTo(w * .52f, h * .9f); lineTo(w * .25f, h * .65f); lineTo(0f, h * .65f); close()
