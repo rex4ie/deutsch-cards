@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": "2026-11-20",
+    "title": "Doch",
+    "date": "20 Nov 2026",
+    "topic": "grammar",
+    "cards": [
+      { "front": "Yes, to a negative question (German)", "back": "doch", "note": "Sind Sie nicht der Lehrer? - Doch, ich bin der Lehrer." },
+      { "front": "Sind Sie nicht der Lehrer?", "back": "Aren't you the teacher?", "note": "negative question: confirm it with doch" },
+      { "front": "Doch, ich bin der Lehrer.", "back": "Yes, I am the teacher.", "note": "doch answers a negative question with yes" }
+    ]
+  }
+]
