@@ -1,6 +1,6 @@
 package com.flashcards.german.ui
 
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,6 +36,8 @@ fun StudyScreen(
     var reviewed by remember { mutableIntStateOf(0) }
     var germanFront by remember { mutableStateOf(true) }
     var flipped by remember { mutableStateOf(false) }
+    // bumps on every answered card, so the next card gets a fresh, unrotated face
+    var turn by remember { mutableIntStateOf(0) }
     val counts = remember { mutableStateMapOf<Rating, Int>() }
 
     Column(Modifier.fillMaxSize().padding(20.dp)) {
@@ -68,7 +70,10 @@ fun StudyScreen(
         LaunchedEffect(card, flipped, germanFront) {
             if (germanFront && !flipped || !germanFront && flipped) repo.play(card)
         }
-        val rot by animateFloatAsState(if (flipped) 180f else 0f, tween(380), label = "flip")
+        // Only the front-to-back reveal spins; a new card appears straight away, already face up.
+        val rotation = remember(turn) { Animatable(0f) }
+        LaunchedEffect(turn, flipped) { rotation.animateTo(if (flipped) 180f else 0f, tween(380)) }
+        val rot = rotation.value
         val showBack = rot > 90f
         Box(
             Modifier.weight(1f).fillMaxWidth().padding(vertical = 20.dp)
@@ -128,6 +133,7 @@ fun StudyScreen(
                             queue.removeAt(0)
                             if (r == Rating.Again) queue.add(minOf(queue.size, 3), card) else reviewed++
                             flipped = false
+                            turn++
                         }
                     }
                 }

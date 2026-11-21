@@ -11,6 +11,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -47,6 +48,7 @@ fun HomeScaffold(
     onStudyDeck: (Deck, List<Card>, String, Boolean) -> Unit,
     onGender: (GenderMode) -> Unit,
     onGenderScope: (Boolean) -> Unit,
+    onSchedule: (String?) -> Unit,
     updateAvailable: Boolean,
     onAbout: () -> Unit,
 ) {
@@ -55,7 +57,7 @@ fun HomeScaffold(
         Box(Modifier.weight(1f)) {
             when (tab) {
                 Screen.Learn -> LearnPath(repo, progress, onOpen)
-                Screen.Review -> ReviewDashboard(repo, progress, onStudy)
+                Screen.Review -> ReviewDashboard(repo, progress, onStudy, onSchedule)
                 Screen.Artikel -> GenderHub(repo, progress, onGender, onGenderScope)
                 Screen.Finds -> MyLessonsScreen(repo, progress, Deck.Finds) { c, t, cram -> onStudyDeck(Deck.Finds, c, t, cram) }
                 else -> MyLessonsScreen(repo, progress, Deck.Class) { c, t, cram -> onStudyDeck(Deck.Class, c, t, cram) }
@@ -352,7 +354,7 @@ private fun Stone(status: Status, review: Boolean, onClick: () -> Unit) {
 // ---------------------------------------------------------------- Review dashboard
 
 @Composable
-private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boolean) -> Unit) {
+private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, String, Boolean) -> Unit, onSchedule: (String?) -> Unit) {
     val now = System.currentTimeMillis()
     val total = repo.allCards.size
     val seenCards = repo.allCards.filter { it.id in p.cards }
@@ -361,7 +363,8 @@ private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, Strin
     val mature = p.cards.values.count { it.intervalDays >= 21 }
     val young = seen - mature
 
-    Column(Modifier.fillMaxSize().padding(20.dp)) {
+    val buckets = remember(p.cards) { dueBuckets(repo, p, now) }
+    Column(Modifier.fillMaxSize().verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(20.dp)) {
         Label("Word bank")
         Spacer(Modifier.height(6.dp))
         Row(verticalAlignment = Alignment.Bottom) {
@@ -390,7 +393,9 @@ private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, Strin
                 }
             }
         }
-        Spacer(Modifier.weight(1f))
+        Spacer(Modifier.height(20.dp))
+        ComingUp(buckets, onSchedule)
+        Spacer(Modifier.height(24.dp))
         InkButton(
             if (due.isEmpty()) "No reviews due" else "Review due cards",
             Modifier.fillMaxWidth(), color = C.Accent, enabled = due.isNotEmpty(),

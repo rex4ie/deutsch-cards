@@ -20,6 +20,7 @@ sealed interface Screen {
     data object Mine : Screen
     data object Artikel : Screen
     data object Finds : Screen
+    data class Schedule(val open: String?) : Screen
     data class Gender(val mode: GenderMode, val nouns: List<GNoun>) : Screen
     data object About : Screen
     data class Play(val item: PathItem) : Screen
@@ -58,6 +59,7 @@ class MainActivity : ComponentActivity() {
                                 onStudy = { cards, title, cram -> screen = Screen.Study(cards, title, cram) },
                                 onStudyDeck = { deck, cards, title, cram -> screen = Screen.Study(cards, title, cram, deck) },
                                 onGenderScope = { learnedOnly -> update(progress.copy(genderLearnedOnly = learnedOnly)) },
+                                onSchedule = { open -> screen = Screen.Schedule(open) },
                                 onGender = { mode ->
                                     val (all, mine) = genderPool(repo, progress)
                                     screen = Screen.Gender(mode, pickNouns(mode, all, mine, progress.genderStats))
@@ -82,6 +84,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                             )
+                            is Screen.Schedule -> ScheduleScreen(repo, progress, s.open) { screen = tab }
                             Screen.About -> AboutScreen(repo, progress, updateState) { screen = tab }
                             is Screen.Play -> {
                                 val item = s.item
