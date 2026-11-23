@@ -5,9 +5,364 @@
     "date": "20 Nov 2026",
     "topic": "grammar",
     "cards": [
-      { "front": "Yes, to a negative question (German)", "back": "doch", "note": "Sind Sie nicht der Lehrer? - Doch, ich bin der Lehrer." },
-      { "front": "Sind Sie nicht der Lehrer?", "back": "Aren't you the teacher?", "note": "negative question: confirm it with doch" },
-      { "front": "Doch, ich bin der Lehrer.", "back": "Yes, I am the teacher.", "note": "doch answers a negative question with yes" }
+      {
+        "front": "Yes, to a negative question (German)",
+        "back": "doch",
+        "note": "Sind Sie nicht der Lehrer? - Doch, ich bin der Lehrer."
+      },
+      {
+        "front": "Sind Sie nicht der Lehrer?",
+        "back": "Aren't you the teacher?",
+        "note": "negative question: confirm it with doch"
+      },
+      {
+        "front": "Doch, ich bin der Lehrer.",
+        "back": "Yes, I am the teacher.",
+        "note": "doch answers a negative question with yes"
+      }
+    ]
+  },
+  {
+    "id": "2026-11-23",
+    "title": "Lektion 1 Kursbuch",
+    "date": "23 Nov 2026",
+    "topic": "vocab",
+    "cards": [
+      {
+        "front": "beginnen (er hat begonnen)",
+        "back": "to begin, to start",
+        "note": "Heute beginnt ein neuer Kurs. (Today a new course begins.)"
+      },
+      {
+        "front": "umher|gehen (er ist umhergegangen)",
+        "back": "to walk around",
+        "note": "Gehen Sie umher! (Walk around!)"
+      },
+      {
+        "front": "wählen (er hat gewählt)",
+        "back": "to choose, to select",
+        "note": "Wählen Sie drei Personen! (Choose three people!)"
+      },
+      {
+        "front": "grüßen (er hat gegrüßt)",
+        "back": "to greet",
+        "note": "Grüßen Sie! (Say hello!)"
+      },
+      {
+        "front": "sich vor|stellen (er hat sich vorgestellt)",
+        "back": "to introduce oneself",
+        "note": "Stellen Sie sich vor! (Introduce yourself!)"
+      },
+      {
+        "front": "die Kursliste",
+        "back": "course list",
+        "note": "pl. -n. Die Kursliste ist lang. (The course list is long.)"
+      },
+      {
+        "front": "das Profil",
+        "back": "profile",
+        "note": "pl. -e. Ich schreibe mein Profil. (I am writing my profile.)"
+      },
+      {
+        "front": "Freut mich sehr!",
+        "back": "Very nice to meet you!"
+      },
+      {
+        "front": "Uns geht's super.",
+        "back": "We're doing great."
+      },
+      {
+        "front": "Lange nicht gesehen!",
+        "back": "Long time no see!"
+      },
+      {
+        "front": "Wie geht's euch?",
+        "back": "How are you? (to several people)"
+      },
+      {
+        "front": "mit verteilten Rollen",
+        "back": "with assigned roles",
+        "note": "Lesen Sie in 3 und 4 die Dialoge 1 bis 3 mit verteilten Rollen! (Read dialogues 1 to 3 in groups of 3 and 4, with assigned roles.)"
+      },
+      {
+        "front": "Kopf oder Zahl?",
+        "back": "Heads or tails?",
+        "note": "Spielen Sie, Kopf oder Zahl? (Play heads or tails.)"
+      },
+      {
+        "front": "Mir geht's gut.",
+        "back": "I'm doing well."
+      },
+      {
+        "front": "die Karte",
+        "back": "card",
+        "note": "pl. -n. Schreiben Sie den Dialog aus 7 auf eine Karte! (Write the dialogue from 7 on a card.)"
+      },
+      {
+        "front": "ander-",
+        "back": "other",
+        "note": "Fragen Sie andere Gruppen! (Ask other groups.)"
+      },
+      {
+        "front": "abwechselnd",
+        "back": "alternately, in turns",
+        "note": "Abwechselnd eine Person fragt und antwortet für die Gruppe. (In turns, one person asks and answers for the group.)"
+      },
+      {
+        "front": "in Kontakt bleiben (er ist in Kontakt geblieben)",
+        "back": "to stay in touch",
+        "note": "Sie möchten in Kontakt bleiben? (Would you like to stay in touch?)"
+      },
+      {
+        "front": "fotografieren (er hat fotografiert)",
+        "back": "to photograph",
+        "note": "Fotografieren Sie die Kursliste mit dem Smartphone! (Photograph the course list with your smartphone.)"
+      },
+      {
+        "front": "einverstanden sein",
+        "back": "to agree, to be in agreement",
+        "note": "Alle müssen einverstanden sein. (Everyone has to agree.)"
+      },
+      {
+        "front": "das Thema",
+        "back": "topic, subject",
+        "note": "pl. Themen. Wählen Sie drei Themen! (Choose three topics.)"
+      },
+      {
+        "front": "über sich",
+        "back": "about oneself",
+        "note": "Schreiben Sie über sich! (Write about yourself.)"
+      },
+      {
+        "front": "das Alter",
+        "back": "age",
+        "note": "Wie alt bist du? (How old are you?)"
+      },
+      {
+        "front": "die Herkunft",
+        "back": "origin",
+        "note": "Diese Waren sind englischer Herkunft. (These goods are of English origin.)"
+      },
+      {
+        "front": "der Traum",
+        "back": "dream",
+        "note": "pl. Träume. Ich möchte gerne ... Das ist mein Traum. (I would like to ... That is my dream.)"
+      },
+      {
+        "front": "das Lieblingsland",
+        "back": "favourite country",
+        "note": "pl. Lieblingsländer. Mein Lieblingsland ist Deutschland. (My favourite country is Germany.)"
+      },
+      {
+        "front": "vor|lesen (er liest vor, hat vorgelesen)",
+        "back": "to read aloud",
+        "note": "Lesen Sie vor! (Read aloud.)"
+      },
+      {
+        "front": "raten (er rät, hat geraten)",
+        "back": "to guess",
+        "note": "Alle raten und fragen! (Everyone guesses and asks.)"
+      },
+      {
+        "front": "das Modell",
+        "back": "model, example",
+        "note": "pl. -e. Nehmen Sie die Sätze in 11 als Modell! (Take the sentences in 11 as a model.)"
+      },
+      {
+        "front": "senden an (er hat gesandt)",
+        "back": "to send to",
+        "note": "Senden Sie den Text mit WhatsApp an Ihre Partnerin/Ihren Partner! (Send the text by WhatsApp to your partner.)"
+      },
+      {
+        "front": "vergleichen (er hat verglichen)",
+        "back": "to compare",
+        "note": "Lesen und vergleichen Sie! (Read and compare.)"
+      },
+      {
+        "front": "die Vorderseite",
+        "back": "front side",
+        "note": "pl. -n. Schreiben Sie Karten, auf die Vorderseite nur Ihren Vornamen! (Write cards, with only your first name on the front.)"
+      },
+      {
+        "front": "die Rückseite",
+        "back": "back side",
+        "note": "pl. -n. Schreiben Sie Ihren Nachnamen auf die Rückseite! (Write your surname on the back.)"
+      },
+      {
+        "front": "zeigen (er hat gezeigt)",
+        "back": "to show",
+        "note": "Zeigen Sie Ihre Bücher! (Show your books.)"
+      },
+      {
+        "front": "das Au-pair-Mädchen",
+        "back": "au pair girl",
+        "note": "pl. no change. Feng arbeitet als Au-pair-Mädchen in Berlin. (Feng works as an au pair in Berlin.)"
+      },
+      {
+        "front": "die Gastfamilie",
+        "back": "host family",
+        "note": "pl. -n. Sie ist für die Kinder in der Gastfamilie. (She is there for the children in the host family.)"
+      },
+      {
+        "front": "die Au-pair-Oma",
+        "back": "au pair granny",
+        "note": "pl. -s. Was hat sie an die Agentur Au-pair-Oma geschickt? (What did she send to the Au-pair-Oma agency?)"
+      },
+      {
+        "front": "in die weite Welt",
+        "back": "out into the wide world",
+        "note": "Er ist in die weite Welt gereist. (He travelled out into the wide world.)"
+      },
+      {
+        "front": "geboren sein",
+        "back": "to be born",
+        "note": "Gisela ist 1962 geboren. (Gisela was born in 1962.)"
+      },
+      {
+        "front": "kennen|lernen (er hat kennengelernt)",
+        "back": "to get to know, to meet",
+        "note": "Gisela hat 1982 ihren Mann, Peter, kennengelernt. (In 1982 Gisela met her husband, Peter.)"
+      },
+      {
+        "front": "zusammen",
+        "back": "together",
+        "note": "Sie sind zusammen viel gereist. (They travelled a lot together.)"
+      },
+      {
+        "front": "die Verpflegung",
+        "back": "meals, catering (board)",
+        "note": "pl. -en. Unterkunft und Verpflegung waren sehr gut im Hotel \"Omid\". (Accommodation and meals were very good at the Hotel Omid.)"
+      },
+      {
+        "front": "frei",
+        "back": "free",
+        "note": "Bist du frei jetzt? (Are you free now?)"
+      },
+      {
+        "front": "zufrieden",
+        "back": "content, satisfied",
+        "note": "Die Familie ECO ist mit dem Leben in Rom zufrieden. (The ECO family is content with life in Rome.)"
+      },
+      {
+        "front": "wie",
+        "back": "like, as",
+        "note": "Die Kinder lieben Gisela wie ihre Großmutter. (The children love Gisela like their grandmother.)"
+      },
+      {
+        "front": "die Oma",
+        "back": "grandma",
+        "note": "pl. -s. Meine Oma ist letztes Jahr gestorben. (My grandma died last year.)"
+      },
+      {
+        "front": "folgend-",
+        "back": "following",
+        "note": "Unterstreichen Sie folgende Verben in 4 im Perfekt! (Underline the following verbs in 4 in the perfect tense.)"
+      },
+      {
+        "front": "das Verb",
+        "back": "verb",
+        "note": "pl. -en. Das Verb steht im Satz immer in zweiter Stelle. (In a sentence the verb is always in second position.)"
+      },
+      {
+        "front": "der Infinitiv",
+        "back": "infinitive",
+        "note": "pl. -e. Ergänzen Sie im Satz den Infinitiv! (Complete the sentence with the infinitive.)"
+      },
+      {
+        "front": "aus|drucken (er hat ausgedruckt)",
+        "back": "to print out",
+        "note": "Ich drucke die E-Mail aus. (I am printing out the email.)"
+      },
+      {
+        "front": "seit + Dativ",
+        "back": "since, for (a period of time)",
+        "note": "Caroline lernt seit vier Jahren Deutsch. (Caroline has been learning German for four years.)"
+      },
+      {
+        "front": "unterrichten (er hat unterrichtet)",
+        "back": "to teach",
+        "note": "Caroline möchte in Deutschland Englisch unterrichten. (Caroline would like to teach English in Germany.)"
+      },
+      {
+        "front": "der Master",
+        "back": "master's degree",
+        "note": "Jan möchte den Master machen. (Jan would like to do his master's.)"
+      },
+      {
+        "front": "den Master machen",
+        "back": "to do a master's degree",
+        "note": "Er hat seinen Master in Köln gemacht. (He did his master's in Cologne.)"
+      },
+      {
+        "front": "die Grenze",
+        "back": "border",
+        "note": "pl. -n. Er hat für \"Ärzte ohne Grenze\" in Afrika und Indien gearbeitet. (He worked for Doctors Without Borders in Africa and India.)"
+      },
+      {
+        "front": "Afrika",
+        "back": "Africa",
+        "note": "Afrika ist der drittgrößte Kontinent der Erde. (Africa is the third largest continent on Earth.)"
+      },
+      {
+        "front": "Indien",
+        "back": "India",
+        "note": "Ich will mit meiner Familie nach Indien reisen. (I want to travel to India with my family.)"
+      },
+      {
+        "front": "heiraten (er hat geheiratet)",
+        "back": "to marry",
+        "note": "1986 hat Peter mit Gisela geheiratet. (In 1986 Peter married Gisela.)"
+      },
+      {
+        "front": "später",
+        "back": "later",
+        "note": "Später habe ich verstanden, dass du Recht hattest. (Later I understood that you were right.)"
+      },
+      {
+        "front": "ein Kind bekommen (er hat ein Kind bekommen)",
+        "back": "to have a baby",
+        "note": "Sie hat zwei Jahre später noch ein Kind bekommen. (Two years later she had another child.)"
+      },
+      {
+        "front": "auf|stehen (er ist aufgestanden)",
+        "back": "to get up, to stand up",
+        "note": "Sie ist früh aufgestanden. (She got up early.)"
+      },
+      {
+        "front": "die Agentur",
+        "back": "agency",
+        "note": "pl. -en. Gisela hat im Internet über die Agentur Au-pair-Oma gelesen. (Gisela read about the Au-pair-Oma agency on the internet.)"
+      },
+      {
+        "front": "senden (er hat gesandt)",
+        "back": "to send",
+        "note": "Die Agentur sendet Frauen über fünfzig als Au-Pairs ins Ausland. (The agency sends women over fifty abroad as au pairs.)"
+      },
+      {
+        "front": "denken (er hat gedacht)",
+        "back": "to think",
+        "note": "Gisela hat gedacht \"jetzt oder nie\". (Gisela thought \"now or never\".)"
+      },
+      {
+        "front": "schicken (er hat geschickt)",
+        "back": "to send",
+        "note": "Sie hat sofort ihren Lebenslauf an die Agentur geschickt. (She immediately sent her CV to the agency.)"
+      },
+      {
+        "front": "das Glück",
+        "back": "luck, good fortune",
+        "note": "Sie hat Glück gehabt und die Stelle bekommen. (She was lucky and got the job.)"
+      },
+      {
+        "front": "die Stelle",
+        "back": "job, position",
+        "note": "pl. -n. Ich habe eine Stelle als Verkäufer in einem Buchladen. (I have a job as a salesperson in a bookshop.)"
+      },
+      {
+        "front": "die Unterkunft",
+        "back": "accommodation",
+        "note": "pl. Unterkünfte. Unterkunft und Verpflegung sind frei. (Accommodation and meals are free.)"
+      }
     ]
   }
 ]
