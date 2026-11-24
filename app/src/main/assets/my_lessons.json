@@ -364,5 +364,531 @@
         "note": "pl. Unterkünfte. Unterkunft und Verpflegung sind frei. (Accommodation and meals are free.)"
       }
     ]
+  },
+  {
+    "id": "2026-11-24",
+    "title": "Lektion 1 Kursbuch (2)",
+    "date": "24 Nov 2026",
+    "topic": "vocab",
+    "cards": [
+      {
+        "front": "an|sehen (er sieht an, hat angesehen)",
+        "back": "to look at",
+        "note": "Sehen Sie das Foto auf Seite 9 an! (Look at the photo on page 9.)"
+      },
+      {
+        "front": "warum?",
+        "back": "why?",
+        "note": "Warum lernst du denn Deutsch? (Why are you learning German, then?)"
+      },
+      {
+        "front": "zu viert",
+        "back": "in a group of four, four of us",
+        "note": "Wir sitzen zu viert im Auto. (The four of us are sitting in the car.)"
+      },
+      {
+        "front": "vergleichen mit (er hat verglichen)",
+        "back": "to compare with",
+        "note": "Vergleichen Sie mit einem anderen Paar Ihre Fragen! (Compare your questions with another pair.)"
+      },
+      {
+        "front": "das Paar",
+        "back": "pair, couple",
+        "note": "pl. -e. Was kosten drei Paar Schuhe? (How much are three pairs of shoes?)"
+      },
+      {
+        "front": "diskutieren (er hat diskutiert)",
+        "back": "to discuss",
+        "note": "Ich diskutiere mit ihm über das Thema \"Krieg\". (I am discussing the topic of war with him.)"
+      },
+      {
+        "front": "best-",
+        "back": "best",
+        "note": "Wählen Sie die vier besten Fragen! (Choose the four best questions.)"
+      },
+      {
+        "front": "interessieren",
+        "back": "to interest",
+        "note": "Das interessiert mich auch. (That interests me too.)"
+      },
+      {
+        "front": "die Idee",
+        "back": "idea",
+        "note": "pl. -n. Das war eine gute Idee. (That was a good idea.)"
+      },
+      {
+        "front": "uninteressant",
+        "back": "uninteresting",
+        "note": "Die Frage ist uninteressant. (The question is uninteresting.)"
+      },
+      {
+        "front": "persönlich",
+        "back": "personal",
+        "note": "Die Frage ist zu persönlich. (The question is too personal.)"
+      },
+      {
+        "front": "global",
+        "back": "global",
+        "note": "Ich hoffe, dass für das Coronavirus globale Lösungen gefunden werden. (I hope global solutions are found for the coronavirus.)"
+      },
+      {
+        "front": "immer mehr",
+        "back": "more and more",
+        "note": "Immer mehr junge Menschen kommen nach Berlin. (More and more young people are coming to Berlin.)"
+      },
+      {
+        "front": "das Nomen",
+        "back": "noun",
+        "note": "pl. Nomen. Unterstreichen Sie die Nomen! (Underline the nouns.)"
+      },
+      {
+        "front": "die Station",
+        "back": "stage, stop",
+        "note": "pl. -en. Schreiben Sie fünf Sätze über wichtige Stationen! (Write five sentences about important stages.)"
+      },
+      {
+        "front": "das Beispiel",
+        "back": "example",
+        "note": "pl. -e. Nehmen Sie den Text in 4 als Beispiel! (Take the text in 4 as an example.)"
+      },
+      {
+        "front": "tauschen mit (er hat getauscht)",
+        "back": "to swap with",
+        "note": "Tauschen Sie die Texte mit Ihrer Partnerin/Ihrem Partner! (Swap the texts with your partner.)"
+      },
+      {
+        "front": "die Frage",
+        "back": "question",
+        "note": "pl. -n. Schreiben Sie eine Frage unter den Text! (Write a question under the text.)"
+      },
+      {
+        "front": "unter",
+        "back": "under, below, fewer than",
+        "note": "Es sind unter 50 Leute beim Konzert. (There are fewer than 50 people at the concert.)"
+      },
+      {
+        "front": "sammeln (er hat gesammelt)",
+        "back": "to collect",
+        "note": "Sammeln Sie Texte, Poster etc.! (Collect texts, posters etc.)"
+      },
+      {
+        "front": "etc. (= et cetera)",
+        "back": "and so on",
+        "note": "Ich liebe persische Küche (Reis, Kebab etc.). (I love Persian cuisine: rice, kebab and so on.)"
+      },
+      {
+        "front": "der Fortschritt",
+        "back": "progress",
+        "note": "pl. -e. Sie können die Texte immer wieder lesen und Ihren Fortschritt messen. (You can read the texts again and again and measure your progress.)"
+      },
+      {
+        "front": "messen (er misst, er hat gemessen)",
+        "back": "to measure",
+        "note": "Ich messe, wie hoch die Tür ist. (I am measuring how tall the door is.)"
+      },
+      {
+        "front": "weil",
+        "back": "because",
+        "note": "Mein Freund konnte nicht kommen, weil er krank war. (My friend couldn't come because he was ill.) Im Büro habe ich kein Problem, weil alle Englisch sprechen. (At the office I have no problem because everyone speaks English.)"
+      },
+      {
+        "front": "Europa",
+        "back": "Europe",
+        "note": "Spanien und Frankreich liegen in Europa. (Spain and France are in Europe.)"
+      },
+      {
+        "front": "ganz",
+        "back": "whole, entire",
+        "note": "Ich will dir die ganze Wahrheit sagen. (I want to tell you the whole truth.)"
+      },
+      {
+        "front": "die Lingua franca",
+        "back": "lingua franca",
+        "note": "Da ist Englisch die Lingua franca. (There, English is the lingua franca.)"
+      },
+      {
+        "front": "der Italiener",
+        "back": "Italian (man)",
+        "note": "pl. no change. Er ist Italiener. (He is Italian.)"
+      },
+      {
+        "front": "deutsch-italienisch",
+        "back": "German-Italian",
+        "note": "Dieses Wörterbuch ist deutsch-italienisch. (This dictionary is German-Italian.)"
+      },
+      {
+        "front": "natürlich",
+        "back": "of course, naturally",
+        "note": "Ich lerne natürlich Deutsch. (Of course I'm learning German.)"
+      },
+      {
+        "front": "montags",
+        "back": "on Mondays",
+        "note": "Montags gehe ich in den Deutschkurs. (On Mondays I go to the German course.)"
+      },
+      {
+        "front": "mittwochs",
+        "back": "on Wednesdays",
+        "note": "Mittwochs gehe ich ins Fitnessstudio. (On Wednesdays I go to the gym.)"
+      },
+      {
+        "front": "der Melting Pot",
+        "back": "melting pot",
+        "note": "pl. -s. Berlin ist ein Melting Pot, fast wie New York. (Berlin is a melting pot, almost like New York.)"
+      },
+      {
+        "front": "der Spielplatz",
+        "back": "playground",
+        "note": "pl. Spielplätze. Auf dem Spielplatz in Kreuzberg hörst du alle Sprachen! (On the playground in Kreuzberg you hear all languages.)"
+      },
+      {
+        "front": "China",
+        "back": "China",
+        "note": "Ich komme aus China. (I come from China.)"
+      },
+      {
+        "front": "der Super-Intensiv-Kurs",
+        "back": "super-intensive course",
+        "note": "pl. -e. Ich habe fünfmal pro Woche einen Super-Intensiv-Kurs besucht. (I attended a super-intensive course five times a week.)"
+      },
+      {
+        "front": "die Prüfung",
+        "back": "exam",
+        "note": "pl. -en. Die mündliche Prüfung war sehr schwer. (The oral exam was very hard.)"
+      },
+      {
+        "front": "eine Prüfung machen (er hat die Prüfung gemacht)",
+        "back": "to take an exam",
+        "note": "Ich habe die C1-Prüfung gemacht. (I took the C1 exam.)"
+      },
+      {
+        "front": "die Universitätsklinik",
+        "back": "university hospital",
+        "note": "pl. -en. Heute arbeite ich in der Universitätsklinik. (Today I work at the university hospital.)"
+      },
+      {
+        "front": "die Kultur",
+        "back": "culture",
+        "note": "pl. -en. Das Land hat eine hohe Kultur. (The country has a high culture.)"
+      },
+      {
+        "front": "berichten (er hat berichtet)",
+        "back": "to report, to tell",
+        "note": "Er berichtet mir alles. (He tells me everything.)"
+      },
+      {
+        "front": "der Sprachkurs",
+        "back": "language course",
+        "note": "pl. -e. Ich habe einen Sprachkurs besucht und Deutsch gelernt. (I attended a language course and learned German.)"
+      },
+      {
+        "front": "das Motto",
+        "back": "motto",
+        "note": "pl. -s. Mein Motto: Du willst in Berlin bleiben und erfolgreich sein? Ganz klar! Dann musst du Deutsch lernen. (My motto: you want to stay in Berlin and be successful? Of course! Then you have to learn German.)"
+      },
+      {
+        "front": "erfolgreich",
+        "back": "successful",
+        "note": "Ich bin erfolgreich in meinem beruflichen Leben. (I am successful in my professional life.)"
+      },
+      {
+        "front": "Ganz klar, ...",
+        "back": "Quite clearly, ...",
+        "note": "Ich sage meinem Sohn ganz klar, was ich will. (I tell my son quite clearly what I want.)"
+      },
+      {
+        "front": "selbstständig",
+        "back": "self-employed, independent",
+        "note": "Ich bin selbstständig. (I am self-employed.)"
+      },
+      {
+        "front": "kontrollieren (er hat kontrolliert)",
+        "back": "to check, to inspect",
+        "note": "Ich kontrolliere IT-Projekte für deutsche und spanische Firmen. (I check IT projects for German and Spanish companies.)"
+      },
+      {
+        "front": "das IT-Projekt",
+        "back": "IT project",
+        "note": "pl. -e. Das IT-Projekt muss man genau planen. (You have to plan the IT project carefully.)"
+      },
+      {
+        "front": "das Projekt",
+        "back": "project",
+        "note": "pl. -e. Dieses Projekt dauert ziemlich lange. (This project takes quite long.)"
+      },
+      {
+        "front": "deutsch",
+        "back": "German",
+        "note": "Ich übersetze den Text ins Deutsche. (I translate the text into German.)"
+      },
+      {
+        "front": "spanisch",
+        "back": "Spanish",
+        "note": "Spanische Texte sind schwer. (Spanish texts are difficult.)"
+      },
+      {
+        "front": "die Kauffrau",
+        "back": "businesswoman, merchant",
+        "note": "pl. -en. Sie ist Kauffrau. (She is a businesswoman.)"
+      },
+      {
+        "front": "das Büromanagement",
+        "back": "office management",
+        "note": "pl. -s. Er studiert Büromanagement. (He studies office management.)"
+      },
+      {
+        "front": "benutzen (er hat benutzt)",
+        "back": "to use",
+        "note": "Benutzen Sie auch ein Wörterbuch! (Also use a dictionary.)"
+      },
+      {
+        "front": "das Wörterbuch",
+        "back": "dictionary",
+        "note": "pl. Wörterbücher. Mein Wörterbuch hat 30.000 deutsche Beispielsätze. (My dictionary has 30,000 German example sentences.)"
+      },
+      {
+        "front": "was heißt ...?",
+        "back": "what does ... mean? (a word)",
+        "note": "Was heißt dieses Wort? (What does this word mean?)"
+      },
+      {
+        "front": "was bedeutet ...?",
+        "back": "what does ... mean?",
+        "note": "Was bedeutet dieses Zeichen? (What does this sign mean?)"
+      },
+      {
+        "front": "bedeuten (es hat bedeutet)",
+        "back": "to mean",
+        "note": "Grünes Licht im Verkehr bedeutet, dass man fahren kann. (A green light in traffic means you can go.)"
+      },
+      {
+        "front": "dienstags",
+        "back": "on Tuesdays",
+        "note": "Dienstags geht Fabiana in den Deutschkurs. (On Tuesdays Fabiana goes to the German course.)"
+      },
+      {
+        "front": "der Donnerstag",
+        "back": "Thursday",
+        "note": "Am Donnerstag treibe ich Sport. (On Thursday I do sports.)"
+      },
+      {
+        "front": "korrigieren",
+        "back": "to correct",
+        "note": "Korrigieren Sie die Sätze! (Correct the sentences.)"
+      },
+      {
+        "front": "der Weil-Satz",
+        "back": "weil clause",
+        "note": "pl. Weil-Sätze. Markieren Sie die Weil-Sätze! (Mark the weil clauses.)"
+      },
+      {
+        "front": "die konjugierten Verben",
+        "back": "conjugated verbs",
+        "note": "Unterstreichen Sie die konjugierten Verben! (Underline the conjugated verbs.)"
+      },
+      {
+        "front": "finden (er hat gefunden)",
+        "back": "to find, to think (opinion)",
+        "note": "Ich finde Deutsch super. (I think German is great.)"
+      },
+      {
+        "front": "Notizen machen (er hat Notizen gemacht)",
+        "back": "to take notes",
+        "note": "Machen Sie Notizen! (Take notes.)"
+      },
+      {
+        "front": "zeichnen (er hat gezeichnet)",
+        "back": "to draw",
+        "note": "Zeichnen Sie die Person! (Draw the person.)"
+      },
+      {
+        "front": "reagieren (er hat reagiert)",
+        "back": "to react",
+        "note": "Warum reagierst du immer unfreundlich auf meine Frage? (Why do you always react unfriendly to my question?)"
+      },
+      {
+        "front": "Das ist wirklich interessant!",
+        "back": "That's really interesting!"
+      },
+      {
+        "front": "wirklich (+ Adjektiv)",
+        "back": "really, truly",
+        "note": "Deine Augen sind wirklich schön. (Your eyes are really beautiful.)"
+      },
+      {
+        "front": "Das ist neu für mich!",
+        "back": "That's new to me!"
+      },
+      {
+        "front": "Ach, ja!/?",
+        "back": "Oh, I see! / Oh, really?",
+        "note": "Said when you suddenly remember something, or when you doubt something."
+      },
+      {
+        "front": "der Dativ",
+        "back": "dative case",
+        "note": "Dieses Verb braucht ein Dativobjekt. (This verb needs a dative object.)"
+      },
+      {
+        "front": "das Partizip",
+        "back": "participle",
+        "note": "pl. Partizipien. In folgenden Wörtern trennen Sie die Partizipien! (In the following words, separate the participles.)"
+      },
+      {
+        "front": "trennbar",
+        "back": "separable",
+        "note": "Markieren Sie die trennbaren Verben in den Sätzen! (Mark the separable verbs in the sentences.)"
+      },
+      {
+        "front": "die Präposition",
+        "back": "preposition",
+        "note": "pl. -en. Ergänzen Sie die Präpositionen in den Sätzen! (Complete the prepositions in the sentences.)"
+      },
+      {
+        "front": "der Nebensatz",
+        "back": "subordinate clause",
+        "note": "pl. Nebensätze. Im Nebensatz steht das Verb am Ende. (In the subordinate clause the verb is at the end.)"
+      },
+      {
+        "front": "der Hauptsatz",
+        "back": "main clause",
+        "note": "pl. Hauptsätze. Im Hauptsatz steht das Verb immer an zweiter Position. (In the main clause the verb is always in second position.)"
+      },
+      {
+        "front": "der Grund",
+        "back": "reason",
+        "note": "pl. Gründe. Es gibt persönliche Gründe, dass ich nicht kommen konnte. (There are personal reasons why I couldn't come.)"
+      },
+      {
+        "front": "Amerika",
+        "back": "America",
+        "note": "Er fährt nach Amerika. (He is travelling to America.)"
+      },
+      {
+        "front": "der Artikel",
+        "back": "article",
+        "note": "pl. no change. Lesen Sie den Artikel. (Read the article.)"
+      },
+      {
+        "front": "zu|ordnen (er hat zugeordnet)",
+        "back": "to assign, to match",
+        "note": "Ordnen Sie Zahlen und Nomen zu! (Match the numbers and the nouns.)"
+      },
+      {
+        "front": "der Meter",
+        "back": "metre",
+        "note": "pl. no change. Ein Meter hat hundert Zentimeter. (A metre has a hundred centimetres.)"
+      },
+      {
+        "front": "die Geisterstadt",
+        "back": "ghost town",
+        "note": "pl. Geisterstädte. In Nevada ist Berlin nur noch eine Geisterstadt, Menschen gibt es nicht mehr. (In Nevada, Berlin is only a ghost town; there are no people any more.)"
+      },
+      {
+        "front": "klar",
+        "back": "clear, of course",
+        "note": "Klar, Berlin liegt in Deutschland. (Of course, Berlin is in Germany.)"
+      },
+      {
+        "front": "das Brandenburger Tor",
+        "back": "Brandenburg Gate",
+        "note": "Berlin hat viele Sehenswürdigkeiten wie das Brandenburger Tor und viele Orte mehr. (Berlin has many sights such as the Brandenburg Gate and many more places.)"
+      },
+      {
+        "front": "Nordamerika",
+        "back": "North America",
+        "note": "In Nordamerika hat der Ortsname Berlin eine lange Tradition. (In North America the place name Berlin has a long tradition.)"
+      },
+      {
+        "front": "der Ortsname",
+        "back": "place name",
+        "note": "pl. -n. Viele deutsche Ortsnamen stammen aus dem Mittelalter. (Many German place names date from the Middle Ages.)"
+      },
+      {
+        "front": "die Tradition",
+        "back": "tradition",
+        "note": "pl. -en. In jeder Kultur gibt es natürlich viele verschiedene Traditionen. (In every culture there are of course many different traditions.)"
+      },
+      {
+        "front": "größt-",
+        "back": "largest, biggest",
+        "note": "Die größte Stadt mit fast 40.000 Einwohnern liegt in Wisconsin. (The largest town, with almost 40,000 inhabitants, is in Wisconsin.)"
+      },
+      {
+        "front": "der Namensvetter",
+        "back": "namesake",
+        "note": "pl. no change. Ein ganz kleiner Namensvetter der deutschen Hauptstadt in North Dakota kommt nur auf 38 Einwohner. (A very small namesake of the German capital in North Dakota has only 38 inhabitants.)"
+      },
+      {
+        "front": "die Hauptstadt",
+        "back": "capital city",
+        "note": "pl. Hauptstädte. Teheran ist die Hauptstadt vom Iran. (Tehran is the capital of Iran.)"
+      },
+      {
+        "front": "auf|wachsen (er wächst auf, ist aufgewachsen)",
+        "back": "to grow up",
+        "note": "Ich bin in Berlin geboren und aufgewachsen. (I was born and grew up in Berlin.)"
+      },
+      {
+        "front": "immer noch",
+        "back": "still",
+        "note": "Ich liebe immer noch meine ehemalige Deutschlehrerin. (I still love my former German teacher.)"
+      },
+      {
+        "front": "die Heimat",
+        "back": "homeland, home",
+        "note": "Berlin ist meine Heimat. (Berlin is my home.)"
+      },
+      {
+        "front": "den Namen tragen",
+        "back": "to bear the name",
+        "note": "118 Orte auf der Welt tragen den Namen Berlin. (118 places in the world bear the name Berlin.)"
+      },
+      {
+        "front": "die technische Universität",
+        "back": "technical university",
+        "note": "Was lernt man an der technischen Universität? (What does one learn at the technical university?)"
+      },
+      {
+        "front": "entdecken (er hat entdeckt)",
+        "back": "to discover",
+        "note": "Viele Menschen haben wertvolle Sachen entdeckt. (Many people have discovered valuable things.)"
+      },
+      {
+        "front": "die Hütte",
+        "back": "hut",
+        "note": "pl. -n. Das ist eine Hütte aus Holz. (That is a hut made of wood.)"
+      },
+      {
+        "front": "zum Beispiel",
+        "back": "for example",
+        "note": "Viele Tiere, zum Beispiel Elefanten, haben ein gutes Gedächtnis. (Many animals, for example elephants, have a good memory.)"
+      },
+      {
+        "front": "Argentinien",
+        "back": "Argentina",
+        "note": "Argentinien ist ein Land in Südamerika. (Argentina is a country in South America.)"
+      },
+      {
+        "front": "die Höhe",
+        "back": "height, altitude",
+        "note": "Berlin liegt in den Bergen auf 4.500 Meter Höhe. (Berlin lies in the mountains at 4,500 metres altitude.)"
+      },
+      {
+        "front": "die Großstadt",
+        "back": "big city",
+        "note": "Ich lebe in der Großstadt. (I live in the big city.)"
+      },
+      {
+        "front": "welch-",
+        "back": "which; some (of those)",
+        "note": "Gibt es welche in Ihrem Land? (Are there some in your country?)"
+      },
+      {
+        "front": "googeln",
+        "back": "to google",
+        "note": "Googeln und sprechen Sie! (Google and talk.)"
+      }
+    ]
   }
 ]
