@@ -22,6 +22,7 @@ sealed interface Screen {
     data object Finds : Screen
     data class Schedule(val open: String?) : Screen
     data class Gender(val mode: GenderMode, val nouns: List<GNoun>) : Screen
+    data class Verbs(val questions: List<VerbQ>) : Screen
     data object About : Screen
     data class Play(val item: PathItem) : Screen
     data class Study(val cards: List<Card>, val title: String, val cram: Boolean, val deck: Deck? = null) : Screen
@@ -59,6 +60,13 @@ class MainActivity : ComponentActivity() {
                                 onStudy = { cards, title, cram -> screen = Screen.Study(cards, title, cram) },
                                 onStudyDeck = { deck, cards, title, cram -> screen = Screen.Study(cards, title, cram, deck) },
                                 onGenderScope = { learnedOnly -> update(progress.copy(genderLearnedOnly = learnedOnly)) },
+                                onPracticeTab = { t -> update(progress.copy(practiceTab = t)) },
+                                onVerbForms = { c -> update(progress.copy(verbForms = c.name)) },
+                                onVerbs = { mode ->
+                                    val choice = runCatching { VerbFormChoice.valueOf(progress.verbForms) }.getOrDefault(VerbFormChoice.Both)
+                                    val qs = pickVerbQs(mode, repo.verbs, choice, progress.verbStats)
+                                    if (qs.isNotEmpty()) screen = Screen.Verbs(qs)
+                                },
                                 onSchedule = { open -> screen = Screen.Schedule(open) },
                                 onGender = { mode ->
                                     val (all, mine) = genderPool(repo, progress)
@@ -82,6 +90,20 @@ class MainActivity : ComponentActivity() {
                                         progress.copy(genderStats = stats, bestSprint = maxOf(progress.bestSprint, res.sprintScore ?: 0))
                                             .let { if (answered > 0) it.withActivity(res.right.values.sum()) else it }
                                     )
+                                },
+                            )
+                            is Screen.Verbs -> VerbGame(
+                                s.questions,
+                                onExit = { screen = tab },
+                                onFinish = { res ->
+                                    val now = System.currentTimeMillis()
+                                    val stats = progress.verbStats.toMutableMap()
+                                    (res.right.keys + res.wrong.keys).forEach { id ->
+                                        val w = stats[id] ?: WordStat()
+                                        stats[id] = w.copy(right = w.right + (res.right[id] ?: 0), wrong = w.wrong + (res.wrong[id] ?: 0), last = now)
+                                    }
+                                    val answered = res.right.values.sum() + res.wrong.values.sum()
+                                    update(progress.copy(verbStats = stats).let { if (answered > 0) it.withActivity(res.right.values.sum()) else it })
                                 },
                             )
                             is Screen.Schedule -> ScheduleScreen(repo, progress, s.open) { screen = tab }

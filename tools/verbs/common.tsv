@@ -1,0 +1,582 @@
+# Most frequent German verbs (picked by hand from a subtitle frequency list).
+# infinitive<TAB>aux (h = hat, s = ist, s/h = both, first is the usual one)<TAB>English
+sein	s	to be
+haben	h	to have
+werden	s	to become
+können	h	can, to be able to
+müssen	h	must, to have to
+sagen	h	to say
+machen	h	to make, to do
+geben	h	to give
+kommen	s	to come
+sollen	h	should, to be supposed to
+wollen	h	to want
+gehen	s	to go
+wissen	h	to know (a fact)
+sehen	h	to see
+lassen	h	to let, to leave
+stehen	h	to stand
+finden	h	to find
+bleiben	s	to stay
+liegen	h	to lie, to be located
+heißen	h	to be called
+denken	h	to think
+nehmen	h	to take
+tun	h	to do
+dürfen	h	may, to be allowed to
+glauben	h	to believe
+halten	h	to hold, to stop
+nennen	h	to name, to call
+mögen	h	to like
+zeigen	h	to show
+führen	h	to lead
+sprechen	h	to speak
+bringen	h	to bring
+leben	h	to live
+fahren	s/h	to drive, to go (by vehicle)
+meinen	h	to mean, to think
+fragen	h	to ask
+kennen	h	to know (be familiar with)
+gelten	h	to be valid, to count as
+stellen	h	to put (upright)
+spielen	h	to play
+arbeiten	h	to work
+brauchen	h	to need
+folgen	s	to follow
+lernen	h	to learn
+bestehen	h	to exist, to pass (an exam)
+verstehen	h	to understand
+setzen	h	to put, to set
+bekommen	h	to get, to receive
+beginnen	h	to begin
+erzählen	h	to tell (a story)
+versuchen	h	to try
+schreiben	h	to write
+laufen	s	to run, to walk
+erklären	h	to explain
+entsprechen	h	to correspond to
+sitzen	h	to sit
+ziehen	h/s	to pull; to move (house)
+scheinen	h	to seem, to shine
+fallen	s	to fall
+gehören	h	to belong
+entstehen	s	to arise, to come about
+erhalten	h	to receive, to preserve
+treffen	h	to meet, to hit
+suchen	h	to look for
+legen	h	to lay, to put (flat)
+vorstellen	h	to introduce, to imagine
+handeln	h	to act, to trade
+erreichen	h	to reach, to achieve
+tragen	h	to carry, to wear
+schaffen	h	to manage; to create
+lesen	h	to read
+verlieren	h	to lose
+darstellen	h	to depict, to represent
+erkennen	h	to recognize
+entwickeln	h	to develop
+reden	h	to talk
+aussehen	h	to look (appear)
+erscheinen	s	to appear
+bilden	h	to form, to educate
+anfangen	h	to begin, to start
+erwarten	h	to expect
+wohnen	h	to live (reside)
+betreffen	h	to concern
+warten	h	to wait
+vergehen	s	to pass (time)
+helfen	h	to help
+gewinnen	h	to win
+schließen	h	to close
+fühlen	h	to feel
+bieten	h	to offer
+interessieren	h	to interest
+erinnern	h	to remind; (sich) to remember
+ergeben	h	to result in
+anbieten	h	to offer
+studieren	h	to study (at university)
+verbinden	h	to connect
+ansehen	h	to look at
+fehlen	h	to be missing
+bedeuten	h	to mean
+vergleichen	h	to compare
+ändern	h	to change
+passieren	s	to happen
+dauern	h	to last, to take (time)
+hören	h	to hear
+essen	h	to eat
+trinken	h	to drink
+schlafen	h	to sleep
+rufen	h	to call, to shout
+kaufen	h	to buy
+verkaufen	h	to sell
+bezahlen	h	to pay (for)
+zahlen	h	to pay
+öffnen	h	to open
+lieben	h	to love
+hoffen	h	to hope
+lachen	h	to laugh
+weinen	h	to cry
+antworten	h	to answer
+fliegen	s/h	to fly
+schwimmen	s/h	to swim
+springen	s	to jump
+sterben	s	to die
+töten	h	to kill
+vergessen	h	to forget
+bitten	h	to ask (for), to request
+danken	h	to thank
+holen	h	to fetch, to get
+retten	h	to save, to rescue
+anrufen	h	to phone
+entschuldigen	h	to excuse; (sich) to apologize
+bestimmen	h	to determine, to decide
+umbringen	h	to kill
+erfahren	h	to find out, to experience
+geschehen	s	to happen
+verschwinden	s	to disappear
+schicken	h	to send
+kriegen	h	to get
+behalten	h	to keep
+aufhören	h	to stop, to quit
+funktionieren	h	to work, to function
+benutzen	h	to use
+heiraten	h	to marry
+aufgeben	h	to give up
+vertrauen	h	to trust
+zurückkommen	s	to come back
+ankommen	s	to arrive
+übergeben	h	to hand over
+versprechen	h	to promise
+verdienen	h	to earn, to deserve
+fangen	h	to catch
+erledigen	h	to get done, to deal with
+verletzen	h	to hurt, to injure
+verraten	h	to betray, to give away
+kümmern	h	(sich) to take care of
+fernsehen	h	to watch TV
+verstecken	h	to hide
+schlagen	h	to hit, to beat
+zugeben	h	to admit
+ausgehen	s	to go out
+wiederkommen	s	to come again
+abgeben	h	to hand in
+kämpfen	h	to fight
+ausgeben	h	to spend (money)
+zerstören	h	to destroy
+entscheiden	h	to decide
+schießen	h	to shoot
+stehlen	h	to steal
+unterhalten	h	to entertain; (sich) to chat
+lügen	h	to lie (tell lies)
+bewegen	h	to move
+umgehen	s	to deal with, to handle
+besorgen	h	to get hold of, to buy
+mitnehmen	h	to take along
+schauen	h	to look
+weggehen	s	to go away
+zusehen	h	to watch
+überleben	h	to survive
+vermissen	h	to miss (someone)
+verändern	h	to change, to alter
+losgehen	s	to set off, to start
+brechen	h/s	to break
+zurückgehen	s	to go back
+bauen	h	to build
+übernehmen	h	to take over
+erschießen	h	to shoot dead
+beschützen	h	to protect
+entkommen	s	to escape
+aufhalten	h	to stop, to delay
+erwischen	h	to catch (in the act)
+annehmen	h	to accept, to assume
+tanzen	h	to dance
+entfernen	h	to remove
+besuchen	h	to visit
+beweisen	h	to prove
+wünschen	h	to wish
+stecken	h	to put (into), to stick
+werfen	h	to throw
+melden	h	to report; (sich) to get in touch
+verlieben	h	(sich) to fall in love
+beenden	h	to end, to finish
+verhaften	h	to arrest
+mitbringen	h	to bring along
+aufnehmen	h	to record, to take in
+singen	h	to sing
+überraschen	h	to surprise
+verpassen	h	to miss (a bus, a chance)
+verfolgen	h	to pursue, to follow
+verzeihen	h	to forgive
+überlegen	h	to consider, to think over
+aufstehen	s	to get up, to stand up
+beschäftigen	h	to employ; (sich) to be busy with
+behandeln	h	to treat
+verlangen	h	to demand
+verbringen	h	to spend (time)
+erlauben	h	to allow
+überprüfen	h	to check
+einladen	h	to invite
+zuhören	h	to listen
+angreifen	h	to attack
+gebrauchen	h	to use
+überzeugen	h	to convince
+teilen	h	to share, to divide
+drehen	h	to turn
+schützen	h	to protect
+feiern	h	to celebrate
+aufmachen	h	to open
+vergeben	h	to forgive; to give away
+freuen	h	(sich) to be glad, to look forward
+beruhigen	h	to calm down
+kosten	h	to cost; to taste
+küssen	h	to kiss
+beobachten	h	to observe, to watch
+passen	h	to fit, to suit
+raten	h	to guess; to advise
+rennen	s	to run
+trennen	h	to separate
+beibringen	h	to teach
+treten	h/s	to kick; to step
+aufpassen	h	to pay attention, to look after
+planen	h	to plan
+erleben	h	to experience
+wählen	h	to choose, to vote, to dial
+stören	h	to disturb
+erwähnen	h	to mention
+stimmen	h	to be right; to vote
+leiden	h	to suffer
+vorbereiten	h	to prepare
+merken	h	to notice; (sich) to remember
+anziehen	h	to put on; (sich) to get dressed
+hängen	h	to hang
+zwingen	h	to force
+lösen	h	to solve
+schreien	h	to scream, to shout
+jagen	h	to hunt, to chase
+kennenlernen	h	to get to know, to meet
+beeilen	h	(sich) to hurry
+untersuchen	h	to examine
+entdecken	h	to discover
+reichen	h	to be enough; to pass (hand)
+unterschreiben	h	to sign
+abholen	h	to pick up, to collect
+landen	s	to land
+träumen	h	to dream
+nutzen	h	to use
+schätzen	h	to estimate, to value
+abnehmen	h	to lose weight; to take off
+steigen	s	to climb, to rise
+mitmachen	h	to join in
+verwenden	h	to use
+bestellen	h	to order
+besprechen	h	to discuss
+entführen	h	to kidnap
+loslassen	h	to let go
+behaupten	h	to claim
+warnen	h	to warn
+bestätigen	h	to confirm
+kontrollieren	h	to check, to control
+bemerken	h	to notice, to remark
+schenken	h	to give (as a present)
+befreien	h	to free
+lächeln	h	to smile
+enttäuschen	h	to disappoint
+hassen	h	to hate
+kochen	h	to cook, to boil
+reparieren	h	to repair
+reisen	s	to travel
+verhindern	h	to prevent
+genießen	h	to enjoy
+erfüllen	h	to fulfil
+streiten	h	to argue
+existieren	h	to exist
+probieren	h	to try, to taste
+spüren	h	to feel, to sense
+einstellen	h	to hire; to adjust
+akzeptieren	h	to accept
+fliehen	s	to flee
+begleiten	h	to accompany
+rauchen	h	to smoke
+konzentrieren	h	(sich) to concentrate
+atmen	h	to breathe
+packen	h	to pack; to grab
+übersetzen	h	to translate
+einfallen	s	to occur to (an idea)
+verbrennen	h/s	to burn
+klären	h	to clarify
+auffallen	s	to stand out, to be noticed
+unterstützen	h	to support
+irren	h	(sich) to be mistaken
+aufregen	h	(sich) to get upset
+erschrecken	h	to frighten
+springen	s	to jump
+verbieten	h	to forbid
+auftauchen	s	to turn up, to appear
+berühren	h	to touch
+schneiden	h	to cut
+informieren	h	to inform
+zählen	h	to count
+besitzen	h	to own
+aufwachen	s	to wake up
+wachsen	s	to grow
+betrügen	h	to cheat, to deceive
+zumachen	h	to close
+ausziehen	s/h	to move out; to take off (clothes)
+beantworten	h	to answer
+greifen	h	to grab, to reach
+gewöhnen	h	(sich) to get used to
+enden	h	to end
+riskieren	h	to risk
+abschließen	h	to lock; to complete
+begegnen	s	to meet (by chance)
+betreten	h	to enter (a room)
+verwandeln	h	to transform
+drücken	h	to press, to push
+klopfen	h	to knock
+mitbekommen	h	to notice, to catch (on)
+durchsuchen	h	to search (through)
+stoppen	h	to stop
+binden	h	to tie
+reagieren	h	to react
+schulden	h	to owe
+entspannen	h	to relax
+zurückkehren	s	to return
+besiegen	h	to defeat
+heilen	h	to heal
+beten	h	to pray
+aussprechen	h	to pronounce
+liefern	h	to deliver
+aussuchen	h	to pick out, to choose
+übertragen	h	to broadcast, to transfer
+wechseln	h	to change, to exchange
+dienen	h	to serve
+festhalten	h	to hold on (to)
+wiederholen	h	to repeat
+verursachen	h	to cause
+bestrafen	h	to punish
+waschen	h	to wash
+starten	h/s	to start
+telefonieren	h	to phone
+berichten	h	to report
+erfinden	h	to invent
+umziehen	s	to move (house)
+gründen	h	to found
+gucken	h	to look
+erscheinen	s	to appear
+gestehen	h	to confess
+verurteilen	h	to sentence, to condemn
+einsetzen	h	to use, to insert
+betrachten	h	to look at, to regard
+zunehmen	h	to increase, to gain weight
+opfern	h	to sacrifice
+wetten	h	to bet
+zurückrufen	h	to call back
+ablehnen	h	to reject, to decline
+bewahren	h	to keep, to preserve
+aushalten	h	to bear, to stand
+riechen	h	to smell
+prüfen	h	to check, to test
+unterbrechen	h	to interrupt
+befinden	h	(sich) to be located
+sammeln	h	to collect
+einschlafen	s	to fall asleep
+ansprechen	h	to speak to, to address
+testen	h	to test
+verabschieden	h	(sich) to say goodbye
+verschwenden	h	to waste
+herstellen	h	to produce, to make
+klingen	h	to sound
+trainieren	h	to train
+leiten	h	to lead, to manage
+spazieren	s	to stroll
+üben	h	to practise
+ignorieren	h	to ignore
+begreifen	h	to grasp, to understand
+wecken	h	to wake (someone)
+aussteigen	s	to get off (a vehicle)
+einsteigen	s	to get on (a vehicle)
+umsteigen	s	to change (trains, buses)
+sparen	h	to save (money)
+einkaufen	h	to shop
+beleidigen	h	to insult
+aufbauen	h	to build up, to set up
+löschen	h	to delete; to put out (fire)
+leihen	h	to lend; to borrow
+vorschlagen	h	to suggest
+ersetzen	h	to replace
+befehlen	h	to order, to command
+beschreiben	h	to describe
+verteilen	h	to distribute
+aufwachsen	s	to grow up
+fürchten	h	to fear
+beschließen	h	to decide
+malen	h	to paint
+zustimmen	h	to agree
+benötigen	h	to need
+bereuen	h	to regret
+wenden	h	to turn
+rechnen	h	to calculate
+begrüßen	h	to greet, to welcome
+abfahren	s	to depart
+eröffnen	h	to open (up)
+täuschen	h	to deceive; (sich) to be wrong
+ausruhen	h	(sich) to rest
+verhandeln	h	to negotiate
+überreden	h	to persuade
+ausschalten	h	to switch off
+einschalten	h	to switch on
+steuern	h	to steer
+festnehmen	h	to arrest
+streichen	h	to paint; to cross out
+zeichnen	h	to draw
+erholen	h	(sich) to recover
+diskutieren	h	to discuss
+korrigieren	h	to correct
+fotografieren	h	to photograph
+unterrichten	h	to teach
+vorlesen	h	to read aloud
+schmecken	h	to taste
+schwitzen	h	to sweat
+frieren	h	to be cold, to freeze
+regnen	h	to rain
+schneien	h	to snow
+wandern	s	to hike
+klettern	s	to climb
+joggen	s/h	to jog
+segeln	s/h	to sail
+tauchen	s/h	to dive
+schieben	h	to push
+gießen	h	to pour, to water
+schmelzen	s	to melt
+sinken	s	to sink
+stinken	h	to stink
+gelingen	s	to succeed (es gelingt mir)
+misslingen	s	to fail
+empfehlen	h	to recommend
+empfangen	h	to receive
+erschrecken	s	to be startled
+gewinnen	h	to win
+bewerben	h	(sich) to apply
+beschweren	h	(sich) to complain
+entlassen	h	to dismiss, to discharge
+erziehen	h	to bring up, to educate
+verbessern	h	to improve
+erhöhen	h	to raise, to increase
+erfüllen	h	to fulfil
+verbieten	h	to forbid
+vermeiden	h	to avoid
+anmelden	h	to register
+abmelden	h	to sign off, to deregister
+ausfüllen	h	to fill in
+aufschreiben	h	to write down
+abschreiben	h	to copy (out)
+anfassen	h	to touch
+anschauen	h	to look at
+anhören	h	to listen to
+aufräumen	h	to tidy up
+ausprobieren	h	to try out
+einziehen	s	to move in
+mitkommen	s	to come along
+vorbeikommen	s	to drop by
+zurückgeben	h	to give back
+weitermachen	h	to carry on
+weglaufen	s	to run away
+nachdenken	h	to think about, to reflect
+vorhaben	h	to plan, to intend
+stattfinden	h	to take place
+teilnehmen	h	to take part
+zuschauen	h	to watch
+abschicken	h	to send off
+aufladen	h	to charge, to load
+herunterladen	h	to download
+hochladen	h	to upload
+anklicken	h	to click on
+speichern	h	to save (data)
+drucken	h	to print
+ausdrucken	h	to print out
+tippen	h	to type; to tap
+buchen	h	to book
+mieten	h	to rent
+vermieten	h	to let, to rent out
+putzen	h	to clean
+spülen	h	to rinse, to wash up
+backen	h	to bake
+braten	h	to fry, to roast
+schälen	h	to peel
+duschen	h	to shower
+baden	h	to bathe
+frühstücken	h	to have breakfast
+schmeißen	h	to throw, to chuck
+schweigen	h	to be silent
+leuchten	h	to shine, to glow
+blühen	h	to bloom
+bellen	h	to bark
+beißen	h	to bite
+stechen	h	to sting, to prick
+kriechen	s	to crawl
+reiten	s/h	to ride (a horse)
+gleiten	s	to glide, to slide
+pfeifen	h	to whistle
+schleichen	s	to creep
+schwingen	h	to swing
+winken	h	to wave
+nicken	h	to nod
+zittern	h	to tremble
+stolpern	s	to trip, to stumble
+rutschen	s	to slip, to slide
+fließen	s	to flow
+wiegen	h	to weigh
+messen	h	to measure
+schützen	h	to protect
+verlassen	h	to leave
+verwechseln	h	to mix up
+verzichten	h	to do without
+vorkommen	s	to occur
+zuhören	h	to listen
+aufnehmen	h	to take up, to record
+erwachen	s	to awaken
+gehorchen	h	to obey
+verschieben	h	to postpone, to move
+verstecken	h	to hide
+zögern	h	to hesitate
+schwören	h	to swear (an oath)
+schalten	h	to switch
+schimpfen	h	to scold, to grumble
+staunen	h	to be amazed
+klingeln	h	to ring
+nähen	h	to sew
+stricken	h	to knit
+füttern	h	to feed
+pflanzen	h	to plant
+ernten	h	to harvest
+fischen	h	to fish
+angeln	h	to fish (with a rod)
+überqueren	h	to cross
+parken	h	to park
+bremsen	h	to brake
+pendeln	s/h	to commute
+abbiegen	s	to turn (off)
+überholen	h	to overtake
+einparken	h	to park (in a space)
+verpacken	h	to wrap up
+auspacken	h	to unpack
+einpacken	h	to pack
+ausleihen	h	to borrow, to lend out
+zurückbringen	h	to bring back
+erkälten	h	(sich) to catch a cold
+husten	h	to cough
+niesen	h	to sneeze
+bluten	h	to bleed
+schmerzen	h	to hurt, to ache
+weh tun	h	to hurt
+erbrechen	h	to vomit
+impfen	h	to vaccinate
+operieren	h	to operate (on)
+gratulieren	h	to congratulate
+einschlagen	h	to smash; to take (a direction)
+verlängern	h	to extend
+kündigen	h	to quit, to cancel (a contract)
+verschlafen	h	to oversleep
+verlaufen	h	(sich) to get lost
+verfahren	h	(sich) to get lost (driving)

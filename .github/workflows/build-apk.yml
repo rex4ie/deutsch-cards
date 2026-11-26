@@ -7,6 +7,7 @@ on:
     paths-ignore:
       - "app/src/main/assets/my_lessons.json"
       - "app/src/main/assets/my_finds.json"
+      - "app/src/main/assets/verbs.json"
       - "**.md"
   workflow_dispatch:
 
@@ -60,10 +61,13 @@ jobs:
           name: DeutschCards-apk
           path: DeutschCards.apk
 
+      # Only main publishes; a manual run on another branch is just a compile check.
       - name: Move the "latest" tag to this commit
+        if: github.ref == 'refs/heads/main'
         run: git tag -f latest && git push -f origin latest
 
       - name: Publish to "latest" release
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest

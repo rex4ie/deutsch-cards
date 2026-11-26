@@ -48,6 +48,9 @@ fun HomeScaffold(
     onStudyDeck: (Deck, List<Card>, String, Boolean) -> Unit,
     onGender: (GenderMode) -> Unit,
     onGenderScope: (Boolean) -> Unit,
+    onPracticeTab: (String) -> Unit,
+    onVerbs: (VerbMode) -> Unit,
+    onVerbForms: (VerbFormChoice) -> Unit,
     onSchedule: (String?) -> Unit,
     updateAvailable: Boolean,
     onAbout: () -> Unit,
@@ -58,7 +61,7 @@ fun HomeScaffold(
             when (tab) {
                 Screen.Learn -> LearnPath(repo, progress, onOpen)
                 Screen.Review -> ReviewDashboard(repo, progress, onStudy, onSchedule)
-                Screen.Artikel -> GenderHub(repo, progress, onGender, onGenderScope)
+                Screen.Artikel -> PracticeTab(repo, progress, onPracticeTab, onGender, onGenderScope, onVerbs, onVerbForms)
                 Screen.Finds -> MyLessonsScreen(repo, progress, Deck.Finds) { c, t, cram -> onStudyDeck(Deck.Finds, c, t, cram) }
                 else -> MyLessonsScreen(repo, progress, Deck.Class) { c, t, cram -> onStudyDeck(Deck.Class, c, t, cram) }
             }
@@ -116,7 +119,7 @@ private fun BottomBar(tab: Screen, onTab: (Screen) -> Unit, due: Int, myDue: Int
     ) {
         NavItem(Icons.Rounded.Forest, "Learn", null, tab == Screen.Learn, Modifier.weight(1f)) { onTab(Screen.Learn) }
         NavItem(Icons.Rounded.Style, "Review", due.takeIf { it > 0 }, tab == Screen.Review, Modifier.weight(1f)) { onTab(Screen.Review) }
-        NavItem(Icons.Rounded.Category, "Artikel", null, tab == Screen.Artikel, Modifier.weight(1f)) { onTab(Screen.Artikel) }
+        NavItem(Icons.Rounded.Category, "Practice", null, tab == Screen.Artikel, Modifier.weight(1f)) { onTab(Screen.Artikel) }
         NavItem(Icons.AutoMirrored.Rounded.MenuBook, "Class", myDue.takeIf { it > 0 }, tab == Screen.Mine, Modifier.weight(1f)) { onTab(Screen.Mine) }
         NavItem(Icons.Rounded.Headphones, "Finds", findsDue.takeIf { it > 0 }, tab == Screen.Finds, Modifier.weight(1f)) { onTab(Screen.Finds) }
     }

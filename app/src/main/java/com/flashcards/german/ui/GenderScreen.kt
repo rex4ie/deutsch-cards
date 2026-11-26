@@ -118,14 +118,19 @@ fun GenderHub(repo: Repo, p: Progress, onPlay: (GenderMode) -> Unit, onScope: (B
 
 /** Segmented two-option switch: all nouns vs. only learned ones. */
 @Composable
-private fun ScopeSwitch(learnedOnly: Boolean, totalAll: Int, learned: Int, onScope: (Boolean) -> Unit) {
+private fun ScopeSwitch(learnedOnly: Boolean, totalAll: Int, learned: Int, onScope: (Boolean) -> Unit) =
+    Segmented(listOf(false to "All nouns · $totalAll", true to "Learned · $learned"), learnedOnly, onScope)
+
+/** Pill-shaped segmented control. */
+@Composable
+fun <T> Segmented(options: List<Pair<T, String>>, selected: T, onSelect: (T) -> Unit) {
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(50)).background(C.Sunk).padding(4.dp)) {
-        listOf(false to "All nouns · $totalAll", true to "Learned · $learned").forEach { (value, label) ->
-            val on = learnedOnly == value
+        options.forEach { (value, label) ->
+            val on = selected == value
             Box(
                 Modifier.weight(1f).clip(RoundedCornerShape(50)).background(if (on) C.Card else Color.Transparent)
                     .then(if (on) Modifier.border(1.dp, C.Line, RoundedCornerShape(50)) else Modifier)
-                    .clickable { if (!on) onScope(value) }.padding(vertical = 10.dp),
+                    .clickable { if (!on) onSelect(value) }.padding(vertical = 10.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(label, color = if (on) C.Accent else C.Muted, fontWeight = if (on) FontWeight.Bold else FontWeight.Medium, fontSize = 14.sp)
@@ -135,7 +140,7 @@ private fun ScopeSwitch(learnedOnly: Boolean, totalAll: Int, learned: Int, onSco
 }
 
 @Composable
-private fun BigStat(value: String, label: String, modifier: Modifier) {
+fun BigStat(value: String, label: String, modifier: Modifier) {
     Column(modifier) {
         Text(value, color = C.Ink, fontFamily = Serif, fontSize = 26.sp, fontWeight = FontWeight.Bold)
         Text(label, color = C.Muted, fontSize = 12.sp)
@@ -143,7 +148,7 @@ private fun BigStat(value: String, label: String, modifier: Modifier) {
 }
 
 @Composable
-private fun ModeCard(icon: ImageVector, title: String, sub: String, badge: String?, enabled: Boolean, onClick: () -> Unit) {
+fun ModeCard(icon: ImageVector, title: String, sub: String, badge: String?, enabled: Boolean, onClick: () -> Unit) {
     Row(
         Modifier.fillMaxWidth().padding(vertical = 5.dp).clip(RoundedCornerShape(18.dp)).background(C.Card)
             .border(1.dp, C.Line, RoundedCornerShape(18.dp)).clickable(enabled = enabled, onClick = onClick).padding(16.dp),

@@ -17,7 +17,7 @@ up next time you open the tab. No app update, no APK build.
    **Class lesson**
    ```
    Update my lessons with today's class (follow UPDATE_FROM_PHONE.md).
-   Commit only app/src/main/assets/my_lessons.json and push to main.
+   Commit only app/src/main/assets/my_lessons.json (and verbs.json) and push to main.
 
    <paste your class notes here>
    ```
@@ -101,8 +101,11 @@ Each file is a JSON array of lessons:
 - **Nouns**: singular, with the article on the front: `"der Tisch"` → `"table"`. Cards that
   are exactly *article + noun* also feed the app's der/die/das game. Put the plural in
   `note` if the notes give it (`"Plural: die Tische"`).
-- **Verbs**: infinitive on the front; irregular forms in `note`
+- **Verbs**: infinitive on the front, back starting with "to …"; irregular forms in `note`
   (`"gehen"` → `"to go"`, note `"ging, ist gegangen"`).
+  **Class verbs also go into the verb-forms game, automatically**, even when the notes only
+  give the present tense. With Claude Code (Option A), follow "Verb forms" in `CLAUDE.md`
+  to rebuild `app/src/main/assets/verbs.json` and commit it too.
 - **Grammar**: one fact per card, phrased as a question:
   `"Perfekt of gehen"` → `"ist gegangen"`; `"Dative of 'der'"` → `"dem"`.
   Never paste a whole paragraph onto a card.
@@ -125,6 +128,6 @@ The app keys each card's review schedule on `<lessonId>` plus the card's positio
 ### Before pushing (Option A)
 
 - Check that the file is valid JSON.
-- Commit **only** the one deck file. Message, for example: `Class: add 2026-11-20 Modal verbs`.
+- Commit **only** the one deck file (plus `verbs.json` for a Class update with verbs). Message, for example: `Class: add 2026-11-20 Modal verbs`.
 - Push to `main`. No version bump, no app build: the app downloads the file itself.
 - Reply with a short summary: deck, lesson title, number of cards added.

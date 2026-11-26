@@ -83,6 +83,11 @@ data class Progress(
     val bestSprint: Int = 0,
     /** Artikel tab: false = all nouns (default), true = only nouns already learned. Remembered. */
     val genderLearnedOnly: Boolean = false,
+    /** Practice tab: which game is shown ("artikel" or "verbs"). */
+    val practiceTab: String = "artikel",
+    /** Verb-forms game: results per "verb:prt" / "verb:pp", and which forms to ask (VerbFormChoice name). */
+    val verbStats: Map<String, WordStat> = emptyMap(),
+    val verbForms: String = "Both",
     val myXp: Int = 0,
     val xp: Int = 0,
     val streak: Int = 0,
@@ -182,6 +187,33 @@ class Repo(private val ctx: Context) {
         } finally { conn.disconnect() }
     }
 
+    /**
+     * Verbs for the verb-forms game. Like the personal decks, refreshed from the repo at
+     * runtime so verbs from new class notes arrive without an app update.
+     */
+    private val verbState = androidx.compose.runtime.mutableStateOf(
+        listOf(File(ctx.filesDir, VERBS).takeIf { it.exists() }?.readText(), asset(VERBS)).firstNotNullOfOrNull { t ->
+            t?.let { runCatching { json.decodeFromString<List<Verb>>(it) }.getOrNull() }
+        } ?: emptyList()
+    )
+    val verbs: List<Verb> get() = verbState.value
+
+    suspend fun refreshVerbs() = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        runCatching {
+            val url = java.net.URL("https://raw.githubusercontent.com/${Updater.REPO}/main/app/src/main/assets/$VERBS?t=${System.currentTimeMillis()}")
+            val conn = (url.openConnection() as java.net.HttpURLConnection).apply {
+                connectTimeout = 10_000; readTimeout = 15_000; useCaches = false
+                setRequestProperty("Cache-Control", "no-cache")
+            }
+            try {
+                if (conn.responseCode != 200) return@runCatching
+                val text = conn.inputStream.bufferedReader(Charsets.UTF_8).readText()
+                val parsed = json.decodeFromString<List<Verb>>(text)
+                if (parsed.isNotEmpty()) { File(ctx.filesDir, VERBS).writeText(text); verbState.value = parsed }
+            } finally { conn.disconnect() }
+        }
+    }
+
     /** Each PDF page split into bite-sized lessons of at most [MAX_WORDS] words. */
     val lessons: List<Lesson> = run {
         var id = 0
@@ -207,7 +239,7 @@ class Repo(private val ctx: Context) {
         out
     }
 
-    companion object { const val MAX_WORDS = 9; const val REVIEW_EVERY = 4 }
+    companion object { const val MAX_WORDS = 9; const val REVIEW_EVERY = 4; const val VERBS = "verbs.json" }
     private val file = File(ctx.filesDir, "progress.json")
 
     fun load(): Progress = runCatching { json.decodeFromString<Progress>(file.readText()) }.getOrDefault(Progress())
