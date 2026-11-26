@@ -45,6 +45,15 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 fun update(p: Progress) { progress = p; repo.save(p) }
+                /** Scheduled study is capped by the daily limit; once it's used up, cards open as free practice. */
+                fun limited(cards: List<Card>, title: String, cram: Boolean, deck: Deck?): Screen {
+                    val left = progress.leftToday()
+                    return when {
+                        cram -> Screen.Study(cards, title, true, deck)
+                        left == 0 -> Screen.Study(cards, title, true, deck)
+                        else -> Screen.Study(cards.take(left), title, false, deck)
+                    }
+                }
 
                 BackHandler(enabled = screen != tab) { screen = tab }
 
@@ -57,8 +66,8 @@ class MainActivity : ComponentActivity() {
                                 repo = repo,
                                 progress = progress,
                                 onOpen = { screen = Screen.Play(it) },
-                                onStudy = { cards, title, cram -> screen = Screen.Study(cards, title, cram) },
-                                onStudyDeck = { deck, cards, title, cram -> screen = Screen.Study(cards, title, cram, deck) },
+                                onStudy = { cards, title, cram -> screen = limited(cards, title, cram, null) },
+                                onStudyDeck = { deck, cards, title, cram -> screen = limited(cards, title, cram, deck) },
                                 onGenderScope = { learnedOnly -> update(progress.copy(genderLearnedOnly = learnedOnly)) },
                                 onPracticeTab = { t -> update(progress.copy(practiceTab = t)) },
                                 onVerbForms = { c -> update(progress.copy(verbForms = c.name)) },
@@ -107,7 +116,7 @@ class MainActivity : ComponentActivity() {
                                 },
                             )
                             is Screen.Schedule -> ScheduleScreen(repo, progress, s.open) { screen = tab }
-                            Screen.About -> AboutScreen(repo, progress, updateState) { screen = tab }
+                            Screen.About -> AboutScreen(repo, progress, updateState, onLimit = { on, n -> update(progress.copy(dailyLimitOn = on, dailyLimit = n)) }) { screen = tab }
                             is Screen.Play -> {
                                 val item = s.item
                                 val exercises = remember(item) {
@@ -153,6 +162,8 @@ class MainActivity : ComponentActivity() {
                                 stateOf = { c -> s.deck?.let { progress.deck(it)[c.id] } ?: progress.cards[c.id] },
                                 onRate = { card, rating ->
                                     if (!s.cram) {
+                                        // the daily limit counts a card once, when it leaves the session
+                                        if (rating != Rating.Again) progress = progress.countStudied()
                                         val d = s.deck
                                         if (d != null) {
                                             val st = progress.deck(d)[card.id] ?: CardState()

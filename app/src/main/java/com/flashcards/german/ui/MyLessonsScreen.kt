@@ -83,10 +83,12 @@ fun MyLessonsScreen(repo: Repo, p: Progress, deck: Deck, onStudy: (List<Card>, S
                 }
             }
             Spacer(Modifier.height(20.dp))
+            val today = minOf(p.leftToday(), queue.size)
             InkButton(
-                if (queue.isEmpty()) "All caught up" else "Study ${queue.size} cards",
-                Modifier.fillMaxWidth(), color = C.Accent, enabled = queue.isNotEmpty(),
+                when { queue.isEmpty() -> "All caught up"; today == 0 -> "Daily limit reached"; else -> "Study $today cards" },
+                Modifier.fillMaxWidth(), color = C.Accent, enabled = today > 0,
             ) { onStudy(due.shuffled() + fresh, deck.title, false) }
+            LimitNote(p)
             Spacer(Modifier.height(12.dp))
             InkButton("Review all ${all.size} cards", Modifier.fillMaxWidth(), color = C.Card, textColor = C.Accent) {
                 onStudy(all.shuffled(), "${deck.title} · all", true)

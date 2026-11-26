@@ -66,7 +66,8 @@ fun HomeScaffold(
                 else -> MyLessonsScreen(repo, progress, Deck.Class) { c, t, cram -> onStudyDeck(Deck.Class, c, t, cram) }
             }
         }
-        BottomBar(tab, onTab, dueCount(progress), myDueCount(repo, progress, Deck.Class), myDueCount(repo, progress, Deck.Finds))
+        val left = progress.leftToday()
+        BottomBar(tab, onTab, minOf(left, dueCount(progress)), minOf(left, myDueCount(repo, progress, Deck.Class)), minOf(left, myDueCount(repo, progress, Deck.Finds)))
     }
 }
 
@@ -354,6 +355,18 @@ private fun Stone(status: Status, review: Boolean, onClick: () -> Unit) {
     }
 }
 
+/** "12 of 30 cards left today" under a study button, when the daily limit is on. */
+@Composable
+fun LimitNote(p: Progress) {
+    if (!p.dailyLimitOn) return
+    val left = p.leftToday()
+    Text(
+        if (left == 0) "You've studied your ${p.dailyLimit} cards for today. Review all still works, or change the limit in Settings."
+        else "$left of ${p.dailyLimit} cards left today",
+        color = C.Muted, fontSize = 13.sp, modifier = Modifier.padding(top = 8.dp),
+    )
+}
+
 // ---------------------------------------------------------------- Review dashboard
 
 @Composable
@@ -399,10 +412,13 @@ private fun ReviewDashboard(repo: Repo, p: Progress, onStudy: (List<Card>, Strin
         Spacer(Modifier.height(20.dp))
         ComingUp(buckets, onSchedule)
         Spacer(Modifier.height(24.dp))
+        val left = p.leftToday()
+        val today = minOf(left, due.size)
         InkButton(
-            if (due.isEmpty()) "No reviews due" else "Review due cards",
-            Modifier.fillMaxWidth(), color = C.Accent, enabled = due.isNotEmpty(),
+            when { due.isEmpty() -> "No reviews due"; today == 0 -> "Daily limit reached"; today < due.size -> "Review $today of ${due.size} due"; else -> "Review due cards" },
+            Modifier.fillMaxWidth(), color = C.Accent, enabled = today > 0,
         ) { onStudy(due.shuffled(), "Due reviews", false) }
+        LimitNote(p)
         Spacer(Modifier.height(12.dp))
         InkButton(
             "Review all $seen words", Modifier.fillMaxWidth(), color = C.Card, textColor = C.Accent, enabled = seen > 0,

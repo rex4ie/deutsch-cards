@@ -11,6 +11,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -37,7 +39,7 @@ sealed interface UpdateState {
 }
 
 @Composable
-fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: () -> Unit) {
+fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onLimit: (Boolean, Int) -> Unit, onBack: () -> Unit) {
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
     var state by remember { mutableStateOf(initial) }
@@ -106,6 +108,23 @@ fun AboutScreen(repo: Repo, progress: Progress, initial: UpdateState, onBack: ()
                 checked = sfx, onCheckedChange = { sfx = it; Sfx.setEnabled(it); if (it) Sfx.play(Sound.Correct) },
                 colors = SwitchDefaults.colors(checkedTrackColor = C.Accent, checkedThumbColor = C.OnAccent),
             )
+        }
+        Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
+        Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text("Daily card limit", color = C.Muted, fontFamily = Serif, fontSize = 16.sp)
+                Text("Review, Class and Finds together", color = C.Muted, fontSize = 12.sp)
+            }
+            Switch(
+                checked = progress.dailyLimitOn, onCheckedChange = { onLimit(it, progress.dailyLimit) },
+                colors = SwitchDefaults.colors(checkedTrackColor = C.Accent, checkedThumbColor = C.OnAccent),
+            )
+        }
+        if (progress.dailyLimitOn) Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text("Cards per day", color = C.Muted, fontFamily = Serif, fontSize = 16.sp, modifier = Modifier.weight(1f))
+            IconBtn(Icons.Rounded.Remove, "Fewer", tint = C.Accent) { onLimit(true, (progress.dailyLimit - 5).coerceAtLeast(5)) }
+            Text("${progress.dailyLimit}", color = C.Ink, fontFamily = Serif, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.width(44.dp), textAlign = TextAlign.Center)
+            IconBtn(Icons.Rounded.Add, "More", tint = C.Accent) { onLimit(true, (progress.dailyLimit + 5).coerceAtMost(200)) }
         }
         Box(Modifier.fillMaxWidth().height(1.dp).background(C.Line))
         Spacer(Modifier.height(28.dp))

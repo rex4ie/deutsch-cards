@@ -85,6 +85,11 @@ data class Progress(
     val genderLearnedOnly: Boolean = false,
     /** Practice tab: which game is shown ("artikel" or "verbs"). */
     val practiceTab: String = "artikel",
+    /** Daily flashcard limit (Review, Class, Finds together; due cards count too). "Study all" ignores it. */
+    val dailyLimitOn: Boolean = true,
+    val dailyLimit: Int = 30,
+    val limitDay: Long = -1,
+    val studiedToday: Int = 0,
     /** Verb-forms game: results per "verb:prt" / "verb:pp", and which forms to ask (VerbFormChoice name). */
     val verbStats: Map<String, WordStat> = emptyMap(),
     val verbForms: String = "Both",
@@ -329,6 +334,15 @@ fun Progress.weakestCards(repo: Repo, n: Int, upToLesson: Int): List<Card> {
 }
 
 fun today(): Long = (System.currentTimeMillis() + java.util.TimeZone.getDefault().getOffset(System.currentTimeMillis())) / Srs.DAY
+
+/** How many more scheduled cards may be studied today. */
+fun Progress.leftToday(): Int =
+    if (!dailyLimitOn) Int.MAX_VALUE else maxOf(0, dailyLimit - if (limitDay == today()) studiedToday else 0)
+
+fun Progress.countStudied(): Progress {
+    val t = today()
+    return copy(limitDay = t, studiedToday = (if (limitDay == t) studiedToday else 0) + 1)
+}
 
 fun Progress.withActivity(xpGain: Int): Progress {
     val t = today()
